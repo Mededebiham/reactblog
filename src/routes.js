@@ -5,6 +5,6 @@ import Post from "./pages/Post";
 
 export const routes = [
     { path: '/', component: Home, name: 'Start', renderNav: true },
-    { path: '/routes', component: Posts, name: 'Posts', renderNav: true },
-    { path: '/routes/:id', component: Post, name: 'Post', renderNav: false },
+    { path: '/posts', component: Posts, name: 'Posts', renderNav: true },
+    { path: '/posts/:id', component: Post, name: 'Post', renderNav: false },
 ];
