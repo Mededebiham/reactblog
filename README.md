@@ -139,8 +139,8 @@ react-webblog/
 │   │   └── index.css
 │   ├── database/
 │   │   └── DB.js
-│   ├── App.js
-│   ├── index.js
+│   ├── App.jsx
+│   ├── index.jsx
 │   └── ...
 ├── .gitignore
 ├── package.json
