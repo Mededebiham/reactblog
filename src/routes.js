@@ -8,10 +8,10 @@ import Logout from "./components/Logout";
 
 
 export const routes = [
-    { path: '/', component: Home, name: 'Start', renderNav: true },
+    { path: '/', component: Home, name: 'Start', renderNav: false },
     { path: '/posts', component: Posts, name: 'Posts', renderNav: true },
     { path: '/posts/:id', component: Post, name: 'Post', renderNav: false },
-    {path: '/register',component: Register, name: "Registrieren", renderNav:true},
-    {path: '/login',component: Login, name: "Login", renderNav:true},
-    {path: '/logout',component: Logout, name: "Logout", renderNav:true},
+    { path: '/register',component: Register, name: "Registrieren", renderNav:true },
+    { path: '/login',component: Login, name: "Login", renderNav:true },
+    { path: '/logout',component: Logout, name: "Logout", renderNav:true },
 ];
