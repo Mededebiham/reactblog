@@ -4,6 +4,7 @@ import Post from "./pages/Post";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
+import CreatePost from "./pages/CreatePost";
 
 
 
@@ -14,4 +15,6 @@ export const routes = [
     { path: '/register',component: Register, name: "Registrieren", renderNav:true },
     { path: '/login',component: Login, name: "Login", renderNav:true },
     { path: '/logout',component: Logout, name: "Logout", renderNav:true },
+    { path: 'create-post', component: CreatePost, name: 'Create Post', renderNav: false },
+    { path: '*', component: Home, name: '404', renderNav: false}
 ];
