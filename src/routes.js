@@ -3,7 +3,7 @@ import Posts from "./pages/Posts";
 import Post from "./pages/Post";
 import Register from "./components/Register";
 import Login from "./components/Login";
-import Abmelden from "./components/Abmelden";
+import Logout from "./components/Logout";
 
 
 
@@ -13,5 +13,5 @@ export const routes = [
     { path: '/posts/:id', component: Post, name: 'Post', renderNav: false },
     {path: '/register',component: Register, name: "Registrieren", renderNav:true},
     {path: '/login',component: Login, name: "Login", renderNav:true},
-    {path: '/login',component: Abmelden, name: "Login", renderNav:true},
+    {path: '/logout',component: Logout, name: "Logout", renderNav:true},
 ];
