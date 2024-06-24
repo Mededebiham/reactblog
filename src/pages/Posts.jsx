@@ -1,4 +1,5 @@
 import React from 'react';
+import {newId} from "../utils/utils";
 
 const Posts = () => {
     return (

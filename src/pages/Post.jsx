@@ -9,3 +9,15 @@ const Post = () => {
 };
 
 export default Post;
+
+
+/*
+
+ - id: 1
+ - Title: "Post"
+ - Content: "This is the Post page."
+ - Likes?: 0
+ - Comments: []
+ - Tags?: []
+
+ */
