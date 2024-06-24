@@ -16,5 +16,5 @@ export const routes = [
     { path: '/login',component: Login, name: "Login", renderNav:true },
     { path: '/logout',component: Logout, name: "Logout", renderNav:true },
     { path: 'create-post', component: CreatePost, name: 'Create Post', renderNav: false },
-    { path: '*', component: Home, name: '404', renderNav: false}
+    { path: '*', component: Home, name: '404', renderNav: false }
 ];
