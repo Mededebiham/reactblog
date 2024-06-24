@@ -3,6 +3,8 @@ import {BrowserRouter as Router} from 'react-router-dom';
 import Navbar from "./components/Navbar";
 import ContentRoute from "./components/ContentRoute";
 
+const isLoggedIn = React.createContext(false);
+
 export const clearLocalStorage = () => {
     localStorage.removeItem('users');
 };
@@ -15,8 +17,7 @@ function App() {
   return (
     <Router>
       <div>
-
-        <Navbar />
+        <Navbar isLoggedIn={isLoggedIn} />
         <ContentRoute />
       </div>
     </Router>

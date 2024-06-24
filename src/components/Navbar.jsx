@@ -1,6 +1,6 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
-import {routes} from '../routes';
+import {routes as defaultRoutes} from '../routes';
 import Link from "./Link";
 
 const navStyles = {
@@ -14,9 +14,10 @@ const brightnessMode = {
 
 }
 
-const Navbar = () => {
+const Navbar = ({ isLoggedIn }) => {
 
     const [isDark, setIsDark] = React.useState(true);
+    const [routes, setRoutes] = React.useState(defaultRoutes);
 
     const toggleDarkmode = () => {
         const html = document.documentElement;

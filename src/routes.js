@@ -7,15 +7,17 @@ import Logout from "./components/Logout";
 import CreatePost from "./pages/CreatePost";
 import Error404 from "./pages/404";
 
-
-
 export const routes = [
+
     { path: '/', component: Home, name: 'Start', renderNav: false },
     { path: '/posts', component: Posts, name: 'Posts', renderNav: true },
     { path: '/posts/:id', component: Post, name: 'Post', renderNav: false },
     { path: '/register',component: Register, name: "Registrieren", renderNav:true },
-    { path: '/login',component: Login, name: "Login", renderNav:true },
-    { path: '/logout',component: Logout, name: "Logout", renderNav:true },
+    { path: '/login',component: Login, name: "Login", renderNav: true },
+    { path: '/logout',component: Logout, name: "Logout", renderNav: true },
     { path: 'create-post', component: CreatePost, name: 'Create Post', renderNav: false },
     { path: '*', component: Error404, name: '404', renderNav: false }
+
 ];
+
+export default routes;
