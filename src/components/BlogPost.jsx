@@ -1,31 +1,28 @@
-// src/components/BlogPost.jsx
-
 import React, { useState } from 'react';
 import { newId } from '../utils/utils';
+import TagSelector from './TagSelector';
 
 const BlogPost = ({ addPost }) => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [tags, setTags] = useState('');
+    const [selectedTags, setSelectedTags] = useState([]);
+
+    const availableTags = ['react', 'javascript', 'webdev', 'programming', 'css'];
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const formattedTags = tags.split(',')
-            .map(tag => tag.trim().split(' ')
-                .map(word => `#${word}`)
-                .join(' '));
         const newPost = {
             id: newId(),
             title,
             content,
             likes: 0,
             comments: [],
-            tags: formattedTags
+            tags: selectedTags.map(tag => `#${tag}`)
         };
         addPost(newPost);
         setTitle('');
         setContent('');
-        setTags('');
+        setSelectedTags([]);
     };
 
     return (
@@ -50,16 +47,12 @@ const BlogPost = ({ addPost }) => {
                     required
                 />
             </div>
-            <div className="mb-4">
-                <label className="block text-gray-700">Tags (comma separated)</label>
-                <input
-                    type="text"
-                    value={tags}
-                    onChange={(e) => setTags(e.target.value)}
-                    className="w-full p-2 border border-gray-300 rounded mt-1"
-                />
-            </div>
-            <button type="submit" className="w-full p-2 bg-blue-500 text-white rounded hover:bg-blue-700">
+            <TagSelector
+                availableTags={availableTags}
+                selectedTags={selectedTags}
+                setSelectedTags={setSelectedTags}
+            />
+            <button type="submit" className="w-full p-2 bg-blue-500 text-white rounded hover:bg-blue-700 mt-4">
                 Create Post
             </button>
         </form>
