@@ -1,19 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
 const Login = () => {
-
     const [formData, setFormData] = useState({
         email: '',
         password: '',
     });
 
     const [errors, setErrors] = useState('');
-    const [users, setUsers] = useState([]);
-
-    useEffect(() => {
-        const savedUsers = JSON.parse(localStorage.getItem('users')) || [];
-        setUsers(savedUsers);
-    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -23,22 +16,33 @@ const Login = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors('');
 
-        const user = users.find(user => user.email === formData.email);
-        if (!user) {
-            setErrors('Diese E-Mail-Adresse ist nicht registriert. Bitte registrieren Sie sich.');
-            return;
-        }
+        try {
+            const response = await fetch('http://localhost:5000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
 
-        if (user.password !== formData.password) {
-            setErrors('Falsches Passwort.');
-            return;
-        }
+            if (response.status === 400) {
+                setErrors('Diese E-Mail-Adresse ist nicht registriert oder das Passwort ist falsch.');
+                return;
+            }
 
-        alert('Anmeldung erfolgreich!');
+            if (!response.ok) {
+                setErrors('Fehler bei der Anmeldung.');
+                return;
+            }
+
+            alert('Anmeldung erfolgreich!');
+        } catch (error) {
+            setErrors('Fehler bei der Anmeldung.');
+        }
     };
 
     return (
