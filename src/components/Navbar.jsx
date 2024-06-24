@@ -16,7 +16,7 @@ const brightnessMode = {
 
 const Navbar = () => {
 
-    const [isDark, setIsDark] = React.useState(false);
+    const [isDark, setIsDark] = React.useState(true);
 
     const toggleDarkmode = () => {
         const html = document.documentElement;
