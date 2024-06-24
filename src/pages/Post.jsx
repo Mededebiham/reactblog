@@ -1,15 +1,17 @@
 import React from 'react';
 import {NavLink, useParams} from 'react-router-dom';
 import Link from "../components/Link";
-import mockPostData from "../database/mockPostData";
+import {posts} from "../database/mockPostData";
+import TagBadge from "../components/TagBadge";
 
 const Post = () => {
 
 const {id} = useParams();
-const post = mockPostData.find(post => post.id === id);
+const post = posts.find(post => post.id === id);
 
     return (
         <div className="m-4">
+            <div className="flex flex-wrap items-center">
             <Link to="/posts">
                 <div className="flex items-center">
                 <svg className="rotate-180 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -20,6 +22,14 @@ const post = mockPostData.find(post => post.id === id);
                     <p className="ml-2">Back to Posts</p>
                 </div>
             </Link>
+                <div className="ml-6">
+                {post.tags.map((tag) => (
+                    <TagBadge key={tag.id} bgColor={tag.color}>
+                        {tag.name}
+                    </TagBadge>
+                ))}
+                </div>
+            </div>
             <div
                 className="my-4 p-6 bg-surface1 border border-overlay0 rounded-lg shadow">
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-text">{post.title}</h5>
