@@ -1,11 +1,7 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 import {routes} from '../routes';
-
-const navStyles = {
-    active: "block py-2 px-3 text-base bg-blue rounded md:bg-mantle md:text-blue md:p-0",
-    inactive: "block py-2 px-3 md:p-0 rounded md:hover:text-yellow",
-}
+import Link from "./Link";
 
 const Navbar = () => {
     return (
@@ -31,10 +27,9 @@ const Navbar = () => {
                         <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-surface0 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
                             {routes.map((route, index) => (route.renderNav &&
                                 <li key={index}>
-                                    <NavLink to={route.path} className={({isActive}) => isActive ? navStyles.active : navStyles.inactive}
-                                             end>
+                                    <Link to={route.path}>
                                         {route.name}
-                                    </NavLink>
+                                    </Link>
                                 </li>))}
                         </ul>
                     </div>
