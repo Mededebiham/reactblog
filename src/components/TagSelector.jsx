@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import TagBadge from "./TagBadge";
 
 const TagSelector = ({ availableTags, selectedTags, setSelectedTags }) => {
-    const tagArray = Object.values(availableTags);
+    const availableTagArray = Object.values(availableTags);
 
     const [availableTagsForSelection, setAvailableTagsForSelection] = useState([]);
     const [selectedTagsForSelection, setSelectedTagsForSelection] = useState(selectedTags);
 
     useEffect(() => {
-        setAvailableTagsForSelection(tagArray.filter(tag => !selectedTagsForSelection.includes(tag)));
-    }, [tagArray, selectedTagsForSelection]);
+        setAvailableTagsForSelection(availableTagArray.filter(tag => !selectedTagsForSelection.includes(tag)));
+    }, [availableTagArray, selectedTagsForSelection]);
 
     const handleTagClickAvailable = (tag) => {
         if (selectedTagsForSelection.length < 3) {
@@ -18,6 +18,8 @@ const TagSelector = ({ availableTags, selectedTags, setSelectedTags }) => {
             setSelectedTags(newSelectedTags);
             const newAvailableTags = availableTagsForSelection.filter((t) => t.id !== tag.id);
             setAvailableTagsForSelection(newAvailableTags);
+        } else {
+            console.log("Max 3 tags allowed");
         }
     };
 
