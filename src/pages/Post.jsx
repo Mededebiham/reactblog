@@ -1,6 +1,6 @@
 import React from 'react';
 import {NavLink, useParams} from 'react-router-dom';
-import Link from "../components/Link";
+import Link from "../components/parts/Link";
 import {posts} from "../database/mockPostData";
 import TagBadge from "../components/TagBadge";
 

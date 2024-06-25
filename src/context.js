@@ -6,7 +6,7 @@ const UserProvider = ({ children }) => {
     const [userRole, setUserRole] = useState(null);
 
     const setRole = (role) => {
-        if (role === 'user' || role === 'admin') {
+        if (role === 'user' || role === 'mod' || role === 'admin') {
             setUserRole(role);
         } else {
             setUserRole(null);

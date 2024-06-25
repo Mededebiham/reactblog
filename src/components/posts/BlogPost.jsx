@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-import { newId } from '../utils/utils';
-import TagSelector from './TagSelector';
-import { tags as mockTags } from "../database/mockPostData";
+import { newId } from '../../utils/utils';
+import TagSelector from '../TagSelector';
+import { tags as mockTags } from "../../database/mockPostData";
+import '../../styles/quill.css';
 
 const BlogPost = ({ addPost }) => {
     const [title, setTitle] = useState('');

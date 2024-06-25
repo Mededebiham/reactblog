@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo404 from "../components/Logo404";
+import Logo404 from "../components/logos/Logo404";
 
 const Error404 = () => {
     return (
