@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import BlogPost from '../components/BlogPost';
+import BlogPost from '../components/posts/BlogPost';
 import Comments from '../components/Comments';
 import { UserContext } from '../context';
 import { useNavigate } from 'react-router-dom';
