@@ -3,11 +3,27 @@ import {NavLink, useParams} from 'react-router-dom';
 import Link from "../components/parts/Link";
 import {posts} from "../database/mockPostData";
 import TagBadge from "../components/TagBadge";
+import PostCard from "../components/posts/PostCard";
+import PostFooter from "../components/posts/PostFooter";
+import Comments from "../components/Comments";
 
 const Post = () => {
 
 const {id} = useParams();
 const post = posts.find(post => post.id === id);
+
+const [showComments, setShowComments] = React.useState(false);
+const [likeCount, setLikeCount] = React.useState(Math.floor(Math.random() * 10));
+const [liked, setLiked] = React.useState(false);
+
+const toggleComment = () => {
+    setShowComments(!showComments);
+}
+
+const toggleLike = () => {
+    setLiked(!liked);
+    setLikeCount(liked ? likeCount - 1 : likeCount + 1);
+}
 
     return (
         <div className="m-4">
@@ -30,11 +46,18 @@ const post = posts.find(post => post.id === id);
                 ))}
                 </div>
             </div>
-            <div
-                className="my-4 p-6 bg-surface1 border border-overlay0 rounded-lg shadow">
-                <h5 className="mb-2 text-2xl font-bold tracking-tight text-text">{post.title}</h5>
-                <p className="font-normal text-text">{post.content}</p>
-            </div>
+            <ul>
+            <PostCard post={post} footer={false} cropped={false}>
+                <PostFooter
+                    postId={post.id}
+                    toggleComment={() => toggleComment()}
+                    toggleLike={() => toggleLike()}
+                    liked={liked}
+                    likeCount={likeCount}
+                    className="mt-8"/>
+            </PostCard>
+                {showComments && <Comments comments={post.comments} />}
+            </ul>
         </div>
     );
 };

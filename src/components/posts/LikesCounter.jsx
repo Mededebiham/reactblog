@@ -3,7 +3,7 @@ import React from 'react';
 const LikesCounter = ({postId}) => {
 
     const post = postId;
-    const likes = 17 //post.likes.length;
+    const likes = Math.floor(Math.random() * 10) //post.likes.length;
 
     return (
         <div className="pl-4 flex"><strong className="pr-1">{likes}</strong>

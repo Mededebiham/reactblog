@@ -3,10 +3,11 @@ import React from 'react';
 const CommentCounter = ({postId}) => {
 
     const post = postId;
-    const comments = 5 //post.comments.length;
+    const comments = Math.floor(Math.random() * 10) //post.comments.length;
 
     return (
-        <div className="flex"><strong className="pr-1">{comments}</strong>
+        <div className="flex">
+            <strong className="pr-1">{comments}</strong>
             <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                  width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                 <path fill-rule="evenodd"
