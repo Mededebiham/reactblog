@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Modal from './Modal';
-
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -12,13 +10,7 @@ const Register = () => {
 
     const [errors, setErrors] = useState('');
     const [showModal, setShowModal] = useState(false);
-    const [currentUser, setCurrentUser] = useState(null);
     const [users, setUsers] = useState([]);
-
-    useEffect(() => {
-        const savedUsers = JSON.parse(localStorage.getItem('users')) || [];
-        setUsers(savedUsers);
-    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -33,7 +25,21 @@ const Register = () => {
         return passwordRegex.test(password);
     };
 
-    const handleSubmit = (e) => {
+    const fetchUsers = async () => {
+        try {
+            const response = await fetch('http://localhost:5000/users');
+            const data = await response.json();
+            setUsers(data);
+        } catch (error) {
+            console.error('Error fetching users', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchUsers();
+    }, []);
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors('');
         setShowModal(false);
@@ -43,27 +49,37 @@ const Register = () => {
             return;
         }
 
-        const userExists = users.some(user => user.email === formData.email);
-        if (userExists) {
-            setErrors('Ein Benutzer mit dieser E-Mail-Adresse existiert bereits.');
-            return;
+        try {
+            const response = await fetch('http://localhost:5000/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.status === 400) {
+                setErrors('Ein Benutzer mit dieser E-Mail-Adresse existiert bereits.');
+                return;
+            }
+
+            if (!response.ok) {
+                setErrors('Fehler bei der Registrierung.');
+                return;
+            }
+
+            setFormData({
+                firstname: '',
+                lastname: '',
+                email: '',
+                password: '',
+            });
+            fetchUsers();
+            setShowModal(true);
+            alert('Sie haben sich erfolgreich registriert!');
+        } catch (error) {
+            setErrors('Fehler bei der Registrierung.');
         }
-
-        const newUser = { ...formData };
-        const newUsers = [...users, newUser];
-        localStorage.setItem('users', JSON.stringify(newUsers));
-        setUsers(newUsers);
-
-        setFormData({
-            firstname: '',
-            lastname: '',
-            email: '',
-            password: '',
-        });
-
-        setCurrentUser(newUser);
-        setShowModal(true);
-        alert('Sie haben sich erfolgreich registriert!');
     };
 
     const handleCloseModal = () => setShowModal(false);
@@ -92,16 +108,12 @@ const Register = () => {
                 <button type="submit">Registrieren</button>
             </form>
 
-            <Modal show={showModal} handleClose={handleCloseModal}>
-                <h3>Erfolgreich registriert!</h3>
-            </Modal>
             <h3>Registrierte Benutzer</h3>
             <ul>
                 {users.map((user, index) => (
                     <li key={index}>{user.firstname} {user.lastname} - {user.email}</li>
                 ))}
             </ul>
-
         </div>
     );
 };
