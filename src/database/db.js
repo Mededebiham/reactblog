@@ -1,3 +1,39 @@
+/*
+
+user = {
+    id: uuid,
+    vorname: string,
+    nachname: string,
+    email: string,
+    passwort: string,
+    role: string
+}
+
+post = {
+    id: uuid,
+    title: string,
+    content: string,
+    date: date,
+    author: user,
+    category: category[],
+    comment: comment[],
+    likes: number,
+}
+
+comment = {
+    id: uuid,
+    content: string,
+    date: date,
+    from: user,
+}
+
+category = {
+    id: uuid,
+    name: string,
+    color: string,
+}
+
+*/
 
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');

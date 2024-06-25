@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {serverPort} from "../serverConfig";
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -27,7 +28,7 @@ const Register = () => {
 
     const fetchUsers = async () => {
         try {
-            const response = await fetch('http://localhost:5000/users');
+            const response = await fetch("http://localhost:" + serverPort + "/users");
             const data = await response.json();
             setUsers(data);
         } catch (error) {
@@ -50,7 +51,7 @@ const Register = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:5000/register', {
+            const response = await fetch("http://localhost:" + serverPort + "/register", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
