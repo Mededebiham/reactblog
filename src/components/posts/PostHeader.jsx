@@ -13,7 +13,7 @@ const PostHeader = ({post}) => {
                 <div
                     className="flex flex-col items-end text-sm justify-start pl-2 border-l-2 border-l-text">
                     <span className="">01.01.1900</span>
-                    <Link to='#'>Admin</Link>
+                    <Link to='#' className="text-blue hover:text-yellow">Admin</Link>
                 </div>
             </div>
         </div>
