@@ -1,48 +1,48 @@
 import { newId } from "../utils/utils";
 
 const tags = {
-    "ocean": { id: newId(), name: 'Ocean', color: 'bg-sky' },
-    "marineLife": { id: newId(), name: 'Marine Life', color: 'bg-blue' },
-    "conservation": { id: newId(), name: 'Conservation', color: 'bg-green' },
-    "ai": { id: newId(), name: 'Artificial Intelligence', color: 'bg-red' },
-    "future": { id: newId(), name: 'Future', color: 'bg-maroon' },
-    "food": { id: newId(), name: 'Food', color: 'bg-flamingo' },
-    "cuisine": { id: newId(), name: 'Cuisine', color: 'bg-rosewater' },
-    "recipes": { id: newId(), name: 'Recipes', color: 'bg-yellow' },
-    "quantumPhysics": { id: newId(), name: 'Quantum Physics', color: 'bg-teal' },
-    "science": { id: newId(), name: 'Science', color: 'bg-lavender' },
-    "technology": { id: newId(), name: 'Technology', color: 'bg-mauve' }
+    "ocean": { id: newId(), name: 'Ozean', color: 'bg-sky' },
+    "marineLife": { id: newId(), name: 'Meereslebewesen', color: 'bg-blue' },
+    "conservation": { id: newId(), name: 'Naturschutz', color: 'bg-green' },
+    "ai": { id: newId(), name: 'Künstliche Intelligenz', color: 'bg-red' },
+    "future": { id: newId(), name: 'Zukunft', color: 'bg-maroon' },
+    "food": { id: newId(), name: 'Essen', color: 'bg-flamingo' },
+    "cuisine": { id: newId(), name: 'Küche', color: 'bg-rosewater' },
+    "recipes": { id: newId(), name: 'Rezepte', color: 'bg-yellow' },
+    "quantumPhysics": { id: newId(), name: 'Quantenphysik', color: 'bg-teal' },
+    "science": { id: newId(), name: 'Wissenschaft', color: 'bg-lavender' },
+    "technology": { id: newId(), name: 'Technologie', color: 'bg-mauve' }
 };
 
 const posts = [
     {
         id: newId(),
-        title: 'Exploring the Depths of the Ocean: An Unseen World',
-        content: 'The ocean, covering more than 70% of the Earth’s surface, remains a vast and largely uncharted frontier. In this comprehensive exploration, we dive deep into the mysteries of the underwater world. From the vibrant coral reefs teeming with diverse marine life to the eerie, lightless depths of the Mariana Trench, where unknown creatures dwell. This article also sheds light on the crucial role oceans play in regulating the planet’s climate and the pressing need to conserve these vital ecosystems. The fascinating behaviors of marine species, the impact of human activities, and groundbreaking research in marine biology are discussed at length, offering readers a profound understanding of the ocean’s wonders and its significance to our planet.',
+        title: 'Die Tiefen des Ozeans erkunden: Eine ungesehene Welt',
+        content: 'Der Ozean, der mehr als 70 % der Erdoberfläche bedeckt, bleibt eine riesige und weitgehend unerforschte Grenze. In dieser umfassenden Erkundung tauchen wir tief in die Geheimnisse der Unterwasserwelt ein. Von den lebendigen Korallenriffen, die von vielfältigem Meeresleben wimmeln, bis zu den unheimlichen, lichtlosen Tiefen des Marianengrabens, in denen unbekannte Kreaturen leben. Dieser Artikel beleuchtet auch die entscheidende Rolle der Ozeane bei der Regulierung des Klimas auf unserem Planeten und die dringende Notwendigkeit, diese wichtigen Ökosysteme zu schützen. Die faszinierenden Verhaltensweisen von Meereslebewesen, die Auswirkungen menschlicher Aktivitäten und bahnbrechende Forschungen in der Meeresbiologie werden ausführlich diskutiert, um den Lesern ein tiefes Verständnis für die Wunder des Ozeans und seine Bedeutung für unseren Planeten zu vermitteln.',
         likes: 0,
         comments: [],
         tags: [tags["ocean"], tags["marineLife"], tags["conservation"]]
     },
     {
         id: newId(),
-        title: 'The Rise of Artificial Intelligence: Transforming the Future',
-        content: 'Artificial Intelligence (AI) is not just a buzzword; it is a technological revolution that is transforming industries and everyday life. This article delves into the history of AI, from its theoretical foundations to its current applications and future prospects. We explore how AI is being utilized in various fields such as healthcare, where it aids in diagnostics and personalized medicine, in finance for fraud detection and algorithmic trading, and in entertainment through recommendation systems and content creation. The ethical considerations surrounding AI, including issues of privacy, job displacement, and decision-making transparency, are thoroughly examined. By understanding the potential and challenges of AI, we can better navigate its integration into society and harness its power for the greater good.',
+        title: 'Der Aufstieg der Künstlichen Intelligenz: Die Zukunft verändern',
+        content: 'Künstliche Intelligenz (KI) ist nicht nur ein Schlagwort; sie ist eine technologische Revolution, die Branchen und das tägliche Leben verändert. Dieser Artikel beleuchtet die Geschichte der KI, von ihren theoretischen Grundlagen bis zu ihren aktuellen Anwendungen und zukünftigen Perspektiven. Wir untersuchen, wie KI in verschiedenen Bereichen eingesetzt wird, zum Beispiel im Gesundheitswesen, wo sie bei Diagnosen und personalisierter Medizin hilft, im Finanzwesen zur Betrugserkennung und algorithmischen Handel, und in der Unterhaltung durch Empfehlungssysteme und Inhaltserstellung. Die ethischen Überlegungen rund um KI, einschließlich Fragen des Datenschutzes, der Arbeitsplatzverlagerung und der Transparenz bei Entscheidungen, werden ausführlich untersucht. Durch das Verständnis des Potenzials und der Herausforderungen der KI können wir ihre Integration in die Gesellschaft besser steuern und ihre Macht zum Wohle aller nutzen.',
         likes: 0,
         comments: [],
         tags: [tags["ai"], tags["technology"], tags["future"]]
     },
     {
         id: newId(),
-        title: 'Culinary Adventures: A Journey Through World Cuisine',
-        content: 'Embark on a culinary journey that takes you through the diverse and delectable cuisines of the world. This article celebrates the rich tapestry of global gastronomy, highlighting iconic dishes and culinary traditions from various cultures. From the aromatic spices of Indian curry to the delicate flavors of Japanese sushi, and the hearty comfort of Italian pasta, we explore the history, ingredients, and techniques that define these beloved foods. Personal anecdotes and interviews with renowned chefs provide an insider’s perspective on the art of cooking. Additionally, we discuss the cultural significance of food, the rise of fusion cuisine, and tips for home cooks to experiment with international recipes. Whether you are a foodie or a casual diner, this culinary adventure promises to tantalize your taste buds and expand your gastronomic horizons.',
+        title: 'Kulinarische Abenteuer: Eine Reise durch die Weltküche',
+        content: 'Begeben Sie sich auf eine kulinarische Reise, die Sie durch die vielfältigen und köstlichen Küchen der Welt führt. Dieser Artikel feiert das reiche Geflecht der globalen Gastronomie und hebt ikonische Gerichte und kulinarische Traditionen aus verschiedenen Kulturen hervor. Von den aromatischen Gewürzen des indischen Currys bis zu den zarten Aromen des japanischen Sushis und dem herzhaften Komfort der italienischen Pasta erkunden wir die Geschichte, die Zutaten und die Techniken, die diese beliebten Speisen ausmachen. Persönliche Anekdoten und Interviews mit renommierten Köchen bieten einen Einblick in die Kunst des Kochens. Darüber hinaus diskutieren wir die kulturelle Bedeutung von Essen, den Aufstieg der Fusionsküche und geben Tipps für Hobbyköche, wie sie mit internationalen Rezepten experimentieren können. Ob Feinschmecker oder Gelegenheitsdiner, dieses kulinarische Abenteuer verspricht, Ihre Geschmacksknospen zu kitzeln und Ihre gastronomischen Horizonte zu erweitern.',
         likes: 0,
         comments: [],
         tags: [tags["food"], tags["cuisine"], tags["recipes"]]
     },
     {
         id: newId(),
-        title: 'The Quantum Realm: Unveiling the Mysteries of Quantum Physics',
-        content: 'Quantum physics, often regarded as one of the most complex and intriguing fields of science, offers a glimpse into the fundamental workings of the universe. This article provides an accessible introduction to quantum mechanics, explaining key concepts such as superposition, entanglement, and wave-particle duality. We explore the groundbreaking experiments that have shaped our understanding of the quantum realm and discuss the implications of quantum theory for technology and philosophy. Topics include quantum computing, which promises unprecedented processing power, and quantum cryptography, offering unbreakable security for communications. By demystifying these concepts, readers are invited to appreciate the beauty and wonder of quantum physics and its potential to revolutionize our world.',
+        title: 'Das Quantenreich: Die Geheimnisse der Quantenphysik enthüllen',
+        content: 'Die Quantenphysik, oft als eines der komplexesten und faszinierendsten Gebiete der Wissenschaft betrachtet, bietet einen Einblick in die grundlegenden Funktionsweisen des Universums. Dieser Artikel bietet eine zugängliche Einführung in die Quantenmechanik und erklärt Schlüsselkonzepte wie Überlagerung, Verschränkung und Welle-Teilchen-Dualität. Wir erkunden die bahnbrechenden Experimente, die unser Verständnis des Quantenreichs geprägt haben, und diskutieren die Implikationen der Quantentheorie für Technologie und Philosophie. Themen sind unter anderem Quantencomputing, das beispiellose Rechenleistung verspricht, und Quantenkryptografie, die eine unknackbare Sicherheit für Kommunikationssysteme bietet. Indem wir diese Konzepte entmystifizieren, laden wir die Leser ein, die Schönheit und das Wunder der Quantenphysik zu schätzen und ihr Potenzial zur Revolutionierung unserer Welt zu erkennen.',
         likes: 0,
         comments: [],
         tags: [tags["quantumPhysics"], tags["science"], tags["technology"]]

@@ -6,10 +6,10 @@ const styles = {
     inactive: "block py-2 px-3 md:p-0 rounded hover:text-yellow",
 }
 
-const Link = ({to, children}) => {
+const Link = ({to, children, className = ''}) => {
     return (
         <NavLink to={to}
-        className={({isActive}) => isActive ? styles.active : styles.inactive} end>
+        className={`${({isActive}) => isActive ? styles.active : styles.inactive} ${className}`} end>
             {children}
         </NavLink>
     );
