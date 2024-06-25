@@ -1,7 +1,7 @@
 import React from 'react';
 import CommentCounter from "./CommentCounter";
 import LikesCounter from "./LikesCounter";
-import Link from "../Link";
+import Link from "../parts/Link";
 
 const PostFooter = ({postId}) => {
     return (

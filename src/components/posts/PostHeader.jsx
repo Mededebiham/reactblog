@@ -1,6 +1,6 @@
 import React from 'react';
 import PostTags from "./PostTags";
-import Link from "../Link";
+import Link from "../parts/Link";
 
 const PostHeader = ({post}) => {
     return (

@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {NavLink} from 'react-router-dom';
 import {routes} from '../routes';
-import Link from './Link';
+import Link from './parts/Link';
 import {UserContext} from '../context';
 import Logo from "./logos/Logo";
 import UserUnknownIcon from "./logos/UserUnknownIcon";

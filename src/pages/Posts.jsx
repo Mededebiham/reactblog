@@ -1,10 +1,6 @@
 import React, {useState} from 'react';
 import {posts as mockPosts, tags as tagObj} from "../database/mockPostData";
-import Link from "../components/Link";
 import TagBadge from "../components/TagBadge";
-import PostFooter from "../components/posts/PostFooter";
-import PostTags from "../components/posts/PostTags";
-import PostHeader from "../components/posts/PostHeader";
 import PostCard from "../components/posts/PostCard";
 
 const Posts = () => {
