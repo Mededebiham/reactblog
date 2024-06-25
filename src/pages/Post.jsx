@@ -19,7 +19,7 @@ const post = posts.find(post => post.id === id);
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                           d="M1 5h12m0 0L9 1m4 4L9 9"/>
                 </svg>
-                    <p className="ml-2">Back to Posts</p>
+                    <p className="ml-2">Zurück zu den Beiträgen</p>
                 </div>
             </Link>
                 <div className="ml-6">
