@@ -40,10 +40,7 @@ const Navbar = () => {
     }, [userRole]);
 
     const shouldRenderNavLinks = () => {
-        if (filteredRoutes.length === 1 && filteredRoutes[0].path === '/posts') {
-            return false;
-        }
-        return true;
+        return !(filteredRoutes.length === 1 && filteredRoutes[0].path === '/posts');
     };
 
     return (<>
