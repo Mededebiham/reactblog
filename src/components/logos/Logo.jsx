@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../assets/logo.webp';
+import logo from '../../assets/logo.webp';
 
 const defaultClasses = 'scale-125 rounded-full hover:scale-100'
 

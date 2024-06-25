@@ -1,5 +1,5 @@
 import React from 'react';
-import unknown from '../assets/unknown.jpg';
+import unknown from '../../assets/unknown.jpg';
 
 const UserUnknownIcon = ({className = ""}) => {
     return (

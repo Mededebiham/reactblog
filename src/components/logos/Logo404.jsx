@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../assets/404.gif';
+import logo from '../../assets/404.gif';
 
 
 const Logo404 = ({className = ""}) => {
