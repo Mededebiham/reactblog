@@ -15,7 +15,7 @@ const PostHeader = ({post}) => {
     return (
         <div className="flex justify-between">
             <div>
-                <h5 className="mb-2 text-2xl font-bold tracking-tight text-text">{post.title}</h5>
+                <h5 className="mb-2 text-xl font-medium tracking-tight text-text">{post.title}</h5>
                 <PostTags post={post}/>
             </div>
             <div>

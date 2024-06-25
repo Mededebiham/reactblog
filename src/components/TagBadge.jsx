@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const classNames = "text-base text-sm font-medium me-2 px-2.5 py-0.5 rounded-full mb-1"
+const classNames = "text-mantle text-sm font-medium me-2 px-2.5 py-0.5 rounded-full mb-1"
 
 const TagBadge = ({ children, onClick, bgColor = "bg-text", key, className = "" }) => {
     const styles = `${bgColor} ${classNames} ${className}`;

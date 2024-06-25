@@ -12,7 +12,7 @@ const post = posts.find(post => post.id === id);
     return (
         <div className="m-4">
             <div className="flex flex-wrap items-center">
-            <Link to="/posts">
+            <Link to="/posts" className="text-blue hover:text-yellow">
                 <div className="flex items-center">
                 <svg className="rotate-180 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                      fill="none" viewBox="0 0 14 10">
