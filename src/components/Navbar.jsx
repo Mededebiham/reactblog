@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import {NavLink} from 'react-router-dom';
 import {routes} from '../routes';
 import Link from './Link';
-import {AuthContext} from '../context';
+import {UserContext} from '../context';
 
 const brightnessMode = {
     dark: "Dunkler Modus", light: "Heller Modus"
@@ -24,10 +24,11 @@ const Navbar = () => {
         }
     };
 
-    const {isLoggedIn, toggleLogin} = useContext(AuthContext);
+    const { userRole, setRole } = useContext(UserContext);
 
     const toggleLoginAndIcon = () => {
-        toggleLogin();
+        const newRole = userRole === 'admin' ? null : 'admin';
+        setRole(newRole);
         setUserIcon(!userIcon);
     }
 
