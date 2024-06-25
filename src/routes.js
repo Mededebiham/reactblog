@@ -3,7 +3,7 @@ import Posts from "./pages/Posts";
 import Post from "./pages/Post";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
-import Logout from "./components/Logout";
+import Logout from "./pages/Logout";
 import CreatePost from "./pages/CreatePost";
 import Error404 from "./pages/404";
 import Settings from "./pages/Settings";
