@@ -26,10 +26,10 @@ const BlogPost = ({ addPost }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-4 bg-white shadow-md rounded-lg">
+        <form onSubmit={handleSubmit} className="bg-surface1 max-w-lg mx-auto p-4  shadow-md rounded-lg">
             <h2 className="text-2xl font-bold mb-4">Create a New Post</h2>
             <div className="mb-4">
-                <label className="block text-gray-700">Title</label>
+                <label className="block ">Title</label>
                 <input
                     type="text"
                     value={title}
@@ -39,7 +39,7 @@ const BlogPost = ({ addPost }) => {
                 />
             </div>
             <div className="mb-4">
-                <label className="block text-gray-700">Content</label>
+                <label className="block">Content</label>
                 <textarea
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
@@ -52,7 +52,7 @@ const BlogPost = ({ addPost }) => {
                 selectedTags={selectedTags}
                 setSelectedTags={setSelectedTags}
             />
-            <button type="submit" className="w-full p-2 bg-blue-500 text-white rounded hover:bg-blue-700 mt-4">
+            <button type="submit" className="w-full p-2 bg-blue-500  rounded hover:bg-blue-700 mt-4">
                 Create Post
             </button>
         </form>

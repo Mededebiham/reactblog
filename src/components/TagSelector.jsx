@@ -11,12 +11,12 @@ const TagSelector = ({ availableTags, selectedTags, setSelectedTags }) => {
 
     return (
         <div className="mt-4">
-            <label className="block text-gray-700 mb-2">Select Tags</label>
+            <label className="block mb-2">Select Tags</label>
             <div className="flex flex-wrap">
                 {availableTags.map(tag => (
                     <span
                         key={tag}
-                        className={`cursor-pointer px-2 py-1 m-1 border rounded ${selectedTags.includes(tag) ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+                        className={`cursor-pointer px-2 py-1 m-1 border rounded ${selectedTags.includes(tag) ? 'bg-blue-500 ' : 'bg-green text-gray-700 '}`}
                         onClick={() => handleTagClick(tag)}
                     >
                         #{tag}
