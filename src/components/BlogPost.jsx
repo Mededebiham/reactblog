@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import { newId } from '../utils/utils';
 import TagSelector from './TagSelector';
-import {tags as mockTags} from "../database/mockPostData";
+import { tags as mockTags } from "../database/mockPostData";
 
 const BlogPost = ({ addPost }) => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [selectedTags, setSelectedTags] = useState([]);
 
-    const availableTags= mockTags;
+    const availableTags = mockTags;
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -41,9 +43,9 @@ const BlogPost = ({ addPost }) => {
             </div>
             <div className="mb-4">
                 <label className="block text-text">Inhalt</label>
-                <textarea
+                <ReactQuill
                     value={content}
-                    onChange={(e) => setContent(e.target.value)}
+                    onChange={setContent}
                     className="w-full p-2 border border-surface1 rounded mt-1 bg-surface2"
                     required
                 />
