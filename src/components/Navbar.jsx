@@ -1,8 +1,8 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {NavLink} from 'react-router-dom';
 import {routes} from '../routes';
 import Link from './Link';
-import {AuthContext} from '../context';
+import {UserContext} from '../context';
 
 const brightnessMode = {
     dark: "Dunkler Modus", light: "Heller Modus"
@@ -12,6 +12,8 @@ const Navbar = () => {
 
     const [isDark, setIsDark] = useState(true);
     const [userIcon, setUserIcon] = useState(false);
+    const [filteredRoutes, setFilteredRoutes] = useState([]);
+    const { userRole, setRole } = useContext(UserContext);
 
     const toggleDarkmode = () => {
         const html = document.documentElement;
@@ -24,12 +26,23 @@ const Navbar = () => {
         }
     };
 
-    const {isLoggedIn, toggleLogin} = useContext(AuthContext);
-
     const toggleLoginAndIcon = () => {
-        toggleLogin();
+        const newRole = userRole === 'admin' ? null : 'admin';
+        setRole(newRole);
         setUserIcon(!userIcon);
     }
+
+    useEffect(() => {
+        const visibleRoutes = routes.filter(route => route.renderNav && (route.userRole === null || route.userRole === userRole));
+        setFilteredRoutes(visibleRoutes);
+    }, [userRole]);
+
+    const shouldRenderNavLinks = () => {
+        if (filteredRoutes.length === 1 && filteredRoutes[0].path === '/posts') {
+            return false;
+        }
+        return true;
+    };
 
     return (<>
             <nav className="bg-mantle">
@@ -40,7 +53,10 @@ const Navbar = () => {
                             className="self-center text-2xl font-semibold whitespace-nowrap">3M's Blog</span>
                     </NavLink>
                     <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-                            <button onClick={() => toggleLoginAndIcon()} className={`${userIcon ? "hidden" : ""}`}>Login</button>
+                            <ul className={`${userIcon ? "hidden" : ""} flex items-center`}>
+                                <li className="mx-2"><button onClick={() => toggleLoginAndIcon()}>Einloggen</button></li>
+                                <li className="mx-2"><Link to="/register">Registrieren</Link></li>
+                            </ul>
                             <button type="button"
                                     className={`flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-overlay2 ${userIcon ? "" : "hidden"}`}
                                     id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
@@ -65,19 +81,18 @@ const Navbar = () => {
                                     </li>
                                     <li>
                                         <NavLink to="/settings"
-                                                 className="block px-4 py-2 text-sm text-text hover:bg-surface0 w-full text-left">Settings</NavLink>
+                                                 className="block px-4 py-2 text-sm text-text hover:bg-surface0 w-full text-left">Einstellungen</NavLink>
                                     </li>
                                     <li>
                                         <button onClick={() => toggleLoginAndIcon()}
-                                                 className="block px-4 py-2 text-sm text-text hover:bg-surface0 w-full text-left">Sign
-                                            out</button>
+                                                 className="block px-4 py-2 text-sm text-text hover:bg-surface0 w-full text-left">Ausloggen</button>
                                     </li>
                                 </ul>
                             </div>
                         <button data-collapse-toggle="navbar-user" type="button"
-                                className="inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-sm text-overlay0 hover:bg-surface0 focus:ring-overlay2 focus:outline-none focus:ring-2 md:hidden"
+                                className={`inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-sm text-overlay0 hover:bg-surface0 focus:ring-overlay2 focus:outline-none focus:ring-2 md:hidden ${shouldRenderNavLinks() ? "" : "hidden"}`}
                                 aria-controls="navbar-user" aria-expanded="false">
-                            <span className="sr-only">Open main menu</span>
+                            <span className="sr-only">Öffne Hauptmenü</span>
                             <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                                  viewBox="0 0 17 14">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -88,11 +103,13 @@ const Navbar = () => {
                     <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
                          id="navbar-user">
                         <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-surface0 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
-                            {routes.map((route, index) => (route.renderNav && <li key={index}>
-                                <Link to={route.path}>
-                                    {route.name}
-                                </Link>
-                            </li>))}
+                            {shouldRenderNavLinks() && filteredRoutes.map((route, index) => (
+                                <li key={index}>
+                                    <Link to={route.path}>
+                                        {route.name}
+                                    </Link>
+                                </li>
+                            ))}
                         </ul>
                     </div>
                 </div>

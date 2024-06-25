@@ -1,11 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import BlogPost from '../components/BlogPost';
 import Comments from '../components/Comments';
+import { UserContext } from '../context';
+import { useNavigate } from 'react-router-dom';
 
 const CreatePost = () => {
     const [posts, setPosts] = useState([]);
 
-    // Load posts from localStorage on component mount
+    const { userRole } = useContext(UserContext);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (userRole !== 'admin') {
+            navigate('/login');
+        }
+    }, [userRole, navigate]);
+
     useEffect(() => {
         const savedPosts = JSON.parse(localStorage.getItem('posts'));
         if (savedPosts) {
@@ -13,7 +23,6 @@ const CreatePost = () => {
         }
     }, []);
 
-    // Save posts to localStorage whenever posts state changes
     useEffect(() => {
         localStorage.setItem('posts', JSON.stringify(posts));
     }, [posts]);
@@ -34,6 +43,10 @@ const CreatePost = () => {
         });
         setPosts(updatedPosts);
     };
+
+    if (!userRole) {
+        return null;
+    }
 
     return (
         <div className="container mx-auto p-4">

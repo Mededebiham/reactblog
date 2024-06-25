@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { newId } from '../utils/utils';
 import TagSelector from './TagSelector';
+import {tags as mockTags} from "../database/mockPostData";
 
 const BlogPost = ({ addPost }) => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [selectedTags, setSelectedTags] = useState([]);
 
-    const availableTags = ['react', 'javascript', 'webdev', 'programming', 'css'];
+    const availableTags= mockTags;
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -26,24 +27,24 @@ const BlogPost = ({ addPost }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="bg-surface1 max-w-lg mx-auto p-4  shadow-md rounded-lg">
-            <h2 className="text-2xl font-bold mb-4">Create a New Post</h2>
+        <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-4 bg-surface0 shadow-md rounded-lg">
+            <h2 className="text-2xl font-bold mb-4">Neuen Beitrag erstellen</h2>
             <div className="mb-4">
-                <label className="block ">Title</label>
+                <label className="block text-text">Titel</label>
                 <input
                     type="text"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="w-full p-2 border border-gray-300 rounded mt-1"
+                    className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"
                     required
                 />
             </div>
             <div className="mb-4">
-                <label className="block">Content</label>
+                <label className="block text-text">Inhalt</label>
                 <textarea
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
-                    className="w-full p-2 border border-gray-300 rounded mt-1"
+                    className="w-full p-2 border border-surface1 rounded mt-1 bg-surface2"
                     required
                 />
             </div>
@@ -52,8 +53,8 @@ const BlogPost = ({ addPost }) => {
                 selectedTags={selectedTags}
                 setSelectedTags={setSelectedTags}
             />
-            <button type="submit" className="w-full p-2 bg-blue-500  rounded hover:bg-blue-700 mt-4">
-                Create Post
+            <button type="submit" className="w-full p-2 bg-blue text-base rounded hover:bg-sapphire mt-4">
+                Beitrag erstellen
             </button>
         </form>
     );

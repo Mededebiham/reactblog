@@ -1,19 +1,23 @@
 import React, { createContext, useState } from 'react';
 
-const AuthContext = createContext();
+const UserContext = createContext();
 
-const AuthProvider = ({ children }) => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+const UserProvider = ({ children }) => {
+    const [userRole, setUserRole] = useState(null);
 
-    const toggleLogin = () => {
-        setIsLoggedIn(prevState => !prevState);
+    const setRole = (role) => {
+        if (role === 'user' || role === 'admin') {
+            setUserRole(role);
+        } else {
+            setUserRole(null);
+        }
     };
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn, toggleLogin }}>
+        <UserContext.Provider value={{ userRole, setRole }}>
             {children}
-        </AuthContext.Provider>
+        </UserContext.Provider>
     );
 };
 
-export { AuthContext, AuthProvider };
+export { UserContext, UserProvider };
