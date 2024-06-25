@@ -1,5 +1,9 @@
-/*
 
+//TODO: @Medede
+
+const db = null;
+
+/*
 user = {
     id: uuid,
     vorname: string,
@@ -9,7 +13,14 @@ user = {
     role: string,
     profilePicture: string,
 }
+ */
+const getUsers = () => {};
+const getUser = (id) => {};
+const createUser = (user) => {};
+const updateUser = (user) => {};
+const deleteUser = (id) => {};
 
+/*
 post = {
     id: uuid,
     title: string,
@@ -20,7 +31,14 @@ post = {
     comment: comment[],
     likes: number,
 }
+ */
+const getPosts = () => {};
+const getPost = (id) => {};
+const createPost = (post) => {};
+const updatePost = (post) => {};
+const deletePost = (id) => {};
 
+/*
 comment = {
     id: uuid,
     postId: uuid,
@@ -28,37 +46,22 @@ comment = {
     date: date,
     author: user,
 }
+ */
+const getComments = () => {};
+const getComment = (id) => {};
+const createComment = (comment) => {};
+const updateComment = (comment) => {};
+const deleteComment = (id) => {};
 
-category = {
+/*
+tag = {
     id: uuid,
     name: string,
     color: string,
 }
-
-*/
-
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-
-mongoose.connect('mongodb://localhost:27017/reactblog', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
-
-const userSchema = new mongoose.Schema({
-    vorname: String,
-    nachname: String,
-    email: { type: String, unique: true },
-    passwort: String,
-});
-
-userSchema.pre('save', async function (next) {
-    if (this.isModified('passwort') || this.isNew) {
-        this.passwort = await bcrypt.hash(this.passwort, 10);
-    }
-    next();
-});
-
-const User = mongoose.model('User', userSchema);
-
-module.exports = User;
+ */
+const getTags = () => {};
+const getTag = (id) => {};
+const createTag = (tag) => {};
+const updateTag = (tag) => {};
+const deleteTag = (id) => {};
