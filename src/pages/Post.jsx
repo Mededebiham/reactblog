@@ -38,13 +38,6 @@ const toggleLike = () => {
                     <p className="ml-2">Zurück zu den Beiträgen</p>
                 </div>
             </Link>
-                <div className="ml-6">
-                {post.tags.map((tag) => (
-                    <TagBadge key={tag.id} bgColor={tag.color}>
-                        {tag.name}
-                    </TagBadge>
-                ))}
-                </div>
             </div>
             <ul>
             <PostCard post={post} footer={false} cropped={false}>
