@@ -69,7 +69,7 @@ const Login = () => {
                 {errors && <p style={{color: 'red'}}>{errors}</p>}
                 <button type="submit" className="w-full p-2 bg-blue text-base rounded hover:bg-sapphire mt-4">Anmelden</button>
             </form>
-            <p className="text-center">Noch keinen Account? <a href="/register"   className="text-blue ro mt-4">Registrieren</a></p>
+            <p className="text-center">Noch keinen Account? <a href="/register"   className="text-blue  mt-4">Registrieren</a></p>
         </div>
     );
 };

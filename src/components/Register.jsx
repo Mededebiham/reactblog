@@ -86,29 +86,49 @@ const Register = () => {
 
     return (
         <div>
-            <h2>Registrierung</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
+            <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-4 bg-surface0 shadow-md rounded-lg text-text">
+                <h2 className="text-2xl font-bold mb-4">Registrierung</h2>
+                <div  className="mb-4">
                     <label>Vorname:</label>
-                    <input type="text" name="firstname" value={formData.firstname} onChange={handleChange} required/>
+                    <input type="text"
+                           className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"
+                           name="firstname"
+                           value={formData.firstname}
+                           onChange={handleChange}
+                           required/>
                 </div>
                 <div>
                     <label>Nachname:</label>
-                    <input type="text" name="lastname" value={formData.lastname} onChange={handleChange} required/>
+                    <input type="text"
+                           className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"
+                           name="lastname"
+                           value={formData.lastname}
+                           onChange={handleChange}
+                           required/>
                 </div>
                 <div>
                     <label>Email:</label>
-                    <input type="email" name="email" value={formData.email} onChange={handleChange} required/>
+                    <input type="email"
+                           className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"
+                           name="email"
+                           value={formData.email}
+                           onChange={handleChange}
+                           required/>
                 </div>
                 <div>
                     <label>Passwort:</label>
-                    <input type="password" name="password" value={formData.password} onChange={handleChange} required/>
+                    <input type="password"
+                           className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"
+                           name="password"
+                           value={formData.password}
+                           onChange={handleChange}
+                           required/>
                 </div>
                 {errors && <p style={{color: 'red'}}>{errors}</p>}
-                <button type="submit">Registrieren</button>
+                <button type="submit" className="w-full p-2 bg-blue text-base rounded hover:bg-sapphire mt-4">Registrieren</button>
             </form>
 
-            <h3>Registrierte Benutzer</h3>
+            <h3 className="text-center text-blue"> <a href="/login">Registrierte Benutzer</a></h3>
             <ul>
                 {users.map((user, index) => (
                     <li key={index}>{user.firstname} {user.lastname} - {user.email}</li>
