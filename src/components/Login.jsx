@@ -47,20 +47,29 @@ const Login = () => {
 
     return (
         <div>
-            <h2>Anmeldung</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
+
+            <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-4 bg-surface0 shadow-md rounded-lg text-text">
+                <h2 className="text-2xl font-bold mb-4">Anmeldung</h2>
+                <div  className="mb-4">
                     <label>Email:</label>
-                    <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+                    <input type="email"
+                           name="email"
+                           value={formData.email}
+                           className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"
+                           onChange={handleChange} required/>
                 </div>
                 <div>
                     <label>Passwort:</label>
-                    <input type="password" name="password" value={formData.password} onChange={handleChange} required />
+                    <input type="password"
+                           name="password"
+                           value={formData.password}
+                           className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"
+                           onChange={handleChange} required/>
                 </div>
-                {errors && <p style={{ color: 'red' }}>{errors}</p>}
-                <button type="submit">Anmelden</button>
+                {errors && <p style={{color: 'red'}}>{errors}</p>}
+                <button type="submit" className="w-full p-2 bg-blue text-base rounded hover:bg-sapphire mt-4">Anmelden</button>
             </form>
-            <p>Noch keinen Account? <a href="/register">Registrieren</a></p>
+            <p className="text-center">Noch keinen Account? <a href="/register"   className="text-blue ro mt-4">Registrieren</a></p>
         </div>
     );
 };
