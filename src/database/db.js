@@ -65,3 +65,5 @@ const getTag = (id) => {};
 const createTag = (tag) => {};
 const updateTag = (tag) => {};
 const deleteTag = (id) => {};
+
+export { getUsers, getUser, createUser, updateUser, deleteUser, getPosts, getPost, createPost, updatePost, deletePost, getComments, getComment, createComment, updateComment, deleteComment, getTags, getTag, createTag, updateTag, deleteTag };
