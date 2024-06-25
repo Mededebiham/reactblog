@@ -6,7 +6,8 @@ user = {
     nachname: string,
     email: string,
     passwort: string,
-    role: string
+    role: string,
+    profilePicture: string,
 }
 
 post = {
@@ -22,9 +23,10 @@ post = {
 
 comment = {
     id: uuid,
+    postId: uuid,
     content: string,
     date: date,
-    from: user,
+    author: user,
 }
 
 category = {
