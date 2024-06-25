@@ -46,7 +46,7 @@ const BlogPost = ({ addPost }) => {
                 <ReactQuill
                     value={content}
                     onChange={setContent}
-                    className="w-full p-2 border border-surface1 rounded mt-1 bg-surface2"
+                    className="w-full border border-surface1 rounded mt-1 bg-surface2"
                     required
                 />
             </div>
