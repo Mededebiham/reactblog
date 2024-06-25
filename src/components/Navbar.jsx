@@ -3,6 +3,8 @@ import {NavLink} from 'react-router-dom';
 import {routes} from '../routes';
 import Link from './Link';
 import {UserContext} from '../context';
+import Logo from "./Logo";
+import UserUnknownIcon from "./UserUnknownIcon";
 
 const brightnessMode = {
     dark: "Dunkler Modus", light: "Heller Modus"
@@ -48,9 +50,9 @@ const Navbar = () => {
             <nav className="bg-mantle">
                 <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                     <NavLink to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-                        <img src="https://flowbite.com/docs/images/logo.svg" className="h-8" alt="Blog Logo"/>
+                        <Logo className="h-8"/>
                         <span
-                            className="self-center text-2xl font-semibold whitespace-nowrap">3M's Blog</span>
+                            className="self-center text-2xl font-semibold whitespace-nowrap">Blog der drei M's</span>
                     </NavLink>
                     <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
                             <ul className={`${userIcon ? "hidden" : ""} flex items-center`}>
@@ -62,17 +64,16 @@ const Navbar = () => {
                                     id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
                                     data-dropdown-placement="bottom">
                                 <span className="sr-only">Open user menu</span>
-                                <img className="w-8 h-8 rounded-full" src="../assets/unknown.jpg"
-                                     alt="NN"/>
+                                <UserUnknownIcon className="w-8 h-8 rounded-full"/>
                             </button>
                             {/*Dropdown menu*/}
                             <div
                                 className="z-50 hidden my-4 text-base list-none bg-mantle divide-y divide-surface2 rounded-lg shadow"
                                 id="user-dropdown">
                                 <div className="px-4 py-3">
-                                    <span className="block text-sm text-text">Bonnie Green</span>
+                                    <span className="block text-sm text-text">Gandalf</span>
                                     <span
-                                        className="block text-sm  text-overlay1 truncate">name@flowbite.com</span>
+                                        className="block text-sm  text-overlay1 truncate">admin@asdf.com</span>
                                 </div>
                                 <ul className="py-2" aria-labelledby="user-menu-button">
                                     <li>
