@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { posts as mockPosts, tags as tagObj } from "../database/mockPostData";
+import TagPool from "../components/TagPool";
 import TagBadge from "../components/TagBadge";
 import PostCard from "../components/posts/PostCard";
 import Pagination from "../components/Pagination";
@@ -77,17 +78,11 @@ const Posts = () => {
     return (
         <div className="m-4">
             <h1 className="text-lg font-medium mx-4 mb-2">{tagTitle}</h1>
-            <div className="flex flex-wrap bg-mantle p-4 rounded-xl">
-                {tags.map((tag) => (
-                    <TagBadge
-                        onClick={tag.id ? () => filterPosts(tag) : resetPosts}
-                        key={tag.id}
-                        bgColor={tag.color}
-                    >
-                        {tag.name}
-                    </TagBadge>
-                ))}
-            </div>
+            <TagPool
+                tags={tags}
+                onClick={filterPosts}
+                onClickReset={resetPosts}
+            />
             <ul>
                 {currentPosts.map((post) => (
                     <PostCard key={post.id} post={post} />
