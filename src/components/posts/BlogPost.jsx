@@ -42,7 +42,7 @@ const BlogPost = ({ addPost }) => {
                     required
                 />
             </div>
-            <div className="mb-4">
+            <div className="mb-16 h-full">
                 <label className="block text-text">Inhalt</label>
                 <QuillEditor value={content} onChange={setContent}/>
             </div>
