@@ -1,7 +1,20 @@
 
 //TODO: @Medede
 
-const db = null;
+import {serverPort} from "../serverConfig";
+
+const dbUrl = `http://localhost:5000`;
+
+const dbGetter = async (slug) => {
+    try {
+        const response = await fetch(dbUrl + slug);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching data', error);
+    }
+}
+
 
 /*
 user = {
@@ -15,8 +28,13 @@ user = {
     likes: postId[],
 }
  */
-const getUsers = () => {};
-const getUser = (id) => {};
+const getUsers = async () => {
+    return await dbGetter('/users');
+};
+
+const getUser = (id) => {
+    return dbGetter(`/users/${id}`);
+};
 const createUser = (user) => {};
 const updateUser = (user) => {};
 const deleteUser = (id) => {};
