@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {serverPort} from "../serverConfig";
+import {createUser} from "../database/db";
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -26,19 +26,6 @@ const Register = () => {
         return passwordRegex.test(password);
     };
 
-    const fetchUsers = async () => {
-        try {
-            const response = await fetch("http://localhost:" + serverPort + "/users");
-            const data = await response.json();
-            setUsers(data);
-        } catch (error) {
-            console.error('Error fetching users', error);
-        }
-    };
-
-    useEffect(() => {
-        fetchUsers();
-    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -51,7 +38,7 @@ const Register = () => {
         }
 
         try {
-            const response = await fetch("http://localhost:" + serverPort + "/register", {
+            const response = await fetch("http://localhost:" + 5000 + "/register", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -75,7 +62,7 @@ const Register = () => {
                 email: '',
                 password: '',
             });
-            fetchUsers();
+
             setShowModal(true);
             alert('Sie haben sich erfolgreich registriert!');
         } catch (error) {
