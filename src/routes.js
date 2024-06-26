@@ -13,7 +13,9 @@ export const routes = [
 
     { path: '/', component: Home, name: 'Start', renderNav: false, userRole: null },
     { path: '/posts', component: Posts, name: 'Beiträge', renderNav: true, userRole: null },
-    { path: '/posts/:id', component: Post, name: 'Post', renderNav: false, userRole: null },
+    { path: '/posts/category/:tag', component: Posts, name: 'Beiträge', renderNav: true, userRole: null },
+    { path: '/posts/:page', component: Posts, name: 'Beiträge', renderNav: true, userRole: null},
+    { path: '/post/:id', component: Post, name: 'Post', renderNav: false, userRole: null },
     { path: '/register',component: Register, name: "Registrieren", renderNav: false, userRole: null },
     { path: '/login',component: Login, name: "Einloggen", renderNav: false, userRole: null },
     { path: '/logout',component: Logout, name: "Ausloggen", renderNav: false, userRole: null },

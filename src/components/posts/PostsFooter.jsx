@@ -10,7 +10,7 @@ const PostsFooter = ({postId}) => {
                 <CommentCounter postId={postId}/>
                 <LikesCounter likes={postId}/>
             </div>
-            <Link to={`/posts/${postId}`}>
+            <Link to={`/post/${postId}`}>
                 <div className="flex items-center justify-end text-blue hover:text-yellow">
                     Mehr lesen
                     <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
