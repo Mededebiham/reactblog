@@ -20,3 +20,15 @@
 .ql-picker-label::before {
     @apply text-text dark:text-base;
 }
+.label {
+    @apply block text-text ;
+}
+.header2 {
+    @apply text-2xl font-bold mb-4;
+}
+.input {
+    @apply w-full p-2 border border-surface1 bg-surface2 rounded mt-1;
+}
+.button {
+    @apply w-full p-2 bg-blue text-base rounded hover:bg-sapphire mt-4
+}

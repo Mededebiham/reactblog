@@ -41,61 +41,61 @@ const UserSettingsTab = () => {
 
 
         <form onSubmit={handleSubmit} className="space-y-4">
-            <h2 className="text-2xl font-bold mb-4">User Settings</h2>
+            <h2 className="header2">User Settings</h2>
             <div className="mb-4">
-                <label htmlFor="password" className="block text-text">Aktuelles Passwort:</label>
+                <label htmlFor="password" className="label">Aktuelles Passwort:</label>
                 <input
                     type="password"
                     id="password"
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
-                    className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"
+                    className="input"
                     required
                 />
             </div>
 
             <div className="mb-4">
-                <label htmlFor="newPassword" className="block text-text">Neue Passwort:</label>
+                <label htmlFor="newPassword" className="label">Neue Passwort:</label>
                 <input
                     type="password"
                     id="newPassword"
                     name="newPassword"
                     value={formData.newPassword}
                     onChange={handleChange}
-                    className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"
+                    className="input"
                     required
                 />
             </div>
 
             <div className="mb-4">
-                <label htmlFor="confirmPassword" className="block text-text">Bestätige neues Passwort:</label>
+                <label htmlFor="confirmPassword" className="label">Bestätige neues Passwort:</label>
                 <input
                     type="password"
                     id="confirmPassword"
                     name="confirmPassword"
                     value={formData.confirmPassword}
                     onChange={handleChange}
-                    className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"
+                    className="input"
                     required
                 />
             </div>
             <div className="mb-4">
-                <label htmlFor="email" className="block text-text">Neue Email:</label>
+                <label htmlFor="email" className="label">Neue Email:</label>
                 <input
                     type="email"
                     id="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"
+                    className="input"
                     required
                 />
             </div>
 
             {}
             <div className="mb-4">
-                <label htmlFor="darkModeToggle" className="block text-text">Dark mode als standard festlegen</label>
+                <label htmlFor="darkModeToggle" className="label">Dark mode als standard festlegen</label>
                 <input
                     type="checkbox"
                     id="darkModeToggle"
@@ -107,7 +107,7 @@ const UserSettingsTab = () => {
 
             {errors && <p className="text-red-500">{errors}</p>}
 
-            <button type="submit" className="w-full p-2 bg-blue text-base rounded hover:bg-sapphire mt-4">Änderungen speichern</button>
+            <button type="submit" className="button">Änderungen speichern</button>
         </form>
 )
     ;
