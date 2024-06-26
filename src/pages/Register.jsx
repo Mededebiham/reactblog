@@ -2,126 +2,114 @@ import React, { useState, useEffect } from 'react';
 import {createUser} from "../database/db";
 
 const Register = () => {
-    const [formData, setFormData] = useState({
-        firstname: '',
-        lastname: '',
-        email: '',
-        password: '',
-    });
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
-    const [errors, setErrors] = useState('');
-    const [showModal, setShowModal] = useState(false);
-    const [users, setUsers] = useState([]);
-
+    // Handler für Änderungen in den Eingabefeldern
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
+        switch (name) {
+            case 'firstName':
+                setFirstName(value);
+                break;
+            case 'lastName':
+                setLastName(value);
+                break;
+            case 'username':
+                setUsername(value);
+                break;
+            case 'password':
+                setPassword(value);
+                break;
+            default:
+                break;
+        }
     };
-
-    const validatePassword = (password) => {
-        const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$/;
-        return passwordRegex.test(password);
-    };
-
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        setErrors('');
-        setShowModal(false);
-
-        if (!validatePassword(formData.password)) {
-            setErrors('Passwort muss mindestens 10 Zeichen lang sein, einen Großbuchstaben, eine Zahl und ein Sonderzeichen enthalten.');
-            return;
+        // Passwort überprüfen
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!passwordRegex.test(password)) {
+            alert('Das Passwort muss mindestens 8 Zeichen lang sein, einen Großbuchstaben, eine Zahl und ein Sonderzeichen enthalten!');
+            return setError('Das Passwort muss mindestens 8 Zeichen lang sein, einen Großbuchstaben, eine Zahl und ein Sonderzeichen enthalten.');
         }
-
         try {
-            const response = await fetch("http://localhost:" + 5000 + "/register", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
+            const userData = {
+                firstName,
+                lastName,
+                username,
+                password
+            };
 
-            if (response.status === 400) {
-                setErrors('Ein Benutzer mit dieser E-Mail-Adresse existiert bereits.');
-                return;
-            }
+            // Aufruf der createUser-Funktion aus frontend.js, um den Benutzer zu erstellen
+            const response = await createUser(userData);
 
-            if (!response.ok) {
-                setErrors('Fehler bei der Registrierung.');
-                return;
-            }
-
-            setFormData({
-                firstname: '',
-                lastname: '',
-                email: '',
-                password: '',
-            });
-
-            setShowModal(true);
-            alert('Sie haben sich erfolgreich registriert!');
+            // Erfolgsmeldung anzeigen und Zustände zurücksetzen
+            setFirstName('');
+            setLastName('');
+            setUsername('');
+            setPassword('');
+            alert(response.message || 'Benutzer erfolgreich registriert!');
         } catch (error) {
-            setErrors('Fehler bei der Registrierung.');
+            setError(error.message || 'Serverfehler');
         }
     };
-
-    const handleCloseModal = () => setShowModal(false);
 
     return (
         <div>
             <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-4 bg-surface0 shadow-md rounded-lg text-text">
                 <h2 className="text-2xl font-bold mb-4">Registrierung</h2>
-                <div  className="mb-4">
+                <div className="mb-4">
                     <label>Vorname:</label>
-                    <input type="text"
-                           className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"
-                           name="firstname"
-                           value={formData.firstname}
-                           onChange={handleChange}
-                           required/>
+                    <input
+                        type="text"
+                        className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"
+                        name="firstName"
+                        value={firstName}
+                        onChange={handleChange}
+                        required
+                    />
                 </div>
                 <div>
                     <label>Nachname:</label>
-                    <input type="text"
-                           className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"
-                           name="lastname"
-                           value={formData.lastname}
-                           onChange={handleChange}
-                           required/>
+                    <input
+                        type="text"
+                        className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"
+                        name="lastName"
+                        value={lastName}
+                        onChange={handleChange}
+                        required
+                    />
                 </div>
                 <div>
-                    <label>Email:</label>
-                    <input type="email"
-                           className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"
-                           name="email"
-                           value={formData.email}
-                           onChange={handleChange}
-                           required/>
+                    <label>Benutzername:</label>
+                    <input
+                        type="text"
+                        className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"
+                        name="username"
+                        value={username}
+                        onChange={handleChange}
+                        required
+                    />
                 </div>
                 <div>
                     <label>Passwort:</label>
-                    <input type="password"
-                           className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"
-                           name="password"
-                           value={formData.password}
-                           onChange={handleChange}
-                           required/>
+                    <input
+                        type="password"
+                        className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"
+
+                        name="password"
+                        value={password}
+                        onChange={handleChange}
+                        required
+                    />
                 </div>
-                {errors && <p style={{color: 'red'}}>{errors}</p>}
                 <button type="submit" className="w-full p-2 bg-blue text-base rounded hover:bg-sapphire mt-4">Registrieren</button>
             </form>
 
-            <h3 className="text-center text-blue"> <a href="/login">Registrierte Benutzer</a></h3>
-            <ul>
-                {users.map((user, index) => (
-                    <li key={index}>{user.firstname} {user.lastname} - {user.email}</li>
-                ))}
-            </ul>
         </div>
     );
 };
