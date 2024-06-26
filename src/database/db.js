@@ -12,6 +12,7 @@ user = {
     passwort: string,
     role: string,
     profilePicture: string,
+    likes: postId[],
 }
  */
 const getUsers = () => {};
@@ -29,7 +30,7 @@ post = {
     author: user,
     category: category[],
     comment: comment[],
-    likes: number,
+    likes: userId[],
 }
  */
 const getPosts = () => {};
