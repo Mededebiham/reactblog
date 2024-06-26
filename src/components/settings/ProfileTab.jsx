@@ -32,9 +32,9 @@ const ProfileTab = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log('Uploading file:', selectedFile);
-        console.log('Changing name to:', name);
-        console.log('Changing description to:', description);
+        console.log('Profilbild hochladen:', selectedFile);
+        console.log(' Name ändern:', name);
+        console.log('\n' + 'Beschreibung ändern in:', description);
 
 
         setSelectedFile(null);
@@ -50,7 +50,7 @@ const ProfileTab = () => {
 
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                    <label className="block text-text">Upload Profile Picture</label>
+                    <label className="block text-text">Profilbild hochladen</label>
                     <input type="file" accept="image/*" onChange={handleFileChange} className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"/>
 
                     {previewUrl &&
@@ -58,16 +58,16 @@ const ProfileTab = () => {
                 </div>
 
                 <div>
-                    <label className="block text-text">Change Name</label>
+                    <label className="block text-text"> Name ändern</label>
                     <input type="text" value={name} onChange={handleNameChange} className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"/>
                 </div>
 
                 <div>
-                    <label className="block text-text">Change Description</label>
+                    <label className="block text-text">Beschreibung ändern</label>
                     <input type="text" value={description} onChange={handleDescriptionChange} className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"/>
                 </div>
 
-                <button type="submit" className="w-full p-2 bg-blue text-base rounded hover:bg-sapphire mt-4">Save Changes</button>
+                <button type="submit" className="w-full p-2 bg-blue text-base rounded hover:bg-sapphire mt-4">Änderungen speichern</button>
             </form>
         </div>
     );
