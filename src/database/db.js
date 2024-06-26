@@ -1,3 +1,5 @@
+import {useState} from "react";
+
 const API_BASE_URL = 'http://localhost:5000/api';
 
 // Benutzer Funktionen
@@ -20,6 +22,7 @@ const fetchUserById = async (userId) => {
 };
 
 const createUser = async (user) => {
+
     try {
         const response = await fetch(`${API_BASE_URL}/users`, {
             method: 'POST',
@@ -28,6 +31,7 @@ const createUser = async (user) => {
             },
             body: JSON.stringify(user)
         });
+
         return await response.json();
     } catch (error) {
         console.error('Error creating user:', error);
