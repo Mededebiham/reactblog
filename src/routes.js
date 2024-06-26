@@ -16,6 +16,7 @@ export const routes = [
     { path: '/posts/category/:tag', component: Posts, name: 'Beiträge', renderNav: false, userRole: null },
     { path: '/posts/:page', component: Posts, name: 'Beiträge', renderNav: false, userRole: null},
     { path: '/post/:id', component: Post, name: 'Post', renderNav: false, userRole: null },
+    { path: '/post/edit/:id', component: CreatePost, name: 'Beitrag bearbeiten', renderNav: false, userRole: 'admin'},
     { path: '/register',component: Register, name: "Registrieren", renderNav: false, userRole: null },
     { path: '/login',component: Login, name: "Einloggen", renderNav: false, userRole: null },
     { path: '/logout',component: Logout, name: "Ausloggen", renderNav: false, userRole: null },
