@@ -1,5 +1,6 @@
 const Comment = require('../models/Comment');
 const Post = require('../models/Post');
+const {fetchPostById} = require("../../src/database/db");
 
 // Controller-Methoden
 exports.getCommentsForPost = async (req, res) => {
