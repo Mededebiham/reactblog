@@ -9,10 +9,6 @@
     }
 }
 
-.quill {
-    @apply h-96;
-}
-
 .ql-container {
     @apply bg-surface2 text-text text-[1rem] rounded-b;
 }
