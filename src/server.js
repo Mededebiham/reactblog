@@ -57,3 +57,40 @@ app.get('/users', async (req, res) => {
 app.listen(5000, () => {
     console.log('Server is running on port 5000');
 });
+// Post Schema --------------------------------
+const postSchema = new mongoose.Schema({
+    id: String,
+    title: String,
+    content: String,
+    date: Date,
+    author: UserSchema,
+    category: [String],
+    comment: [String],
+    likes: Number,
+});
+const Post = mongoose.model('Post', postSchema);
+app.get('/api/posts', async (req, res) => {
+    const posts = await db.Post.find();
+    res.json(posts);
+});
+
+app.get('/api/posts/:id', async (req, res) => {
+    const post = await db.Post.findOne({ id: req.params.id });
+    res.json(post);
+});
+
+app.post('/api/posts', async (req, res) => {
+    const post = new db.Post({ ...req.body, id: newId(), date: new Date() });
+    const savedPost = await post.save();
+    res.status(201).json(savedPost);
+});
+
+app.put('/api/posts/:id', async (req, res) => {
+    const updatedPost = await db.Post.findOneAndUpdate({ id: req.params.id }, req.body, { new: true });
+    res.json(updatedPost);
+});
+
+app.delete('/api/posts/:id', async (req, res) => {
+    await db.Post.findOneAndDelete({ id: req.params.id });
+    res.status(204).end();
+});
