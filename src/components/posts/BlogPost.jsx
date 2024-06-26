@@ -4,6 +4,7 @@ import { newId } from '../../utils/utils';
 import TagSelector from '../TagSelector';
 import { tags as mockTags } from "../../database/mockPostData";
 import '../../styles/quill.css';
+import QuillEditor  from "../QuillEditor";
 
 const BlogPost = ({ addPost }) => {
     const [title, setTitle] = useState('');
@@ -43,12 +44,7 @@ const BlogPost = ({ addPost }) => {
             </div>
             <div className="mb-4">
                 <label className="block text-text">Inhalt</label>
-                <ReactQuill
-                    value={content}
-                    onChange={setContent}
-                    className="w-full border border-surface1 rounded mt-1 bg-surface2"
-                    required
-                />
+                <QuillEditor value={content} onChange={setContent}/>
             </div>
             <TagSelector
                 availableTags={availableTags}
