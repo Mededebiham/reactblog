@@ -1,6 +1,6 @@
 const Tag = require('../models/Tag');
 
-// Controller-Methoden
+// Controller Methode für Tags
 exports.getAllTags = async (req, res) => {
     try {
         const tags = await Tag.find();

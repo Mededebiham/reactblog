@@ -3,7 +3,6 @@ import TagSelector from '../TagSelector';
 import { tags as mockTags } from "../../database/mockPostData";
 import QuillEditor  from "../QuillEditor";
 import {createPost, fetchPosts} from "../../database/db";
-
 const BlogPost = ({ addPost }) => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
@@ -23,7 +22,8 @@ const BlogPost = ({ addPost }) => {
                 comments: [],
                 tags: []
             };
-            // Post erstellen
+
+            // zum Testen
             const response = await createPost(newPost);
             addPost(newPost);
             setTitle('');

@@ -1,6 +1,6 @@
 const User = require('../models/User');
 
-// Controller-Methoden
+// Controller-Methoden für user
 exports.getAllUsers = async (req, res) => {
     try {
         const users = await User.find(); // Alle Benutzer aus der Datenbank abrufen

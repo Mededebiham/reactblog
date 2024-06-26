@@ -1,7 +1,7 @@
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
+//Posts
 const PostSchema = new Schema({
     authorId:String, // der User der den post erstellt hast
     title: String,

@@ -1,7 +1,7 @@
 const Post = require('../models/Post');
 const User = require('../models/User');
 
-// Controller-Methoden
+// Controller-Methoden für Post
 exports.getAllPosts = async (req, res) => {
     try {
         const posts = await Post.find().populate('author').populate('comments'); // Alle Beiträge abrufen und Autoren und Kommentare auflösen

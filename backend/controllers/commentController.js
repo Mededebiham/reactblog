@@ -2,7 +2,7 @@ const Comment = require('../models/Comment');
 const Post = require('../models/Post');
 const {fetchPostById} = require("../../src/database/db");
 
-// Controller-Methoden
+// Controller-Methoden für Comments
 exports.getCommentsForPost = async (req, res) => {
     const postId = req.params.postId; // Beitrag-ID aus der URL-Parameter lesen
     try {
