@@ -99,7 +99,7 @@ const UserSettingsTab = () => {
                 <input
                     type="checkbox"
                     id="darkModeToggle"
-                    checked={formData.darkMode}
+                    checked
                     onChange={handleDarkModeToggle}
                     className=" p-3 border border-surface1 bg-surface2 rounded mt-1"
                 />
