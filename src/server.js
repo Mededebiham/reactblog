@@ -94,3 +94,37 @@ app.delete('/api/posts/:id', async (req, res) => {
     await db.Post.findOneAndDelete({ id: req.params.id });
     res.status(204).end();
 });
+// Comment Schema --------------------------------
+const commentSchema = new mongoose.Schema({
+    id: String,
+    postId: String,
+    content: String,
+    date: Date,
+    author: UserSchema,
+});
+const Comment = mongoose.model('Comment', commentSchema);
+app.get('/api/comments', async (req, res) => {
+    const comments = await db.Comment.find();
+    res.json(comments);
+});
+
+app.get('/api/comments/:id', async (req, res) => {
+    const comment = await db.Comment.findOne({ id: req.params.id });
+    res.json(comment);
+});
+
+app.post('/api/comments', async (req, res) => {
+    const comment = new db.Comment({ ...req.body, id: newId(), date: new Date() });
+    const savedComment = await comment.save();
+    res.status(201).json(savedComment);
+});
+
+app.put('/api/comments/:id', async (req, res) => {
+    const updatedComment = await db.Comment.findOneAndUpdate({ id: req.params.id }, req.body, { new: true });
+    res.json(updatedComment);
+});
+
+app.delete('/api/comments/:id', async (req, res) => {
+    await db.Comment.findOneAndDelete({ id: req.params.id });
+    res.status(204).end();
+});
