@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css'; // Stile für den Editor
 
 const QuillEditor = ({ value, onChange }) => {
     return (
