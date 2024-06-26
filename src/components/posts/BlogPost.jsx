@@ -30,6 +30,7 @@ const BlogPost = ({ addPost }) => {
     };
 
     return (
+        <>
         <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-4 bg-surface0 shadow-md rounded-lg">
             <h2 className="text-2xl font-bold mb-4">Neuen Beitrag erstellen</h2>
             <div className="mb-4">
@@ -42,7 +43,7 @@ const BlogPost = ({ addPost }) => {
                     required
                 />
             </div>
-            <div className="mb-4">
+            <div className="mb-16 h-full">
                 <label className="block text-text">Inhalt</label>
                 <QuillEditor value={content} onChange={setContent}/>
             </div>
@@ -55,6 +56,7 @@ const BlogPost = ({ addPost }) => {
                 Beitrag erstellen
             </button>
         </form>
+        </>
     );
 };
 
