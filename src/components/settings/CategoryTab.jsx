@@ -3,6 +3,7 @@ import { UserContext } from '../../context';
 import {tags as tagObj, tags} from "../../database/mockPostData";
 import TagPool from "../TagPool";
 import CreateTag from "./CreateTag";
+import ColorPicker from "../ColorPicker";
 
 const CategoryTab = () => {
     const { user } = useContext(UserContext);
