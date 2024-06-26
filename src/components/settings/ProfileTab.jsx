@@ -50,24 +50,24 @@ const ProfileTab = () => {
 
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                    <label className="block text-text">Profilbild hochladen</label>
-                    <input type="file" accept="image/*" onChange={handleFileChange} className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"/>
+                    <label className="label">Profilbild hochladen</label>
+                    <input type="file" accept="image/*" onChange={handleFileChange} className="input"/>
 
                     {previewUrl &&
                         <img src={previewUrl} alt="Profile Preview" className="w-24 h-24 rounded-lg mt-2 mx-auto"/>}
                 </div>
 
                 <div>
-                    <label className="block text-text"> Name ändern</label>
-                    <input type="text" value={name} onChange={handleNameChange} className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"/>
+                    <label className="label"> Name ändern</label>
+                    <input type="text" value={name} onChange={handleNameChange} className="input"/>
                 </div>
 
                 <div>
-                    <label className="block text-text">Beschreibung ändern</label>
-                    <input type="text" value={description} onChange={handleDescriptionChange} className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"/>
+                    <label className="label">Beschreibung ändern</label>
+                    <input type="text" value={description} onChange={handleDescriptionChange} className="input"/>
                 </div>
 
-                <button type="submit" className="w-full p-2 bg-blue text-base rounded hover:bg-sapphire mt-4">Änderungen speichern</button>
+                <button type="submit" className="button">Änderungen speichern</button>
             </form>
         </div>
     );
