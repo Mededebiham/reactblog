@@ -8,7 +8,7 @@ const showAllTitle = 'Nach Kategorie filtern:';
 
 const Posts = () => {
     const tagArray = Object.values(tagObj);
-    const { page } = useParams();
+    const { page, tag } = useParams();
     const navigate = useNavigate();
 
     const [posts, setPosts] = useState(mockPosts);
@@ -21,18 +21,33 @@ const Posts = () => {
         setCurrentPage(parseInt(page) || 1);
     }, [page]);
 
+    useEffect(() => {
+        if (tag) {
+            const tagObject = tagArray.find(t => t.id === tag);
+            if (tagObject) {
+                filterPosts(tagObject);
+            } else {
+                resetPosts();
+            }
+        } else {
+            resetPosts();
+        }
+    }, [tag]);
+
     const filterPosts = (tag) => {
         const filteredPosts = mockPosts.filter(post => post.tags.some(mockTag => mockTag.id === tag.id));
         setPosts(filteredPosts);
         setTags([{ id: null, name: 'Zeige alle Beiträge', color: 'bg-text' }]);
         setTagTitle(<>Zeige Beiträge mit Kategorie: <TagBadge bgColor={tag.color}>{tag.name}</TagBadge></>);
-        navigate('/posts');
+        setCurrentPage(1); // Reset to the first page when filtering
+        navigate(`/posts/category/${tag.id}`);
     };
 
     const resetPosts = () => {
         setPosts(mockPosts);
         setTags(tagArray);
         setTagTitle(showAllTitle);
+        setCurrentPage(1); // Reset to the first page when resetting
         navigate('/posts');
     };
 
@@ -42,9 +57,17 @@ const Posts = () => {
 
     const paginate = (pageNumber) => {
         if (pageNumber === 1) {
-            navigate('/posts');
+            if (tag) {
+                navigate(`/posts/category/${tag}`);
+            } else {
+                navigate('/posts');
+            }
         } else {
-            navigate(`/posts/${pageNumber}`);
+            if (tag) {
+                navigate(`/posts/category/${tag}/${pageNumber}`);
+            } else {
+                navigate(`/posts/${pageNumber}`);
+            }
         }
     };
 
