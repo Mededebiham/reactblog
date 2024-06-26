@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import Comment from './Comment';
+import QuillEditor from "./QuillEditor";
 
 const Comments = ({ comments, addComment }) => {
     const [newComment, setNewComment] = useState('');
@@ -20,11 +21,17 @@ const Comments = ({ comments, addComment }) => {
                 <Comment key={index} comment={comment} />
             ))}
             <form onSubmit={handleAddComment} className="mt-4">
-                <textarea
+                {/*<textarea*/}
+                {/*    value={newComment}*/}
+                {/*    onChange={(e) => setNewComment(e.target.value)}*/}
+                {/*    className="w-full p-2 border-mantle bg-surface1 rounded mt-1"*/}
+                {/*    placeholder="Kommentar eingeben..."*/}
+                {/*/>*/}
+                <QuillEditor
                     value={newComment}
                     onChange={(e) => setNewComment(e.target.value)}
-                    className="w-full p-2 border-mantle bg-surface1 rounded mt-1"
                     placeholder="Kommentar eingeben..."
+                    theight='h-32'
                 />
                 <button type="submit" className="mt-2 px-2 p-1 bg-blue text-base rounded hover:bg-sapphire">
                     Kommentar hinzufügen
