@@ -8,3 +8,15 @@
         @apply dark:mocha bg-base text-text;
     }
 }
+
+.ql-container {
+    @apply bg-base text-text dark:bg-text dark:text-base rounded-b;
+}
+
+.ql-toolbar {
+    @apply bg-base text-text dark:bg-text dark:text-base rounded-t;
+}
+
+.ql-picker-label::before {
+    @apply text-text dark:text-base;
+}
