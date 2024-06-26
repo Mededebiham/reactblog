@@ -57,6 +57,7 @@ app.get('/users', async (req, res) => {
 app.listen(5000, () => {
     console.log('Server is running on port 5000');
 });
+
 // Post Schema --------------------------------
 const postSchema = new mongoose.Schema({
     id: String,
@@ -68,7 +69,23 @@ const postSchema = new mongoose.Schema({
     comment: [String],
     likes: Number,
 });
+const commentSchema = new mongoose.Schema({
+    id: String,
+    postId: String,
+    content: String,
+    date: Date,
+    author: UserSchema,
+});
+const tagSchema = new mongoose.Schema({
+    id: String,
+    name: String,
+    color: String,
+});
 const Post = mongoose.model('Post', postSchema);
+const Comment = mongoose.model('Comment', commentSchema);
+const Tag = mongoose.model('Tag', tagSchema);
+const db = { User, Post, Comment, Tag };
+
 app.get('/api/posts', async (req, res) => {
     const posts = await db.Post.find();
     res.json(posts);
@@ -95,14 +112,7 @@ app.delete('/api/posts/:id', async (req, res) => {
     res.status(204).end();
 });
 // Comment Schema --------------------------------
-const commentSchema = new mongoose.Schema({
-    id: String,
-    postId: String,
-    content: String,
-    date: Date,
-    author: UserSchema,
-});
-const Comment = mongoose.model('Comment', commentSchema);
+
 app.get('/api/comments', async (req, res) => {
     const comments = await db.Comment.find();
     res.json(comments);
@@ -126,5 +136,31 @@ app.put('/api/comments/:id', async (req, res) => {
 
 app.delete('/api/comments/:id', async (req, res) => {
     await db.Comment.findOneAndDelete({ id: req.params.id });
+    res.status(204).end();
+});
+// Tag Schema --------------------------------
+app.get('/api/tags', async (req, res) => {
+    const tags = await db.Tag.find();
+    res.json(tags);
+});
+
+app.get('/api/tags/:id', async (req, res) => {
+    const tag = await db.Tag.findOne({ id: req.params.id });
+    res.json(tag);
+});
+
+app.post('/api/tags', async (req, res) => {
+    const tag = new db.Tag({ ...req.body, id: newId() });
+    const savedTag = await tag.save();
+    res.status(201).json(savedTag);
+});
+
+app.put('/api/tags/:id', async (req, res) => {
+    const updatedTag = await db.Tag.findOneAndUpdate({ id: req.params.id }, req.body, { new: true });
+    res.json(updatedTag);
+});
+
+app.delete('/api/tags/:id', async (req, res) => {
+    await db.Tag.findOneAndDelete({ id: req.params.id });
     res.status(204).end();
 });
