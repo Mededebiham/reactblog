@@ -2,22 +2,45 @@ import React, { createContext, useState } from 'react';
 
 const UserContext = createContext();
 
-const UserProvider = ({ children }) => {
-    const [userRole, setUserRole] = useState(null);
+const initialUserState = {
+    id: null,
+    firstName: null,
+    lastName: null,
+    email: null,
+    password: null,
+    role: null,
+    profilePicture: null,
+};
 
-    const setRole = (role) => {
-        if (role === 'user' || role === 'mod' || role === 'admin') {
-            setUserRole(role);
+const UserProvider = ({ children }) => {
+    const [user, setUser] = useState(initialUserState);
+
+    const setUserState = (newUser) => {
+        if (isValidUser(newUser)) {
+            setUser(newUser);
         } else {
-            setUserRole(null);
+            console.error('Invalid user object structure');
         }
     };
 
+    const setRole = (role) => {
+        if (['user', 'mod', 'admin'].includes(role)) {
+            setUser({ ...user, role });
+        } else {
+            setUser({ ...user, role: null });
+        }
+    };
+
+    const isValidUser = (userObj) => {
+        const keys = ['id', 'firstName', 'lastName', 'email', 'password', 'role', 'profilePicture'];
+        return keys.every(key => key in userObj);
+    };
+
     return (
-        <UserContext.Provider value={{ userRole, setRole }}>
+        <UserContext.Provider value={{ user, setUser: setUserState, setRole }}>
             {children}
         </UserContext.Provider>
     );
 };
 
-export { UserContext, UserProvider };
+export { UserContext, UserProvider, initialUserState };

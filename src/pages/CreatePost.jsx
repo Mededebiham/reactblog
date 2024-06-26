@@ -7,15 +7,14 @@ import parse from 'html-react-parser';
 
 const CreatePost = () => {
     const [posts, setPosts] = useState([]);
-
-    const { userRole } = useContext(UserContext);
+    const { user } = useContext(UserContext);
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (userRole !== 'admin') {
+        if (user.role !== 'admin') {
             navigate('/login');
         }
-    }, [userRole, navigate]);
+    }, [user, navigate]);
 
     useEffect(() => {
         const savedPosts = JSON.parse(localStorage.getItem('posts'));
@@ -45,7 +44,7 @@ const CreatePost = () => {
         setPosts(updatedPosts);
     };
 
-    if (!userRole) {
+    if (user.role !== 'admin') {
         return null;
     }
 
