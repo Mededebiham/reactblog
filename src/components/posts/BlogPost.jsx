@@ -53,7 +53,7 @@ const BlogPost = ({ addPost }) => {
         const test = async () => {setUsers(await fetchPosts());}
         test();
 
-        const test2 = async () => {await createPost({ author: newUser, title: 'Hallo', content: 'Test', likes: ['564564', '5435'], comments: ['oeuohduiho'], tags: ['uioeui'] })}
+        const test2 = async () => {await createPost({ author: newUser._id, title: 'Hallo', content: 'Test', likes: ['564564', '5435'], comments: [''], tags: [''] })}
         test2().then(r => console.log(r));
     }, []);
 

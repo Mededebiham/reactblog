@@ -1,5 +1,6 @@
 const Comment = require('../models/Comment');
 const Post = require('../models/Post');
+const {fetchPostById} = require("../../src/database/db");
 
 // Controller-Methoden
 exports.getCommentsForPost = async (req, res) => {
@@ -13,12 +14,12 @@ exports.getCommentsForPost = async (req, res) => {
 };
 
 exports.createComment = async (req, res) => {
-    const { postId, content } = req.body;
+    const {  content,postId,authorId } = req.body;
     try {
-        const newComment = new Comment({ content, post: postId }); // Neuen Kommentar erstellen
+        const newComment = new Comment({ content, postId,authorId });
         await newComment.save();
-        // Den Kommentar zum entsprechenden Beitrag hinzufügen
-        const post = await Post.findById(postId);
+
+        const post = await fetchPostById(postId);
         if (!post) {
             return res.status(404).json({ error: 'Post not found' });
         }
