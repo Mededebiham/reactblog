@@ -5,7 +5,7 @@ import TagBadge from "../TagBadge";
 
 const CreateTag = ({visible = false}) => {
     const [isNewTag, setIsNewTag] = useState(false);
-    const [showColorPicker, setShowColorPicker] = useState(true);
+    const [showColorPicker, setShowColorPicker] = useState(false);
     const [selectedColor, setSelectedColor] = useState("bg-blue");
     const [tagName, setTagName] = useState("");
 
