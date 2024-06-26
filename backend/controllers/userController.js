@@ -1,6 +1,7 @@
 const User = require('../models/User');
+const Post = require("../models/Post");
 
-// Controller-Methoden für user
+// Controller-Methoden
 exports.getAllUsers = async (req, res) => {
     try {
         const users = await User.find(); // Alle Benutzer aus der Datenbank abrufen
@@ -10,6 +11,15 @@ exports.getAllUsers = async (req, res) => {
     }
 };
 
+exports.getUserByName = async (req, res) => {
+    try {
+        const post = await Post.findOne({ username: req.params.username });
+        if (!post) return res.status(404).json({ message: 'Post not found' });
+        res.status(200).json(post);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
 exports.getUserById = async (req, res) => {
     const userId = req.params.id;
     try {

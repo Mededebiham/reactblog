@@ -3,7 +3,7 @@ import {useState} from "react";
 const API_BASE_URL = 'http://localhost:5001/api';
 
 // Benutzer Funktionen
-const fetchUsers = async () => {
+const getUsers = async () => {
     try {
         const response = await fetch(`${API_BASE_URL}/users`);
         return await response.json();
@@ -12,7 +12,7 @@ const fetchUsers = async () => {
     }
 };
 
-const fetchUserById = async (userId) => {
+const getUserById = async (userId) => {
     try {
         const response = await fetch(`${API_BASE_URL}/users/${userId}`);
         return await response.json();
@@ -74,7 +74,7 @@ const deleteAllUsers = async () => {
 };
 
 // Post Funktionen
-const fetchPosts = async () => {
+const getPosts = async () => {
     try {
         const response = await fetch(`${API_BASE_URL}/posts`);
         return await response.json();
@@ -83,7 +83,7 @@ const fetchPosts = async () => {
     }
 };
 
-const fetchPostById = async (postId) => {
+const getPostById = async (postId) => {
     try {
         const response = await fetch(`${API_BASE_URL}/posts/${postId}`);
         return await response.json();
@@ -143,7 +143,7 @@ const deleteAllPosts = async () => {
 };
 
 // Kommentar Funktionen
-const fetchComments = async () => {
+const getComments = async () => {
     try {
         const response = await fetch(`${API_BASE_URL}/comments`);
         return await response.json();
@@ -152,7 +152,7 @@ const fetchComments = async () => {
     }
 };
 
-const fetchCommentById = async (commentId) => {
+const getCommentById = async (commentId) => {
     try {
         const response = await fetch(`${API_BASE_URL}/comments/${commentId}`);
         return await response.json();
@@ -212,7 +212,7 @@ const deleteAllCommentsForPost = async (postId) => {
 };
 
 // Tag Funktionen
-const fetchTags = async () => {
+const getTags = async () => {
     try {
         const response = await fetch(`${API_BASE_URL}/tags`);
         return await response.json();
@@ -221,7 +221,7 @@ const fetchTags = async () => {
     }
 };
 
-const fetchTagById = async (tagId) => {
+const getTagById = async (tagId) => {
     try {
         const response = await fetch(`${API_BASE_URL}/tags/${tagId}`);
         return await response.json();
@@ -282,26 +282,26 @@ const deleteAllTags = async () => {
 
 // Export aller Funktionen
 export {
-    fetchUsers,
-    fetchUserById,
+    getUsers,
+    getUserById,
     createUser,
     updateUser,
     deleteUser,
     deleteAllUsers,
-    fetchPosts,
-    fetchPostById,
+    getPosts,
+    getPostById,
     createPost,
     updatePost,
     deletePost,
     deleteAllPosts,
-    fetchComments,
-    fetchCommentById,
+    getComments,
+    getCommentById,
     createComment,
     updateComment,
     deleteComment,
     deleteAllCommentsForPost,
-    fetchTags,
-    fetchTagById,
+    getTags,
+    getTagById,
     createTag,
     updateTag,
     deleteTag,

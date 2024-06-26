@@ -1,6 +1,7 @@
 const Tag = require('../models/Tag');
+const Post = require("../models/Post");
 
-// Controller Methode für Tags
+// Controller-Methoden
 exports.getAllTags = async (req, res) => {
     try {
         const tags = await Tag.find();
@@ -20,6 +21,15 @@ exports.getTagById = async (req, res) => {
         res.json(tag);
     } catch (error) {
         res.status(500).json({ error: error.message });
+    }
+};
+exports.getTagByName = async (req, res) => {
+    try {
+        const post = await Post.findOne({ name: req.params.name });
+        if (!post) return res.status(404).json({ message: 'Post not found' });
+        res.status(200).json(post);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 };
 

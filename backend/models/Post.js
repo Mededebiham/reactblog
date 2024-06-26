@@ -1,15 +1,35 @@
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-//Posts
-const PostSchema = new Schema({
-    authorId:String, // der User der den post erstellt hast
-    title: String,
-    content: String,
-    likes: [{ type:String }], //Array von UserId die post gelike haben
-    tags:[{ type:String }], // Array von tagsId
-    comments: [{ type:String }],// array von commentId
 
-});
+const PostSchema = new Schema({
+    benutzername: {
+        type: String,
+        required: true,
+    },
+    title: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    content: {
+        type: String,
+        required: true
+    },
+    likes: {
+        type: [String],
+        default: []
+    },
+    tags: {
+        type: [String],
+        default: []
+    },
+    comments: {
+        type: [String],
+        default: []
+    }
+
+}, { timestamps: true });
+
 
 module.exports = mongoose.model('Post', PostSchema);

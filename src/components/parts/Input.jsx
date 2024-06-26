@@ -1,3 +1,5 @@
+// noinspection JSUnusedGlobalSymbols
+
 import React from 'react';
 
 const Input = () => {
