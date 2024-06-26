@@ -1,3 +1,4 @@
+@import "quill.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,4 +7,16 @@
     body {
         @apply dark:mocha bg-base text-text;
     }
+}
+
+.ql-container {
+    @apply bg-surface2 text-text text-[1rem] rounded-b;
+}
+
+.ql-toolbar {
+    @apply bg-base text-text dark:bg-text dark:text-base rounded-t;
+}
+
+.ql-picker-label::before {
+    @apply text-text dark:text-base;
 }

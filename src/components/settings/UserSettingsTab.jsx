@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
+
 
 const UserSettingsTab = () => {
+
     return (
         <div>
-            User Einstellungen
+            - Change Password
+            - Change Email
+            - Default Dark Mode
         </div>
     );
 };
