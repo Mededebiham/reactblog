@@ -13,9 +13,9 @@ const brightnessMode = {
 const Navbar = () => {
 
     const [isDark, setIsDark] = useState(true);
-    const [userIcon, setUserIcon] = useState(false);
+    const [userIconVisibility, setUserIconVisibility] = useState(false);
     const [filteredRoutes, setFilteredRoutes] = useState([]);
-    const { user, setUser, setRole } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
 
     const toggleDarkmode = () => {
         const html = document.documentElement;
@@ -39,7 +39,7 @@ const Navbar = () => {
             profilePicture: 'path/to/picture.jpg'
         };
         setUser(newUser);
-        setUserIcon(!userIcon);
+        setUserIconVisibility(!userIconVisibility);
     };
 
     useEffect(() => {
@@ -60,14 +60,14 @@ const Navbar = () => {
                         <span className="self-center text-2xl font-semibold whitespace-nowrap">Blog der drei M's</span>
                     </NavLink>
                     <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-                        <ul className={`${userIcon ? "hidden" : ""} flex items-center`}>
+                        <ul className={`${userIconVisibility ? "hidden" : ""} flex items-center`}>
                             <li className="mx-2">
                                 <button onClick={toggleLoginAndIcon}>Einloggen</button>
                             </li>
                             <li className="mx-2"><Link to="/register">Registrieren</Link></li>
                         </ul>
                         <button type="button"
-                                className={`flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-overlay2 ${userIcon ? "" : "hidden"}`}
+                                className={`flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-overlay2 ${userIconVisibility ? "" : "hidden"}`}
                                 id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
                                 data-dropdown-placement="bottom">
                             <span className="sr-only">Benutzer Menü öffnen</span>
