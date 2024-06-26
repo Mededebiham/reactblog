@@ -30,6 +30,7 @@ const Register = () => {
     };
 
     const handleSubmit = async (e) => {
+        e.preventDefault();
         // Passwort überprüfen
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
         if (!passwordRegex.test(password)) {

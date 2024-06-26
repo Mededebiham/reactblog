@@ -27,10 +27,10 @@ exports.getPostById = async (req, res) => {
 exports.createPost = async (req, res) => {
     const { authorId, title, content } = req.body;
     try {
-        const author = await User.findById(authorId); // Autor-ID aus der Anfrage lesen
-        if (!author) {
-            return res.status(404).json({ error: 'Author not found' });
-        }
+        // const author = await User.findById(authorId); // Autor-ID aus der Anfrage lesen
+        // if (!author) {
+        //     return res.status(404).json({ error: 'Author not found' });
+        // }
         const newPost = new Post({ author: authorId, title, content }); // Neuen Beitrag erstellen
         await newPost.save();
         res.status(201).json(newPost);

@@ -1,11 +1,8 @@
-import React, { useState } from 'react';
-import ReactQuill from 'react-quill';
-import { newId } from '../../utils/utils';
+import React, {useEffect, useState} from 'react';
 import TagSelector from '../TagSelector';
 import { tags as mockTags } from "../../database/mockPostData";
-import '../../styles/quill.css';
 import QuillEditor  from "../QuillEditor";
-import {createPost, createUser} from "../../database/db";
+import {createPost, fetchPosts} from "../../database/db";
 
 const BlogPost = ({ addPost }) => {
     const [title, setTitle] = useState('');
@@ -19,11 +16,12 @@ const BlogPost = ({ addPost }) => {
         e.preventDefault();
         try {
             const newPost = {
-                title,
-                content,
-                likes: 0,
+                author: '',
+                title: 'Hallo',
+                content: 'Test',
+                likes: [],
                 comments: [],
-                tags: selectedTags.map(tag => `#${tag}`)
+                tags: []
             };
             // Post erstellen
             const response = await createPost(newPost);
@@ -37,9 +35,27 @@ const BlogPost = ({ addPost }) => {
         } catch (error) {
             setError(error.message || 'Serverfehler');
         }
-
-
     };
+
+    const medede372433 = '667c1af03545e00aa69c6401'
+    const [users, setUsers] = useState([]);
+
+    const newUser = {  _id: medede372433,
+                            firstName: 'Medede',
+                            lastName: 'Markus',
+                            username: 'Mazlum',
+                            password: '12834754',
+                            role: 'mod',
+                            profilePicture: 'https://randomuser.me/api/portraits'
+    };
+
+    useEffect(() => {
+        const test = async () => {setUsers(await fetchPosts());}
+        test();
+
+        const test2 = async () => {await createPost({ author: newUser, title: 'Hallo', content: 'Test', likes: ['564564', '5435'], comments: ['oeuohduiho'], tags: ['uioeui'] })}
+        test2().then(r => console.log(r));
+    }, []);
 
     return (
         <>
@@ -67,6 +83,7 @@ const BlogPost = ({ addPost }) => {
                 <button type="submit" className="w-full p-2 bg-blue text-base rounded hover:bg-sapphire mt-4">
                     Beitrag erstellen
                 </button>
+                {users.map(user => <div key={user._id}>{user._id}</div>)}
             </form>
         </>
     );
