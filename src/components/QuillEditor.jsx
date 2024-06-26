@@ -7,7 +7,7 @@ const QuillEditor = ({ value, onChange }) => {
         <ReactQuill
             value={value}
             onChange={onChange}
-            className="w-full p-2 border border-surface1 rounded mt-1 bg-surface2"
+            className="w-full border border-surface1 rounded-lg mt-1 bg-surface2"
             required
         />
     );
