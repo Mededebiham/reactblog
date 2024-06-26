@@ -21,12 +21,6 @@ const Comments = ({ comments, addComment }) => {
                 <Comment key={index} comment={comment} />
             ))}
             <form onSubmit={handleAddComment} className="mt-4">
-                {/*<textarea*/}
-                {/*    value={newComment}*/}
-                {/*    onChange={(e) => setNewComment(e.target.value)}*/}
-                {/*    className="w-full p-2 border-mantle bg-surface1 rounded mt-1"*/}
-                {/*    placeholder="Kommentar eingeben..."*/}
-                {/*/>*/}
                 <QuillEditor
                     value={newComment}
                     onChange={(e) => setNewComment(e.target.value)}
