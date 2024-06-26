@@ -1,77 +1,94 @@
 const Post = require('../models/Post');
-const User = require('../models/User');
+exports.createPost = async (req, res) => {
+    try {
+        const { benutzername,title, content, likes, tags, comments } = req.body;
+        const post = new Post({
+            benutzername,
+            title,
+            content,
+            likes: likes || [],
+            tags: tags || [],
+            comments: comments || []
+        });
+        await post.save();
+        res.status(201).json(post);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
 
-// Controller-Methoden
+// Get all posts
 exports.getAllPosts = async (req, res) => {
     try {
-        const posts = await Post.find().populate('author').populate('comments'); // Alle Beiträge abrufen und Autoren und Kommentare auflösen
-        res.json(posts);
+        const posts = await Post.find();
+        res.status(200).json(posts);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ message: error.message });
     }
 };
 
+// Get post by title
+exports.getPostByTitle = async (req, res) => {
+    try {
+        const post = await Post.findOne({ title: req.params.title });
+        if (!post) return res.status(404).json({ message: 'Post not found' });
+        res.status(200).json(post);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// Get post by ID
 exports.getPostById = async (req, res) => {
-    const postId = req.params.id;
     try {
-        const post = await Post.findById(postId).populate('author').populate('comments');
-        if (!post) {
-            return res.status(404).json({ error: 'Post not found' });
-        }
-        res.json(post);
+        const post = await Post.findById(req.params.id);
+        if (!post) return res.status(404).json({ message: 'Post not found' });
+        res.status(200).json(post);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ message: error.message });
     }
 };
 
-exports.createPost = async (req, res) => {
-    const { authorId, title, content,likes,tags,comments } = req.body;
-    try {
-
-        const newPost = new Post({ author: authorId, title, content,likes,tags,comments }); // Neuen Beitrag erstellen
-        await newPost.save();
-        res.status(201).json(newPost);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-};
-
-exports.updatePost = async (req, res) => {
-    const postId = req.params.id;
-    const { title, content } = req.body;
-    try {
-        const updatedPost = await Post.findByIdAndUpdate(
-            postId,
-            { title, content },
-            { new: true }
-        ).populate('author').populate('comments');
-        if (!updatedPost) {
-            return res.status(404).json({ error: 'Post not found' });
-        }
-        res.json(updatedPost);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-};
-
-exports.deleteAllPosts = async (req, res) => {
-    try {
-        await Post.deleteMany({});
-        res.json({ message: 'All posts deleted successfully' });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-};
-
+// Delete post by ID
 exports.deletePostById = async (req, res) => {
-    const postId = req.params.id;
     try {
-        const deletedPost = await Post.findByIdAndDelete(postId);
-        if (!deletedPost) {
-            return res.status(404).json({ error: 'Post not found' });
-        }
-        res.json({ message: 'Post deleted successfully' });
+        const post = await Post.findByIdAndDelete(req.params.id);
+        if (!post) return res.status(404).json({ message: 'Post not found' });
+        res.status(200).json({ message: 'Post deleted successfully' });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// Delete post by title
+exports.deletePostByTitle = async (req, res) => {
+    try {
+        const post = await Post.findOneAndDelete({ title: req.params.title });
+        if (!post) return res.status(404).json({ message: 'Post not found' });
+        res.status(200).json({ message: 'Post deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// Update post by ID
+exports.updatePostById = async (req, res) => {
+    try {
+        const post = await Post.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+        if (!post) return res.status(404).json({ message: 'Post not found' });
+        res.status(200).json(post);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
+// Update post by title
+exports.updatePostByTitle = async (req, res) => {
+    try {
+        const post = await Post.findOneAndUpdate({ title: req.params.title }, req.body, { new: true, runValidators: true });
+        if (!post) return res.status(404).json({ message: 'Post not found' });
+        res.status(200).json(post);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
     }
 };

@@ -2,27 +2,44 @@ import React, {useEffect, useState} from 'react';
 import TagSelector from '../TagSelector';
 import { tags as mockTags } from "../../database/mockPostData";
 import QuillEditor  from "../QuillEditor";
-import {createPost, fetchPosts} from "../../database/db";
+import {createComment, createPost, createTag, createUser, fetchPosts} from "../../database/db";
 
 const BlogPost = ({ addPost }) => {
-    const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [selectedTags, setSelectedTags] = useState([]);
     const [error, setError] = useState('');
+    const [title, setTitle] = useState('');
+    const [tags, setTags] = useState([]);
+    const [comments, setComments] = useState([]);
+    const [benutzername, setBenutzername] = useState('');
 
     const availableTags = mockTags;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         try {
+            const newComment = {
+                content:'my first comment',
+                postId:'26522fgdztt72g224433r',
+                authorId:'87466t44663772',
+            };
+            const newTag = {
+                name:'ocean',
+                color:'red',
+            };
+            const responseTag = await createTag(newTag);
+            const responseContent = await createComment(newComment);
             const newPost = {
-                author: '',
-                title: 'Hallo',
-                content: 'Test',
+                benutzername: 'Medede',
+                title: title,
+                content: content,
                 likes: [],
                 comments: [],
-                tags: []
+                tags: [],
             };
+
+
             // Post erstellen
             const response = await createPost(newPost);
             addPost(newPost);
@@ -40,7 +57,7 @@ const BlogPost = ({ addPost }) => {
     const medede372433 = '667c1af03545e00aa69c6401'
     const [users, setUsers] = useState([]);
 
-    const newUser = {  _id: medede372433,
+    const newUser = {  _id: '667c9028fcf07fcdd9199a8a',
                             firstName: 'Medede',
                             lastName: 'Markus',
                             username: 'Mazlum',
@@ -49,13 +66,17 @@ const BlogPost = ({ addPost }) => {
                             profilePicture: 'https://randomuser.me/api/portraits'
     };
 
-    useEffect(() => {
-        const test = async () => {setUsers(await fetchPosts());}
+   /* useEffect(() => {
+        const test = async () => {await createUser({  lastName: 'Markus',
+            username: 'Mazlum',
+            password: '12834754',
+            role: 'mod',
+            profilePicture: 'https://randomuser.me/api/portraits'})}
         test();
-
-        const test2 = async () => {await createPost({ author: newUser._id, title: 'Hallo', content: 'Test', likes: ['564564', '5435'], comments: [''], tags: [''] })}
+//authorId: newUser._id,
+        const test2 = async () => {await createPost({ benutzername:'Abalo', title: 'Halloeman', content: 'Testerff', likes: ['564564q', '5435q'], comments: [''], tags: [''] })}
         test2().then(r => console.log(r));
-    }, []);
+    }, []);*/
 
     return (
         <>
