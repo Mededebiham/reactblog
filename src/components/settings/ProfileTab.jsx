@@ -3,7 +3,9 @@ import React from 'react';
 const ProfileTab = () => {
     return (
         <div>
-            ProfileTab
+            - Change Password
+            - Change Email
+            - Default Dark Mode
         </div>
     );
 };

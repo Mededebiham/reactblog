@@ -3,7 +3,9 @@ import React from 'react';
 const UserSettingsTab = () => {
     return (
         <div>
-            User Einstellungen
+            - Upload Profile Picture
+            - Change Name
+            - Change Description
         </div>
     );
 };
