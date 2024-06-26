@@ -44,7 +44,7 @@ const CreatePost = () => {
         setPosts(updatedPosts);
     };
 
-    if (user.role !== 'admin') {
+    if (user.role !== 'admin' || user.role === 'mod') {
         return null;
     }
 
