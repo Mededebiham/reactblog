@@ -21,7 +21,7 @@ const PostHeader = ({post}) => {
                 <h5 className="mb-2 text-xl font-medium tracking-tight text-text">{post.title}</h5>
                 <PostTags post={post}/>
             </div>
-            <div className="flex flex-col items-end">
+            <div className="flex flex-col items-end ml-4">
                 { canEdit && <Link to={`/post/edit/${post.id}`} className="text-sm text-overlay0 hover:text-yellow mb-1">Bearbeiten</Link> }
                 <div
                     className="flex flex-col items-end text-sm justify-start pl-2 border-l-2 border-l-text">
