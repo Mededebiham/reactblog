@@ -10,7 +10,7 @@
 }
 
 .ql-container {
-    @apply bg-base text-text dark:bg-text dark:text-base rounded-b;
+    @apply bg-surface2 text-text text-[1rem] rounded-b;
 }
 
 .ql-toolbar {
