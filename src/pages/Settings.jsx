@@ -1,25 +1,26 @@
 import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context';
+import SettingsMenu from "../components/settings/SettingsMenu";
 
 const Settings = () => {
-    const { userRole } = useContext(UserContext);
+    const { user } = useContext(UserContext);
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!userRole) {
+        if (!user.role) {
             navigate('/login');
         }
-    }, [userRole, navigate]);
+    }, [user, navigate]);
 
-    if (!userRole) {
+    if (!user.role) {
         return null;
     }
 
     return (
-        <div>
-            User Settings
-        </div>
+        <>
+            <SettingsMenu />
+        </>
     );
 };
 
