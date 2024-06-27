@@ -10,7 +10,7 @@ const PostHeader = ({post}) => {
     const post1 = {
         author: {
             name: 'Admin',
-            id: 1,
+            _id: 1,
         },
         date: '01.01.1900',
     }
@@ -22,13 +22,12 @@ const PostHeader = ({post}) => {
                 <PostTags post={post}/>
             </div>
             <div className="flex flex-col items-end ml-4">
-
                 <div
-                    className="flex flex-col items-end text-sm justify-start pl-2 border-l-2 border-l-text">
+                    className="flex flex-col items-end text-sm justify-start pl-2 border-l-2 border-l-surface2">
                     <span className="">{post1.date}</span>
                     <Link to='#' className="text-blue hover:text-yellow">{post1.author.name}</Link>
                 </div>
-                { canEdit && <Link to={`/post/edit/${post.id}`} className="text-sm text-surface0 hover:text-yellow mt-1">Bearbeiten</Link> }
+                { canEdit && <Link to={`/post/edit/${post._id}`} className="text-sm text-surface0 hover:text-yellow mt-1">Bearbeiten</Link> }
             </div>
         </div>
     );

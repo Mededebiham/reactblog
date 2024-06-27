@@ -18,7 +18,7 @@ const BlogPost = ({ addPost }) => {
                 const tags = await getTags();
                 setAvailableTags(tags);
             } catch (error) {
-                setError('Failed to fetch tags');
+                setError('Fehler beim Laden der Tags');
             }
         };
 
@@ -43,7 +43,7 @@ const BlogPost = ({ addPost }) => {
         e.preventDefault();
 
         if (!user._id) {
-            setError('User is not logged in');
+            setError('Bitte einloggen, um einen Beitrag zu erstellen');
             return;
         }
 
