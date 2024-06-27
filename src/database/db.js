@@ -285,21 +285,30 @@ const updateTag = async (tag) => {
             },
             body: JSON.stringify(tag)
         });
+        if (!response.ok) {
+            throw new Error(`Error updating tag: ${response.statusText}`);
+        }
         return await response.json();
     } catch (error) {
         console.error('Error updating tag:', error);
+        throw error;
     }
 };
 
 const deleteTag = async (tagId) => {
     try {
-        await fetch(`${API_BASE_URL}/tags/${tagId}`, {
+        const response = await fetch(`${API_BASE_URL}/tags/${tagId}`, {
             method: 'DELETE'
         });
+        if (!response.ok) {
+            throw new Error(`Error deleting tag: ${response.statusText}`);
+        }
     } catch (error) {
         console.error('Error deleting tag:', error);
+        throw error;
     }
 };
+
 
 const deleteAllTags = async () => {
     try {
