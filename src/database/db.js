@@ -278,7 +278,7 @@ const createTag = async (tag) => {
 
 const updateTag = async (tag) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/tags/${tag.id}`, {
+        const response = await fetch(`${API_BASE_URL}/tags/${tag._id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

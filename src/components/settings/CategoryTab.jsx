@@ -12,13 +12,18 @@ const CategoryTab = () => {
 
     useEffect(() => {
         if (user.role === 'admin' || user.role === 'mod') {
-            getTags().then(fetchedTags => {
-                setTags(fetchedTags);
-            }).catch(error => {
-                console.error('Error fetching tags:', error);
-            });
+            fetchTags();
         }
     }, [user.role]);
+
+    const fetchTags = async () => {
+        try {
+            const fetchedTags = await getTags();
+            setTags(fetchedTags);
+        } catch (error) {
+            console.error('Error fetching tags:', error);
+        }
+    };
 
     if (user.role !== 'admin' && user.role !== 'mod') {
         return null;
@@ -31,7 +36,7 @@ const CategoryTab = () => {
 
     const handleEditTag = (tag) => {
         setIsNewTag(false);
-        setTagId(tag.id);
+        setTagId(tag._id);
     };
 
     return (
@@ -43,7 +48,13 @@ const CategoryTab = () => {
                     Neue Kategorie erstellen
                 </button>, oder aus existierender auswählen zum Bearbeiten.
             </p>
-            <CreateTag visible={isNewTag !== null} isNewTag={isNewTag} setIsNewTag={setIsNewTag} tagId={tagId} />
+            <CreateTag
+                visible={isNewTag !== null}
+                isNewTag={isNewTag}
+                setIsNewTag={setIsNewTag}
+                tagId={tagId}
+                updateTagPool={fetchTags}
+            />
         </div>
     );
 };

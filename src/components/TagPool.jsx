@@ -18,8 +18,8 @@ const TagPool = ({ tags, onClick = null, onClickReset = null }) => {
         <div className="flex flex-wrap bg-mantle p-4 rounded-xl">
             {tags.map((tag) => (
                 <TagBadge
-                    onClick={tag.id ? () => handleClick(tag) : handleResetClick}
-                    key={tag.id}
+                    onClick={tag._id ? () => handleClick(tag) : handleResetClick}
+                    key={tag._id}
                     bgColor={tag.color}
                 >
                     {tag.name}

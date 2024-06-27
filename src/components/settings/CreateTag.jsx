@@ -2,26 +2,30 @@ import React, { useEffect, useState } from 'react';
 import ColorPicker from "../ColorPicker";
 import Button from "../parts/Button";
 import TagBadge from "../TagBadge";
-import { createTag, updateTag, deleteTag, getTags, getTagById } from "../../database/db";
-import { tags } from "../../database/mockPostData";
+import { createTag, updateTag, deleteTag, getTagById } from "../../database/db";
 
-
-
-const CreateTag = ({ visible = false, isNewTag, setIsNewTag, tagId }) => {
+const CreateTag = ({ visible = false, isNewTag, setIsNewTag, tagId, updateTagPool }) => {
     const [selectedColor, setSelectedColor] = useState("bg-blue");
     const [error, setError] = useState("");
     const [tagName, setTagName] = useState("");
 
     useEffect(() => {
-        const tagArray = Object.values(tags);
-        const tagToEdit = tagArray.find(tag => tag.id === tagId);
-
-        setTagName(tagToEdit ? tagToEdit.name : "");
-        setSelectedColor(tagToEdit ? tagToEdit.color : "bg-blue");
-        setError("");
+        if (tagId && tagId !== 'new') {
+            getTagById(tagId)
+                .then(tagToEdit => {
+                    setTagName(tagToEdit ? tagToEdit.name : "");
+                    setSelectedColor(tagToEdit ? tagToEdit.color : "bg-blue");
+                    setError("");
+                })
+                .catch(e => setError("Unerwarteter Fehler: " + e.message));
+        } else {
+            setTagName("");
+            setSelectedColor("bg-blue");
+            setError("");
+        }
     }, [tagId]);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const newTag = {
@@ -29,23 +33,29 @@ const CreateTag = ({ visible = false, isNewTag, setIsNewTag, tagId }) => {
             color: selectedColor
         };
 
-        if (tagId !== 'new' && tagId !== null) {
-            newTag.id = tagId;
-            updateTag(newTag)
-                .then(() => resetForm())
-                .catch(e => setError("Unerwarteter Fehler: " + e.message));
-        } else {
-            createTag(newTag)
-                .then(() => resetForm())
-                .catch(e => setError("Unerwarteter Fehler: " + e.message));
+        try {
+            if (tagId !== 'new' && tagId !== null) {
+                newTag._id = tagId;
+                await updateTag(newTag);
+            } else {
+                await createTag(newTag);
+            }
+            resetForm();
+            updateTagPool();
+        } catch (e) {
+            setError("Unerwarteter Fehler: " + e.message);
         }
     };
 
-    const handleDelete = () => {
-        if (tagId !== 'new' && tagId !== null) {
-            deleteTag(tagId)
-                .then(() => resetForm())
-                .catch(e => setError("Unerwarteter Fehler: " + e.message));
+    const handleDelete = async () => {
+        try {
+            if (tagId !== 'new' && tagId !== null) {
+                await deleteTag(tagId);
+                resetForm();
+                updateTagPool();
+            }
+        } catch (e) {
+            setError("Unerwarteter Fehler: " + e.message);
         }
     };
 
@@ -55,10 +65,8 @@ const CreateTag = ({ visible = false, isNewTag, setIsNewTag, tagId }) => {
         setIsNewTag(null);
     };
 
-    const handleChange = async (e) => {
+    const handleChange = (e) => {
         setTagName(e.target.value);
-        console.log(tags);
-        console.log(await getTags());
     };
 
     return (
