@@ -1,347 +1,56 @@
-import {useState} from "react";
-
 const API_BASE_URL = 'http://localhost:5001/api';
 
-// Benutzer Funktionen
-const getUsers = async () => {
+// Helper function for making API requests
+const apiRequest = async (url, method = 'GET', data = null) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/users`);
-        return await response.json();
-    } catch (error) {
-        console.error('Error fetching users:', error);
-    }
-};
-
-const getUserById = async (userId) => {
-    try {
-        const response = await fetch(`${API_BASE_URL}/users/${userId}`);
-        return await response.json();
-    } catch (error) {
-        console.error(`Error fetching user with id ${userId}:`, error);
-    }
-};
-export const loginUser = async (benutzername, passwort) => {
-    try {
-        const res = await fetch.post(`${API_BASE_URL}/users`, {
-            benutzername,
-            passwort,
-        });
-        return res.data;
-    } catch (error) {
-        throw error.response.data;
-    }
-};
-export const registerUser = async (nachname, vorname, benutzername, passwort) => {
-    try {
-        const res = await fetch.post(`${API_BASE_URL}/users`, {
-            nachname,
-            vorname,
-            benutzername,
-            passwort,
-        });
-        return res.data;
-    } catch (error) {
-        throw error.response.data;
-    }
-};
-
-const createUser = async (user) => {
-
-    try {
-        const response = await fetch(`${API_BASE_URL}/users`, {
-            method: 'POST',
+        const options = {
+            method,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(user)
-        });
-
-        return await response.json();
-    } catch (error) {
-        console.error('Error creating user:', error);
-    }
-};
-const updateUser = async (user) => {
-    try {
-        const response = await fetch(`${API_BASE_URL}/users/${user.id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(user)
-        });
-        return await response.json();
-    } catch (error) {
-        console.error('Error updating user:', error);
-    }
-};
-
-const deleteUser = async (userId) => {
-    try {
-        await fetch(`${API_BASE_URL}/users/${userId}`, {
-            method: 'DELETE'
-        });
-    } catch (error) {
-        console.error('Error deleting user:', error);
-    }
-};
-
-const deleteAllUsers = async () => {
-    try {
-        await fetch(`${API_BASE_URL}/users`, {
-            method: 'DELETE'
-        });
-    } catch (error) {
-        console.error('Error deleting all users:', error);
-    }
-};
-
-// Post Funktionen
-const getPosts = async () => {
-    try {
-        const response = await fetch(`${API_BASE_URL}/posts`);
-        return await response.json();
-    } catch (error) {
-        console.error('Error fetching posts:', error);
-    }
-};
-
-const getPostById = async (postId) => {
-    try {
-        const response = await fetch(`${API_BASE_URL}/posts/${postId}`);
-        return await response.json();
-    } catch (error) {
-        console.error(`Error fetching post with id ${postId}:`, error);
-    }
-};
-
-const createPost = async (post) => {
-    try {
-        const response = await fetch(`${API_BASE_URL}/posts`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(post)
-        });
-        return await response.json();
-    } catch (error) {
-        console.error('Error creating post:', error);
-    }
-};
-
-const updatePost = async (post) => {
-    try {
-        const response = await fetch(`${API_BASE_URL}/posts/${post.id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(post)
-        });
-        return await response.json();
-    } catch (error) {
-        console.error('Error updating post:', error);
-    }
-};
-
-const deletePost = async (postId) => {
-    try {
-        await fetch(`${API_BASE_URL}/posts/${postId}`, {
-            method: 'DELETE'
-        });
-    } catch (error) {
-        console.error('Error deleting post:', error);
-    }
-};
-
-const deleteAllPosts = async () => {
-    try {
-        await fetch(`${API_BASE_URL}/posts`, {
-            method: 'DELETE'
-        });
-    } catch (error) {
-        console.error('Error deleting all posts:', error);
-    }
-};
-
-// Kommentar Funktionen
-const getComments = async () => {
-    try {
-        const response = await fetch(`${API_BASE_URL}/comments`);
-        return await response.json();
-    } catch (error) {
-        console.error('Error fetching comments:', error);
-    }
-};
-
-const getCommentById = async (commentId) => {
-    try {
-        const response = await fetch(`${API_BASE_URL}/comments/${commentId}`);
-        return await response.json();
-    } catch (error) {
-        console.error(`Error fetching comment with id ${commentId}:`, error);
-    }
-};
-
-const createComment = async (comment) => {
-    try {
-        const response = await fetch(`${API_BASE_URL}/comments`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(comment)
-        });
-        return await response.json();
-    } catch (error) {
-        console.error('Error creating comment:', error);
-    }
-};
-
-const updateComment = async (comment) => {
-    try {
-        const response = await fetch(`${API_BASE_URL}/comments/${comment.id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(comment)
-        });
-        return await response.json();
-    } catch (error) {
-        console.error('Error updating comment:', error);
-    }
-};
-
-const deleteComment = async (commentId) => {
-    try {
-        await fetch(`${API_BASE_URL}/comments/${commentId}`, {
-            method: 'DELETE'
-        });
-    } catch (error) {
-        console.error('Error deleting comment:', error);
-    }
-};
-
-const deleteAllCommentsForPost = async (postId) => {
-    try {
-        await fetch(`${API_BASE_URL}/comments/all/${postId}`, {
-            method: 'DELETE'
-        });
-    } catch (error) {
-        console.error('Error deleting all comments for post:', error);
-    }
-};
-
-// Tag Funktionen
-const getTags = async () => {
-    try {
-        const response = await fetch(`${API_BASE_URL}/tags`);
-        return await response.json();
-    } catch (error) {
-        console.error('Error fetching tags:', error);
-    }
-};
-
-const getTagById = async (tagId) => {
-    try {
-        const response = await fetch(`${API_BASE_URL}/tags/${tagId}`);
-        return await response.json();
-    } catch (error) {
-        console.error(`Error fetching tag with id ${tagId}:`, error);
-    }
-};
-
-const createTag = async (tag) => {
-    try {
-        const response = await fetch(`${API_BASE_URL}/tags`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(tag)
-        });
-
+            body: data ? JSON.stringify(data) : null,
+        };
+        const response = await fetch(url, options);
         if (!response.ok) {
             const errorResponse = await response.json();
-            throw new Error(errorResponse.message || 'Failed to create tag');
-        }
-
-        return await response.json();
-    } catch (error) {
-        console.error('Error creating tag:', error);
-        throw error;
-    }
-};
-
-const updateTag = async (tag) => {
-    try {
-        const response = await fetch(`${API_BASE_URL}/tags/${tag._id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(tag)
-        });
-        if (!response.ok) {
-            throw new Error(`Error updating tag: ${response.statusText}`);
+            throw new Error(errorResponse.message || 'API request failed');
         }
         return await response.json();
     } catch (error) {
-        console.error('Error updating tag:', error);
+        console.error(`Error with ${method} request to ${url}:`, error);
         throw error;
     }
 };
 
-const deleteTag = async (tagId) => {
-    try {
-        const response = await fetch(`${API_BASE_URL}/tags/${tagId}`, {
-            method: 'DELETE'
-        });
-        if (!response.ok) {
-            throw new Error(`Error deleting tag: ${response.statusText}`);
-        }
-    } catch (error) {
-        console.error('Error deleting tag:', error);
-        throw error;
-    }
-};
+// Benutzer Funktionen
+export const getUsers = () => apiRequest(`${API_BASE_URL}/users`);
+export const getUserById = (userId) => apiRequest(`${API_BASE_URL}/users/${userId}`);
+export const createUser = (user) => apiRequest(`${API_BASE_URL}/users`, 'POST', user);
+export const updateUser = (user) => apiRequest(`${API_BASE_URL}/users/${user._id}`, 'PUT', user);
+export const deleteUser = (userId) => apiRequest(`${API_BASE_URL}/users/${userId}`, 'DELETE');
+export const deleteAllUsers = () => apiRequest(`${API_BASE_URL}/users`, 'DELETE');
+export const loginUser = (credentials) => apiRequest(`${API_BASE_URL}/users/login`, 'POST', credentials);
 
+// Post Funktionen
+export const getPosts = () => apiRequest(`${API_BASE_URL}/posts`);
+export const getPostById = (postId) => apiRequest(`${API_BASE_URL}/posts/${postId}`);
+export const createPost = (post) => apiRequest(`${API_BASE_URL}/posts`, 'POST', post);
+export const updatePost = (post) => apiRequest(`${API_BASE_URL}/posts/${post._id}`, 'PUT', post);
+export const deletePost = (postId) => apiRequest(`${API_BASE_URL}/posts/${postId}`, 'DELETE');
+export const deleteAllPosts = () => apiRequest(`${API_BASE_URL}/posts`, 'DELETE');
 
-const deleteAllTags = async () => {
-    try {
-        await fetch(`${API_BASE_URL}/tags`, {
-            method: 'DELETE'
-        });
-    } catch (error) {
-        console.error('Error deleting all tags:', error);
-    }
-};
-// Export aller Funktionen
-export {
-    getUsers,
-    getUserById,
-    createUser,
-    updateUser,
-    deleteUser,
-    deleteAllUsers,
-    getPosts,
-    getPostById,
-    createPost,
-    updatePost,
-    deletePost,
-    deleteAllPosts,
-    getComments,
-    getCommentById,
-    createComment,
-    updateComment,
-    deleteComment,
-    deleteAllCommentsForPost,
-    getTags,
-    getTagById,
-    createTag,
-    updateTag,
-    deleteTag,
-    deleteAllTags,
-};
+// Kommentar Funktionen
+export const getComments = () => apiRequest(`${API_BASE_URL}/comments`);
+export const getCommentById = (commentId) => apiRequest(`${API_BASE_URL}/comments/${commentId}`);
+export const createComment = (comment) => apiRequest(`${API_BASE_URL}/comments`, 'POST', comment);
+export const updateComment = (comment) => apiRequest(`${API_BASE_URL}/comments/${comment._id}`, 'PUT', comment);
+export const deleteComment = (commentId) => apiRequest(`${API_BASE_URL}/comments/${commentId}`, 'DELETE');
+export const deleteAllCommentsForPost = (postId) => apiRequest(`${API_BASE_URL}/comments/all/${postId}`, 'DELETE');
+
+// Tag Funktionen
+export const getTags = () => apiRequest(`${API_BASE_URL}/tags`);
+export const getTagById = (tagId) => apiRequest(`${API_BASE_URL}/tags/${tagId}`);
+export const createTag = (tag) => apiRequest(`${API_BASE_URL}/tags`, 'POST', tag);
+export const updateTag = (tag) => apiRequest(`${API_BASE_URL}/tags/${tag._id}`, 'PUT', tag);
+export const deleteTag = (tagId) => apiRequest(`${API_BASE_URL}/tags/${tagId}`, 'DELETE');
+export const deleteAllTags = () => apiRequest(`${API_BASE_URL}/tags`, 'DELETE');

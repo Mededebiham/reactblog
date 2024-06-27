@@ -1,9 +1,9 @@
 const Post = require('../models/Post');
 exports.createPost = async (req, res) => {
     try {
-        const { benutzername,title, content, likes, tags, comments } = req.body;
+        const { username,title, content, likes, tags, comments } = req.body;
         const post = new Post({
-            benutzername,
+            username,
             title,
             content,
             likes: likes || [],
