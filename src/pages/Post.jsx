@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Link from "../components/parts/Link";
-import { getPostById, getTags, updatePost } from "../database/db";
+import { getPostById, getTags, updatePost, createComment } from "../database/db";
 import PostCard from "../components/posts/PostCard";
 import PostFooter from "../components/posts/PostFooter";
 import Comments from "../components/Comments";
 import { UserContext } from "../context";
 import PostsFooter from "../components/posts/PostsFooter";
+import CreateComment from "../components/CreateComment";
 
 const Post = () => {
     const { id } = useParams();
@@ -15,7 +16,7 @@ const Post = () => {
 
     const [post, setPost] = useState(null);
     const [tags, setTags] = useState([]);
-    const [showComments, setShowComments] = useState(false);
+    const [showCreateComment, setShowCreateComment] = useState(false);
     const [likeCount, setLikeCount] = useState(0);
     const [liked, setLiked] = useState(false);
 
@@ -31,11 +32,11 @@ const Post = () => {
                     tags: fetchedPost.tags.map(tagId => fetchedTags.find(tag => tag._id === tagId))
                 };
                 setPost(postWithTags);
-                setLikeCount(postWithTags.likes.length); // Initialize like count
-                setLiked(fetchedPost.likes.includes(user._id)); // Check if user has already liked the post
+                setLikeCount(postWithTags.likes.length);
+                setLiked(fetchedPost.likes.includes(user._id));
             } catch (error) {
                 console.error('Error fetching post and tags:', error);
-                navigate('/posts'); // Redirect if post is not found
+                navigate('/posts');
             }
         };
 
@@ -43,11 +44,11 @@ const Post = () => {
     }, [id, navigate, user._id]);
 
     const toggleComment = () => {
-        setShowComments(!showComments);
+        setShowCreateComment(!showCreateComment);
     }
 
     const toggleLike = async () => {
-        if (!user._id) return; // Do nothing if the user is not logged in
+        if (!user._id) return;
 
         try {
             let updatedLikes;
@@ -69,6 +70,27 @@ const Post = () => {
             setLiked(!liked);
         } catch (error) {
             console.error('Error updating post likes:', error);
+        }
+    }
+
+    const addComment = async (content) => {
+        try {
+            const newComment = await createComment({
+                content,
+                postid: post._id,
+                authorid: user._id
+            });
+
+            const updatedComments = [...post.comments, newComment._id];
+            const updatedPost = {
+                ...post,
+                comments: updatedComments
+            };
+
+            await updatePost(updatedPost);
+            setPost(updatedPost);
+        } catch (error) {
+            console.error('Error adding comment:', error);
         }
     }
 
@@ -101,7 +123,8 @@ const Post = () => {
                         />
                     ) : <PostsFooter post={post} hideReadMore={true} />}
                 </PostCard>
-                {showComments && <Comments comments={post.comments} />}
+                {post.comments.length > 0 && <Comments commentIds={post.comments} addComment={addComment} />}
+                {showCreateComment && <CreateComment addComment={addComment} />}
             </ul>
         </div>
     );

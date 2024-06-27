@@ -1,6 +1,5 @@
 const API_BASE_URL = 'http://localhost:5001/api';
 
-// Helper function for making API requests
 const apiRequest = async (url, method = 'GET', data = null) => {
     try {
         const options = {
@@ -21,6 +20,7 @@ const apiRequest = async (url, method = 'GET', data = null) => {
         throw error;
     }
 };
+
 
 // Benutzer Funktionen
 export const getUsers = () => apiRequest(`${API_BASE_URL}/users`);

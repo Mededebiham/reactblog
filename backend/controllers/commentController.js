@@ -12,6 +12,21 @@ exports.getCommentsForPost = async (req, res) => {
     }
 };
 
+exports.getCommentById = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const comment = await Comment.findById(id);
+        console.log('Fetched comment:', comment); // Debugging line
+        if (!comment) {
+            return res.status(404).json({ message: 'Comment not found' });
+        }
+        res.status(200).json(comment);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
 exports.createComment = async (req, res) => {
     const {  content,postid,authorid } = req.body;
     try {
