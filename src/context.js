@@ -32,7 +32,7 @@ const UserProvider = ({ children }) => {
     };
 
     const isValidUser = (userObj) => {
-        const keys = ['id', 'firstName', 'lastName', 'email', 'password', 'role', 'profilePicture'];
+        const keys = ['_id', 'firstname', 'lastname', 'email', 'password', 'role', 'profilepicture'];
         return keys.every(key => key in userObj);
     };
 
