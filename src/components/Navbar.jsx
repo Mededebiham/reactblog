@@ -11,7 +11,6 @@ const brightnessMode = {
 };
 
 const Navbar = () => {
-
     const [isDark, setIsDark] = useState(true);
     const [userIconVisibility, setUserIconVisibility] = useState(false);
     const [filteredRoutes, setFilteredRoutes] = useState([]);
@@ -28,23 +27,19 @@ const Navbar = () => {
         }
     };
 
-    const toggleLoginAndIcon = () => {
-        const newUser = user.role === 'admin' ? initialUserState : {
-            _id: null,
-            firstname: 'Admin',
-            lastname: 'User',
-            email: 'admin@example.com',
-            password: 'password',
-            role: 'admin',
-            profilepicture: 'path/to/picture.jpg'
-        };
-        setUser(newUser);
-        setUserIconVisibility(!userIconVisibility);
+    const logout = () => {
+        setUser(initialUserState);
+        setUserIconVisibility(false);
     };
 
     useEffect(() => {
         const visibleRoutes = routes.filter(route => route.renderNav && (route.userRole === null || route.userRole === user.role));
         setFilteredRoutes(visibleRoutes);
+        if (user._id) {
+            setUserIconVisibility(true);
+        } else {
+            setUserIconVisibility(false);
+        }
     }, [user]);
 
     const shouldRenderNavLinks = () => {
@@ -62,7 +57,7 @@ const Navbar = () => {
                     <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
                         <ul className={`${userIconVisibility ? "hidden" : ""} flex items-center`}>
                             <li className="mx-2">
-                                <button onClick={toggleLoginAndIcon}>Einloggen</button>
+                                <Link to="/login">Einloggen</Link>
                             </li>
                             <li className="mx-2"><Link to="/register">Registrieren</Link></li>
                         </ul>
@@ -79,7 +74,7 @@ const Navbar = () => {
                             id="user-dropdown">
                             <div className="px-4 py-3">
                                 <span className="block text-sm text-text">{user.firstname} {user.lastname}</span>
-                                <span className="block text-sm  text-overlay1 truncate">{user.email}</span>
+                                <span className="block text-sm  text-overlay1 truncate">{user.username}</span>
                             </div>
                             <ul className="py-2" aria-labelledby="user-menu-button">
                                 <li>
@@ -91,7 +86,7 @@ const Navbar = () => {
                                              className="block px-4 py-2 text-sm text-text hover:bg-surface0 w-full text-left">Einstellungen</NavLink>
                                 </li>
                                 <li>
-                                    <button onClick={toggleLoginAndIcon}
+                                    <button onClick={logout}
                                             className="block px-4 py-2 text-sm text-text hover:bg-surface0 w-full text-left">Ausloggen
                                     </button>
                                 </li>
