@@ -1,82 +1,86 @@
-import React, {useEffect, useState} from 'react';
-import TagSelector from '../TagSelector';
-import { tags as mockTags } from "../../database/mockPostData";
-import QuillEditor  from "../QuillEditor";
-import {createComment, createPost, createTag, createUser, fetchPosts} from "../../database/db";
+import React, { useState, useContext, useEffect } from 'react';
+import TagPool from '../TagPool';
+import QuillEditor from "../QuillEditor";
+import { createPost, getTags } from "../../database/db";
+import { UserContext } from '../../context';
 
 const BlogPost = ({ addPost }) => {
     const [content, setContent] = useState('');
     const [selectedTags, setSelectedTags] = useState([]);
     const [error, setError] = useState('');
     const [title, setTitle] = useState('');
-    const [tags, setTags] = useState([]);
-    const [comments, setComments] = useState([]);
-    const [benutzername, setBenutzername] = useState('');
+    const [availableTags, setAvailableTags] = useState([]);
+    const { user } = useContext(UserContext);
 
-    const availableTags = mockTags;
+    useEffect(() => {
+        const fetchTags = async () => {
+            try {
+                const tags = await getTags();
+                setAvailableTags(tags);
+            } catch (error) {
+                setError('Failed to fetch tags');
+            }
+        };
+
+        fetchTags();
+    }, []);
+
+    const handleTagClickAvailable = (tag, event) => {
+        event.preventDefault();
+        if (selectedTags.length < 3) {
+            setSelectedTags(prevSelectedTags => [...prevSelectedTags, tag]);
+        } else {
+            console.log("Max 3 tags allowed");
+        }
+    };
+
+    const handleTagClickSelected = (tag, event) => {
+        event.preventDefault();
+        setSelectedTags(prevSelectedTags => prevSelectedTags.filter(t => t._id !== tag._id));
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (!user._id) {
+            setError('User is not logged in');
+            return;
+        }
+
+        if (selectedTags.length === 0) {
+            setError('Bitte mindestens einen Tag auswählen');
+            return;
+        }
+
         try {
-            const newComment = {
-                content:'my first comment',
-                postId:'26522fgdztt72g224433r',
-                authorId:'87466t44663772',
-            };
-            const responseContent = await createComment(newComment);
             const newPost = {
-                benutzername: 'Medede',
-                title: title,
-                content: content,
+                userid: user._id,
+                title,
+                content,
                 likes: [],
+                tags: selectedTags.map(tag => tag._id),
                 comments: [],
-                tags: [],
             };
 
+            console.log('Sending post data to backend:', newPost); // Debug log
 
-            // Post erstellen
             const response = await createPost(newPost);
-            addPost(newPost);
+            addPost(response); // Assuming response contains the created post
             setTitle('');
             setContent('');
-            setSelectedTags([]);
+            setSelectedTags([]); // Clear the selection state as well
             alert(response.message || 'Post erfolgreich erstellt!');
-
 
         } catch (error) {
             setError(error.message || 'Serverfehler');
         }
     };
 
-    const medede372433 = '667c1af03545e00aa69c6401'
-    const [users, setUsers] = useState([]);
-
-    const newUser = {  _id: '667c9028fcf07fcdd9199a8a',
-                            firstName: 'Medede',
-                            lastName: 'Markus',
-                            username: 'Mazlum',
-                            password: '12834754',
-                            role: 'mod',
-                            profilePicture: 'https://randomuser.me/api/portraits'
-    };
-
-   /* useEffect(() => {
-        const test = async () => {await createUser({  lastName: 'Markus',
-            username: 'Mazlum',
-            password: '12834754',
-            role: 'mod',
-            profilePicture: 'https://randomuser.me/api/portraits'})}
-        test();
-//authorId: newUser._id,
-        const test2 = async () => {await createPost({ benutzername:'Abalo', title: 'Halloeman', content: 'Testerff', likes: ['564564q', '5435q'], comments: [''], tags: [''] })}
-        test2().then(r => console.log(r));
-    }, []);*/
-
     return (
-        <>
+        <div>
             <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-4 bg-surface0 shadow-md rounded-lg">
                 <h2 className="text-2xl font-bold mb-4">Neuen Beitrag erstellen</h2>
+                {error && <p className="text-red-500">{error}</p>}
                 <div className="mb-4">
                     <label className="block text-text">Titel</label>
                     <input
@@ -89,19 +93,23 @@ const BlogPost = ({ addPost }) => {
                 </div>
                 <div className="mb-16 h-full">
                     <label className="block text-text">Inhalt</label>
-                    <QuillEditor value={content} onChange={setContent}/>
+                    <QuillEditor value={content} onChange={setContent} />
                 </div>
-                <TagSelector
-                    availableTags={availableTags}
-                    selectedTags={selectedTags}
-                    setSelectedTags={setSelectedTags}
-                />
+                <div className="mt-4">
+                    <div>
+                        <label className="block text-text mb-2">Verfügbare Tags</label>
+                        <TagPool tags={availableTags} onClick={handleTagClickAvailable} />
+                    </div>
+                    <div className={`${selectedTags.length < 1 ? "hidden" : ""}`}>
+                        <label className="block text-text mt-4 mb-2">Ausgewählte Tags</label>
+                        <TagPool tags={selectedTags} onClick={handleTagClickSelected} />
+                    </div>
+                </div>
                 <button type="submit" className="w-full p-2 bg-blue text-base rounded hover:bg-sapphire mt-4">
                     Beitrag erstellen
                 </button>
-                {users.map(user => <div key={user._id}>{user._id}</div>)}
             </form>
-        </>
+        </div>
     );
 };
 

@@ -1,9 +1,10 @@
 const Post = require('../models/Post');
+
 exports.createPost = async (req, res) => {
     try {
-        const { username,title, content, likes, tags, comments } = req.body;
+        const { userid, title, content, likes, tags, comments } = req.body;
         const post = new Post({
-            username,
+            userid,
             title,
             content,
             likes: likes || [],
@@ -16,6 +17,7 @@ exports.createPost = async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 };
+
 
 // Get all posts
 exports.getAllPosts = async (req, res) => {

@@ -1,16 +1,10 @@
 import React from 'react';
 import TagBadge from "./TagBadge";
 
-const TagPool = ({ tags, onClick = null, onClickReset = null }) => {
-    const handleClick = (tag) => {
+const TagPool = ({ tags, onClick }) => {
+    const handleClick = (tag, event) => {
         if (onClick) {
-            onClick(tag);
-        }
-    };
-
-    const handleResetClick = () => {
-        if (onClickReset) {
-            onClickReset();
+            onClick(tag, event);
         }
     };
 
@@ -18,7 +12,7 @@ const TagPool = ({ tags, onClick = null, onClickReset = null }) => {
         <div className="flex flex-wrap bg-mantle p-4 rounded-xl">
             {tags.map((tag) => (
                 <TagBadge
-                    onClick={tag._id ? () => handleClick(tag) : handleResetClick}
+                    onClick={(event) => handleClick(tag, event)}
                     key={tag._id}
                     bgColor={tag.color}
                 >

@@ -1,31 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const classNames = "text-mantle text-sm font-medium me-2 px-2.5 py-0.5 rounded-full mb-1"
+const classNames = "text-mantle text-sm font-medium me-2 px-2.5 py-0.5 rounded-full mb-1";
 
-const TagBadge = ({ children, onClick, bgColor = "bg-text", key, className = "" }) => {
+const TagBadge = ({ children, onClick, bgColor = "bg-text", className = "" }) => {
     const styles = `${bgColor} ${classNames} ${className}`;
 
-    if (onClick) {
-        return (
-            <button onClick={onClick} key={key} className={styles}>
-                {children}
-            </button>
-        );
-    } else {
-        return (
-            <span key={key} className={styles}>
-                {children}
-            </span>
-        );
-    }
+    const handleClick = (event) => {
+        event.stopPropagation();
+        event.preventDefault();
+        if (onClick) {
+            onClick(event);
+        }
+    };
+
+    return (
+        <button onClick={handleClick} className={styles}>
+            {children}
+        </button>
+    );
 };
 
 TagBadge.propTypes = {
     children: PropTypes.node.isRequired,
     onClick: PropTypes.func,
     bgColor: PropTypes.string,
-    key: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    className: PropTypes.string
 };
 
 TagBadge.defaultProps = {
