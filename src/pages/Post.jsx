@@ -73,7 +73,7 @@ const Post = () => {
         }
     }
 
-    if (!post) return <div>Loading...</div>;
+    if (!post) return <div>Lade...</div>;
 
     return (
         <div className="m-4 w-full">
