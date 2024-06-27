@@ -63,14 +63,14 @@ exports.registerUser = async (req, res) => {
 
 exports.loginUser = async (req, res) => {
     try {
-        const { benutzername, passwort } = req.body;
-        const user = await User.findOne({ benutzername });
+        const { username, password } = req.body;
+        const user = await User.findOne({ username });
 
         if (!user) {
             return res.status(404).json({ message: 'Benutzername existiert nicht' });
         }
 
-        const isMatch = await bcrypt.compare(passwort, user.passwort);
+        const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(400).json({ message: 'Falsches Passwort' });
         }

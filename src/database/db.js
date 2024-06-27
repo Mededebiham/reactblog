@@ -20,6 +20,30 @@ const getUserById = async (userId) => {
         console.error(`Error fetching user with id ${userId}:`, error);
     }
 };
+export const loginUser = async (benutzername, passwort) => {
+    try {
+        const res = await fetch.post(`${API_BASE_URL}/users`, {
+            benutzername,
+            passwort,
+        });
+        return res.data;
+    } catch (error) {
+        throw error.response.data;
+    }
+};
+export const registerUser = async (nachname, vorname, benutzername, passwort) => {
+    try {
+        const res = await fetch.post(`${API_BASE_URL}/users`, {
+            nachname,
+            vorname,
+            benutzername,
+            passwort,
+        });
+        return res.data;
+    } catch (error) {
+        throw error.response.data;
+    }
+};
 
 const createUser = async (user) => {
 
