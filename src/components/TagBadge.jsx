@@ -14,11 +14,19 @@ const TagBadge = ({ children, onClick, bgColor = "bg-text", className = "" }) =>
         }
     };
 
-    return (
-        <button onClick={handleClick} className={styles}>
-            {children}
-        </button>
-    );
+    if (onClick) {
+        return (
+            <button onClick={handleClick} className={styles}>
+                {children}
+            </button>
+        );
+    } else {
+        return (
+            <div className={styles}>
+                {children}
+            </div>
+        );
+    }
 };
 
 TagBadge.propTypes = {
