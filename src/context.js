@@ -4,12 +4,12 @@ const UserContext = createContext();
 
 const initialUserState = {
     id: null,
-    firstName: null,
-    lastName: null,
+    firstname: null,
+    lastname: null,
     email: null,
     password: null,
     role: null,
-    profilePicture: null,
+    profilepicture: null,
 };
 
 const UserProvider = ({ children }) => {

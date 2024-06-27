@@ -30,13 +30,13 @@ const Navbar = () => {
 
     const toggleLoginAndIcon = () => {
         const newUser = user.role === 'admin' ? initialUserState : {
-            id: null,
-            firstName: 'Admin',
-            lastName: 'User',
+            _id: null,
+            firstname: 'Admin',
+            lastname: 'User',
             email: 'admin@example.com',
             password: 'password',
             role: 'admin',
-            profilePicture: 'path/to/picture.jpg'
+            profilepicture: 'path/to/picture.jpg'
         };
         setUser(newUser);
         setUserIconVisibility(!userIconVisibility);
