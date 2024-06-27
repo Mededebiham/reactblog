@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import ColorPicker from "../ColorPicker";
 import Button from "../parts/Button";
 import TagBadge from "../TagBadge";
-import { createTag, updateTag, deleteTag } from "../../database/db";
+import { createTag, updateTag, deleteTag, getTags, getTagById } from "../../database/db";
 import { tags } from "../../database/mockPostData";
+
+
 
 const CreateTag = ({ visible = false, isNewTag, setIsNewTag, tagId }) => {
     const [selectedColor, setSelectedColor] = useState("bg-blue");
@@ -53,8 +55,10 @@ const CreateTag = ({ visible = false, isNewTag, setIsNewTag, tagId }) => {
         setIsNewTag(null);
     };
 
-    const handleChange = (e) => {
+    const handleChange = async (e) => {
         setTagName(e.target.value);
+        console.log(tags);
+        console.log(await getTags());
     };
 
     return (
