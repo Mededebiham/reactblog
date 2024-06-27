@@ -2,11 +2,13 @@ import React, {useState} from 'react';
 import ColorPicker from "../ColorPicker";
 import Button from "../parts/Button";
 import TagBadge from "../TagBadge";
+import {createTag} from "../../database/db";
 
 const CreateTag = ({visible = false}) => {
     const [isNewTag, setIsNewTag] = useState(false);
     const [showColorPicker, setShowColorPicker] = useState(false);
     const [selectedColor, setSelectedColor] = useState("bg-blue");
+    const [error, setError] = useState("");
     const [tagName, setTagName] = useState("");
 
     const handleSubmit = (e) => {
@@ -14,10 +16,12 @@ const CreateTag = ({visible = false}) => {
         setShowColorPicker(false);
 
         const newTag = {name: tagName, color: selectedColor};
-        console.log(newTag);
 
-        setSelectedColor("bg-blue");
-        setTagName("");
+        createTag(newTag)
+            .then(r => {
+                setSelectedColor("bg-blue");
+                setTagName("");
+            }).catch(e => setError("Unerwarteter Fehler: " + e.message));
     }
 
     const handleChange = (e) => {
@@ -40,10 +44,12 @@ const CreateTag = ({visible = false}) => {
                            value={tagName}
                            required/>
                 </div>
-                {tagName && <div className="flex mb-4 items-center">
+                {!error && tagName && <div className="flex mb-4 items-center">
                     <p className="mr-2">Vorschau:</p>
                     <TagBadge bgColor={selectedColor}>{tagName}</TagBadge>
+
                 </div>}
+                { error && <p className="text-red ml-2 mb-2">{error}</p> }
                 <div className="flex">
                     <Button type="submit">
                         {isNewTag ? "Kategorie erstellen" : "Kategorie ändern"}
