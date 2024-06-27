@@ -4,12 +4,12 @@ const UserContext = createContext();
 
 const initialUserState = {
     id: null,
-    firstName: null,
-    lastName: null,
+    firstname: null,
+    lastname: null,
     email: null,
     password: null,
     role: null,
-    profilePicture: null,
+    profilepicture: null,
 };
 
 const UserProvider = ({ children }) => {
@@ -32,7 +32,7 @@ const UserProvider = ({ children }) => {
     };
 
     const isValidUser = (userObj) => {
-        const keys = ['id', 'firstName', 'lastName', 'email', 'password', 'role', 'profilePicture'];
+        const keys = ['_id', 'firstname', 'lastname', 'email', 'password', 'role', 'profilepicture'];
         return keys.every(key => key in userObj);
     };
 

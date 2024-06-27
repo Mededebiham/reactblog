@@ -30,13 +30,13 @@ const Navbar = () => {
 
     const toggleLoginAndIcon = () => {
         const newUser = user.role === 'admin' ? initialUserState : {
-            id: null,
-            firstName: 'Admin',
-            lastName: 'User',
+            _id: null,
+            firstname: 'Admin',
+            lastname: 'User',
             email: 'admin@example.com',
             password: 'password',
             role: 'admin',
-            profilePicture: 'path/to/picture.jpg'
+            profilepicture: 'path/to/picture.jpg'
         };
         setUser(newUser);
         setUserIconVisibility(!userIconVisibility);
@@ -78,7 +78,7 @@ const Navbar = () => {
                             className="z-50 hidden my-4 text-base list-none bg-mantle divide-y divide-surface2 rounded-lg shadow"
                             id="user-dropdown">
                             <div className="px-4 py-3">
-                                <span className="block text-sm text-text">{user.firstName} {user.lastName}</span>
+                                <span className="block text-sm text-text">{user.firstname} {user.lastname}</span>
                                 <span className="block text-sm  text-overlay1 truncate">{user.email}</span>
                             </div>
                             <ul className="py-2" aria-labelledby="user-menu-button">

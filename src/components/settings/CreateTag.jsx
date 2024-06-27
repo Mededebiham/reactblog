@@ -70,8 +70,12 @@ const CreateTag = ({ visible = false, isNewTag, setIsNewTag, tagId, updateTagPoo
     };
 
     return (
-        <div className={`ml-1 mt-4 ${visible ? "" : "hidden"}`}>
-            <form className="max-w-sm mx-auto mt-4" onSubmit={handleSubmit}>
+        <div className={`ml-1 mt-8 ${visible ? "" : "hidden"}`}>
+
+            <form className="max-w-lg mx-auto mt-4" onSubmit={handleSubmit}>
+                <h3 className="text-lg font-medium mt-12 mb-8">
+                    {isNewTag ? "Neue Kategorie erstellen" : "Kategorie bearbeiten"}
+                </h3>
                 <div className="mb-5">
                     <label htmlFor="category" className="block mb-2 text-sm font-medium text-text">
                         Bezeichnung der Kategorie
@@ -102,6 +106,7 @@ const CreateTag = ({ visible = false, isNewTag, setIsNewTag, tagId, updateTagPoo
                             Kategorie löschen
                         </Button>
                     )}
+                    <Button className="bg-yellow" type="button" onClick={resetForm}>Abbrechen</Button>
                 </div>
             </form>
             {tagName && (
