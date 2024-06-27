@@ -3,6 +3,7 @@ import PostTags from "./PostTags";
 import Link from "../parts/Link";
 import { UserContext } from '../../context';
 import { getUserById } from "../../database/db";
+import {toTitleCase} from "../../utils/utils";
 
 const PostHeader = ({ post }) => {
     const { user } = useContext(UserContext);
@@ -39,7 +40,7 @@ const PostHeader = ({ post }) => {
             <div className="flex flex-col items-end ml-4">
                 <div className="flex flex-col items-end text-sm justify-start pl-2 border-l-2 border-l-surface2">
                     <span className="">{formattedDate}</span>
-                    <Link to={`/user/${post.userid}`} className="text-blue hover:text-yellow">{author.firstname}</Link>
+                    <Link to={`/user/${post.userid}`} className="text-blue hover:text-yellow">{toTitleCase(author.firstname)}</Link>
                 </div>
                 {canEdit && <Link to={`/post/edit/${post._id}`} className="text-sm text-surface0 hover:text-yellow mt-1">Bearbeiten</Link>}
             </div>

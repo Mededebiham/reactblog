@@ -24,8 +24,11 @@ const Posts = () => {
             try {
                 const [fetchedTags, fetchedPosts] = await Promise.all([getTags(), getPosts()]);
 
+                // Sort posts by createdAt date, newest first
+                const sortedPosts = fetchedPosts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
                 setTags(fetchedTags);
-                const postsWithTags = fetchedPosts.map(post => ({
+                const postsWithTags = sortedPosts.map(post => ({
                     ...post,
                     tags: post.tags.map(tagId => fetchedTags.find(tag => tag._id === tagId))
                 }));
@@ -72,6 +75,7 @@ const Posts = () => {
 
     const resetPosts = () => {
         setFilteredPosts(posts);
+        setTags(tags);  // Preserve the original tags
         setTagTitle(showAllTitle);
         setCurrentPage(1);
         navigate('/posts');
