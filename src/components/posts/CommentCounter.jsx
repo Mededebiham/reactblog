@@ -1,9 +1,8 @@
 import React from 'react';
 
-const CommentCounter = ({postId}) => {
+const CommentCounter = ({post}) => {
 
-    const post = postId;
-    const comments = 0 //post.comments.length;
+    const comments = post.comments.length || 0;
 
     return (
         <div className="flex">

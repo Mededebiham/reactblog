@@ -3,14 +3,14 @@ import CommentCounter from "./CommentCounter";
 import LikesCounter from "./LikesCounter";
 import Link from "../parts/Link";
 
-const PostsFooter = ({postId}) => {
+const PostsFooter = ({post}) => {
     return (
         <div className="flex justify-between">
             <div className="flex">
-                <CommentCounter postId={postId}/>
-                <LikesCounter likes={postId}/>
+                <CommentCounter post={post}/>
+                <LikesCounter post={post}/>
             </div>
-            <Link to={`/post/${postId}`}>
+            <Link to={`/post/${post._id}`}>
                 <div className="flex items-center justify-end text-blue hover:text-yellow">
                     Mehr lesen
                     <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
