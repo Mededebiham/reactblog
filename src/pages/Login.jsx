@@ -1,75 +1,50 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+const API_BASE_URL = 'http://localhost:5001/api';
+
 
 const Login = () => {
-    const [formData, setFormData] = useState({
-        email: '',
-        password: '',
-    });
-
-    const [errors, setErrors] = useState('');
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
-    };
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [message, setMessage] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setErrors('');
-
         try {
-            const response = await fetch("http://localhost:" + 5000 + "/login", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
+            const res = await fetch.post(`${API_BASE_URL}/users/login`, {
+                username,
+                password,
             });
-
-            if (response.status === 400) {
-                setErrors('Diese E-Mail-Adresse ist nicht registriert oder das Passwort ist falsch.');
-                return;
-            }
-
-            if (!response.ok) {
-                setErrors('Fehler bei der Anmeldung.');
-                return;
-            }
-
-            alert('Anmeldung erfolgreich!');
+            setMessage(res.data.message);
+            // Weiterleitung oder andere Aktionen bei erfolgreichem Login
         } catch (error) {
-            setErrors('Fehler bei der Anmeldung.');
+            setMessage(error.response.data.message);
         }
     };
 
     return (
-        <div>
-
+        <div className="mb-4">
+            <h2 className="text-2xl font-bold mb-4">Anmelden</h2>
             <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-4 bg-surface0 shadow-md rounded-lg text-text">
-                <h2 className="text-2xl font-bold mb-4">Anmeldung</h2>
-                <div  className="mb-4">
-                    <label>Email:</label>
-                    <input type="email"
-                           name="email"
-                           value={formData.email}
-                           className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"
-                           onChange={handleChange} required/>
-                </div>
-                <div>
-                    <label>Passwort:</label>
-                    <input type="password"
-                           name="password"
-                           value={formData.password}
-                           className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"
-                           onChange={handleChange} required/>
-                </div>
-                {errors && <p style={{color: 'red'}}>{errors}</p>}
-                <button type="submit" className="w-full p-2 bg-blue text-base rounded hover:bg-sapphire mt-4">Anmelden</button>
+                <label>Benutzername:</label>
+                <input
+                    type="text"
+                    className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"
+                    placeholder="Benutzername"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    required
+                />
+                <input
+                    type="password"
+                    className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"
+                    placeholder="Passwort"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                />
+                <button type="submit" className="w-full p-2 bg-blue text-base rounded hover:bg-sapphire mt-4">Login</button>
             </form>
-            <p className="text-center">Noch keinen Account? <a href="/register"   className="text-blue  mt-4">Registrieren</a></p>
+            {message && <p>{message}</p>}
         </div>
     );
 };
