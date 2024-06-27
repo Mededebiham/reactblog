@@ -29,6 +29,7 @@ export const createUser = (user) => apiRequest(`${API_BASE_URL}/users`, 'POST', 
 export const updateUser = (user) => apiRequest(`${API_BASE_URL}/users/${user._id}`, 'PUT', user);
 export const deleteUser = (userId) => apiRequest(`${API_BASE_URL}/users/${userId}`, 'DELETE');
 export const deleteAllUsers = () => apiRequest(`${API_BASE_URL}/users`, 'DELETE');
+export const loginUser = (credentials) => apiRequest(`${API_BASE_URL}/users/login`, 'POST', credentials);
 
 // Post Funktionen
 export const getPosts = () => apiRequest(`${API_BASE_URL}/posts`);

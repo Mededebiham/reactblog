@@ -1,23 +1,25 @@
-import React, { useState } from 'react';
-const API_BASE_URL = 'http://localhost:5001/api';
-
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { loginUser } from '../database/db';
+import { UserContext } from '../context';
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+    const { setUser } = useContext(UserContext);
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await fetch.post(`${API_BASE_URL}/users/login`, {
-                username,
-                password,
-            });
-            setMessage(res.data.message);
-            // Weiterleitung oder andere Aktionen bei erfolgreichem Login
+            const credentials = { username, password };
+            const res = await loginUser(credentials);
+            setMessage(res.message);
+            setUser(res.user); // Update user context with the logged-in user
+            navigate('/');
         } catch (error) {
-            setMessage(error.response.data.message);
+            setMessage(error.message || 'Fehler beim Einloggen');
         }
     };
 

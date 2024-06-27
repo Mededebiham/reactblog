@@ -41,7 +41,8 @@ const Register = () => {
                 firstname,
                 lastname,
                 username,
-                password
+                password,
+                role: 'user',
             };
             const response = await createUser(userData);
             setFirstname('');

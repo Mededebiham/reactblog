@@ -52,7 +52,7 @@ exports.loginUser = async (req, res) => {
             return res.status(404).json({ message: 'Benutzername existiert nicht' });
         }
 
-        if (user.password!==password) {
+        if (user.password !== password) {
             return res.status(400).json({ message: 'Falsches Passwort' });
         }
         res.status(200).json({ message: 'Erfolgreich eingeloggt', user });
@@ -60,6 +60,7 @@ exports.loginUser = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
 exports.updateUser = async (req, res) => {
     const userid = req.params.id;
     const { firstname, lastname, username, password, role } = req.body;
