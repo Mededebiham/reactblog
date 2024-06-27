@@ -3,7 +3,7 @@ import React from 'react';
 const CommentCounter = ({postId}) => {
 
     const post = postId;
-    const comments = Math.floor(Math.random() * 10) //post.comments.length;
+    const comments = 0 //post.comments.length;
 
     return (
         <div className="flex">
