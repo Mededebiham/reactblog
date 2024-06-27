@@ -3,14 +3,16 @@ import TagPool from '../TagPool';
 import QuillEditor from "../QuillEditor";
 import { createPost, getTags } from "../../database/db";
 import { UserContext } from '../../context';
+import { useNavigate } from "react-router-dom";
 
-const BlogPost = ({ addPost }) => {
+const BlogPost = () => {
     const [content, setContent] = useState('');
     const [selectedTags, setSelectedTags] = useState([]);
     const [error, setError] = useState('');
     const [title, setTitle] = useState('');
     const [availableTags, setAvailableTags] = useState([]);
     const { user } = useContext(UserContext);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchTags = async () => {
@@ -65,11 +67,12 @@ const BlogPost = ({ addPost }) => {
             console.log('Sending post data to backend:', newPost); // Debug log
 
             const response = await createPost(newPost);
-            addPost(response); // Assuming response contains the created post
             setTitle('');
             setContent('');
             setSelectedTags([]); // Clear the selection state as well
-            alert(response.message || 'Post erfolgreich erstellt!');
+
+            // Redirect to the created post's detail page
+            navigate(`/post/${response._id}`);
 
         } catch (error) {
             setError(error.message || 'Serverfehler');

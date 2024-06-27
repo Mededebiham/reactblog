@@ -76,7 +76,7 @@ const Post = () => {
     if (!post) return <div>Loading...</div>;
 
     return (
-        <div className="m-4">
+        <div className="m-4 w-full">
             <div className="flex flex-wrap items-center">
                 <Link to="/posts" className="text-blue hover:text-yellow">
                     <div className="flex items-center">
