@@ -239,9 +239,16 @@ const createTag = async (tag) => {
             },
             body: JSON.stringify(tag)
         });
+
+        if (!response.ok) {
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.message || 'Failed to create tag');
+        }
+
         return await response.json();
     } catch (error) {
         console.error('Error creating tag:', error);
+        throw error;
     }
 };
 
