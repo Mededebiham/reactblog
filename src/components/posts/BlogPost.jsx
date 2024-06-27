@@ -1,11 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import TagPool from '../TagPool';
 import QuillEditor from "../QuillEditor";
-import { createPost, getTags } from "../../database/db";
+import { createPost, updatePost, getPostById, getTags, deletePost } from "../../database/db";
 import { UserContext } from '../../context';
-import { useNavigate } from "react-router-dom";
 
 const BlogPost = () => {
+    const { id } = useParams();
     const [content, setContent] = useState('');
     const [selectedTags, setSelectedTags] = useState([]);
     const [error, setError] = useState('');
@@ -13,19 +14,43 @@ const BlogPost = () => {
     const [availableTags, setAvailableTags] = useState([]);
     const { user } = useContext(UserContext);
     const navigate = useNavigate();
+    const location = useLocation();
+    const isEditMode = Boolean(id);
 
     useEffect(() => {
-        const fetchTags = async () => {
+        const fetchTagsAndPost = async () => {
             try {
                 const tags = await getTags();
                 setAvailableTags(tags);
+
+                if (isEditMode) {
+                    const post = await getPostById(id);
+                    setTitle(post.title);
+                    setContent(post.content);
+                    setSelectedTags(tags.filter(tag => post.tags.includes(tag._id)));
+                } else {
+                    resetForm();
+                }
             } catch (error) {
-                setError('Fehler beim Laden der Tags');
+                setError('Fehler beim Laden der Tags oder des Beitrags');
             }
         };
 
-        fetchTags();
-    }, []);
+        fetchTagsAndPost();
+    }, [id, isEditMode]);
+
+    useEffect(() => {
+        if (!isEditMode) {
+            resetForm();
+        }
+    }, [location.pathname]);
+
+    const resetForm = () => {
+        setTitle('');
+        setContent('');
+        setSelectedTags([]);
+        setError('');
+    };
 
     const handleTagClickAvailable = (tag, event) => {
         event.preventDefault();
@@ -55,7 +80,7 @@ const BlogPost = () => {
         }
 
         try {
-            const newPost = {
+            const postData = {
                 userid: user._id,
                 title,
                 content,
@@ -64,16 +89,23 @@ const BlogPost = () => {
                 comments: [],
             };
 
-            console.log('Sending post data to backend:', newPost); // Debug log
+            if (isEditMode) {
+                await updatePost({ ...postData, _id: id });
+                navigate(`/post/${id}`);
+            } else {
+                const response = await createPost(postData);
+                resetForm();
+                navigate(`/post/${response._id}`);
+            }
+        } catch (error) {
+            setError(error.message || 'Serverfehler');
+        }
+    };
 
-            const response = await createPost(newPost);
-            setTitle('');
-            setContent('');
-            setSelectedTags([]); // Clear the selection state as well
-
-            // Redirect to the created post's detail page
-            navigate(`/post/${response._id}`);
-
+    const handleDelete = async () => {
+        try {
+            await deletePost(id);
+            navigate('/posts');
         } catch (error) {
             setError(error.message || 'Serverfehler');
         }
@@ -82,7 +114,7 @@ const BlogPost = () => {
     return (
         <div>
             <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-4 bg-surface0 shadow-md rounded-lg">
-                <h2 className="text-2xl font-bold mb-4">Neuen Beitrag erstellen</h2>
+                <h2 className="text-2xl font-bold mb-4">{isEditMode ? 'Beitrag bearbeiten' : 'Neuen Beitrag erstellen'}</h2>
                 {error && <p className="text-red-500">{error}</p>}
                 <div className="mb-4">
                     <label className="block text-text">Titel</label>
@@ -108,9 +140,16 @@ const BlogPost = () => {
                         <TagPool tags={selectedTags} onClick={handleTagClickSelected} />
                     </div>
                 </div>
+                <div className="flex">
                 <button type="submit" className="w-full p-2 bg-blue text-base rounded hover:bg-sapphire mt-4">
-                    Beitrag erstellen
+                    {isEditMode ? 'Änderungen speichern' : 'Beitrag erstellen'}
                 </button>
+                {isEditMode && (
+                    <button type="button" onClick={handleDelete} className="ml-2 w-full p-2 bg-red text-base rounded hover:bg-yellow mt-4">
+                        Beitrag löschen
+                    </button>
+                )}
+                </div>
             </form>
         </div>
     );

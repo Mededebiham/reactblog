@@ -10,7 +10,7 @@ const TagPool = ({ tags, onClick }) => {
 
     return (
         <div className="flex flex-wrap bg-mantle p-4 rounded-xl">
-            {tags.map((tag) => (
+            {Array.isArray(tags) && tags.filter(tag => tag && tag._id && tag.name).map((tag) => (
                 <TagBadge
                     onClick={(event) => handleClick(tag, event)}
                     key={tag._id}
