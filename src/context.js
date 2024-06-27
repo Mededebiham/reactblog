@@ -6,7 +6,7 @@ const initialUserState = {
     _id: null,
     firstname: null,
     lastname: null,
-    email: null,
+    username: null,
     password: null,
     role: null,
     profilepicture: null,
@@ -16,6 +16,7 @@ const UserProvider = ({ children }) => {
     const [user, setUser] = useState(initialUserState);
 
     const setUserState = (newUser) => {
+        console.log('Setting user state:', newUser); // Debug: Check the new user state
         if (isValidUser(newUser)) {
             setUser(newUser);
         } else {
@@ -32,8 +33,10 @@ const UserProvider = ({ children }) => {
     };
 
     const isValidUser = (userObj) => {
-        const keys = ['_id', 'firstname', 'lastname', 'email', 'password', 'role', 'profilepicture'];
-        return keys.every(key => key in userObj);
+        const requiredKeys = ['_id', 'firstname', 'lastname', 'username', 'password', 'role', 'profilepicture'];
+        const valid = requiredKeys.every(key => key in userObj);
+        console.log('isValidUser:', valid, userObj); // Debug: Check validation
+        return valid;
     };
 
     return (

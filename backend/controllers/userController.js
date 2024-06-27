@@ -55,11 +55,25 @@ exports.loginUser = async (req, res) => {
         if (user.password !== password) {
             return res.status(400).json({ message: 'Falsches Passwort' });
         }
-        res.status(200).json({ message: 'Erfolgreich eingeloggt', user });
+
+        // Clean user object before sending it
+        const cleanUser = {
+            _id: user._id,
+            firstname: user.firstname,
+            lastname: user.lastname,
+            username: user.username,
+            password: user.password,
+            role: user.role,
+            profilepicture: user.profilepicture || null, // Default to null if not present
+        };
+
+        res.status(200).json({ message: 'Erfolgreich eingeloggt', user: cleanUser });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
+
+
 
 exports.updateUser = async (req, res) => {
     const userid = req.params.id;
