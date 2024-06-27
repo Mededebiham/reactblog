@@ -7,7 +7,7 @@ const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
-    const { user, setUser } = useContext(UserContext);
+    const { setUser } = useContext(UserContext);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -17,7 +17,7 @@ const Login = () => {
             const res = await loginUser(credentials);
             console.log('Login response:', res); // Debug: Check the response
             setMessage(res.message);
-            console.log('Before setting user:', user); // Debug: Before updating context
+            console.log('Before setting user:', res.user); // Debug: Before updating context
             setUser(res.user); // Update user context with the logged-in user
             console.log('After setting user:', res.user); // Debug: After updating context
             navigate('/');
