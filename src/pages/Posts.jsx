@@ -25,7 +25,7 @@ const Posts = () => {
 
     useEffect(() => {
         if (tag) {
-            const tagObject = tagArray.find(t => t.id === tag);
+            const tagObject = tagArray.find(t => t._id === tag);
             if (tagObject) {
                 filterPosts(tagObject);
             } else {
@@ -37,12 +37,12 @@ const Posts = () => {
     }, [tag]);
 
     const filterPosts = (tag) => {
-        const filteredPosts = mockPosts.filter(post => post.tags.some(mockTag => mockTag.id === tag.id));
+        const filteredPosts = mockPosts.filter(post => post.tags.some(mockTag => mockTag._id === tag._id));
         setPosts(filteredPosts);
-        setTags([{ id: null, name: 'Zeige alle Beiträge', color: 'bg-text' }]);
+        setTags([{ _id: null, name: 'Zeige alle Beiträge', color: 'bg-text' }]);
         setTagTitle(<>Zeige Beiträge mit Kategorie: <TagBadge bgColor={tag.color}>{tag.name}</TagBadge></>);
         setCurrentPage(1);
-        navigate(`/posts/category/${tag.id}`);
+        navigate(`/posts/category/${tag._id}`);
     };
 
     const resetPosts = () => {
@@ -85,7 +85,7 @@ const Posts = () => {
             />
             <ul>
                 {currentPosts.map((post) => (
-                    <PostCard key={post.id} post={post} />
+                    <PostCard key={post._id} post={post} />
                 ))}
             </ul>
             <Pagination

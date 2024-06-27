@@ -1,17 +1,17 @@
 import { newId } from "../utils/utils";
 
 const tags = {
-    "ocean": { id: newId(), name: 'Ozean', color: 'bg-sky' },
-    "marineLife": { id: newId(), name: 'Meereslebewesen', color: 'bg-blue' },
-    "conservation": { id: newId(), name: 'Naturschutz', color: 'bg-green' },
-    "ai": { id: newId(), name: 'Künstliche Intelligenz', color: 'bg-red' },
-    "future": { id: newId(), name: 'Zukunft', color: 'bg-maroon' },
-    "food": { id: newId(), name: 'Essen', color: 'bg-flamingo' },
-    "cuisine": { id: newId(), name: 'Küche', color: 'bg-rosewater' },
-    "recipes": { id: newId(), name: 'Rezepte', color: 'bg-yellow' },
-    "quantumPhysics": { id: newId(), name: 'Quantenphysik', color: 'bg-teal' },
-    "science": { id: newId(), name: 'Wissenschaft', color: 'bg-lavender' },
-    "technology": { id: newId(), name: 'Technologie', color: 'bg-mauve' }
+    "ocean": { _id: newId(), name: 'Ozean', color: 'bg-sky' },
+    "marineLife": { _id: newId(), name: 'Meereslebewesen', color: 'bg-blue' },
+    "conservation": { _id: newId(), name: 'Naturschutz', color: 'bg-green' },
+    "ai": { _id: newId(), name: 'Künstliche Intelligenz', color: 'bg-red' },
+    "future": { _id: newId(), name: 'Zukunft', color: 'bg-maroon' },
+    "food": { _id: newId(), name: 'Essen', color: 'bg-flamingo' },
+    "cuisine": { _id: newId(), name: 'Küche', color: 'bg-rosewater' },
+    "recipes": { _id: newId(), name: 'Rezepte', color: 'bg-yellow' },
+    "quantumPhysics": { _id: newId(), name: 'Quantenphysik', color: 'bg-teal' },
+    "science": { _id: newId(), name: 'Wissenschaft', color: 'bg-lavender' },
+    "technology": { _id: newId(), name: 'Technologie', color: 'bg-mauve' }
 };
 
 const posts = [
