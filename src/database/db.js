@@ -319,40 +319,6 @@ const deleteAllTags = async () => {
         console.error('Error deleting all tags:', error);
     }
 };
-//Loginuser
-const createLoginUser = async (user) => {
-
-    try {
-        const response = await fetch(`${API_BASE_URL}/loginusers`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(user)
-        });
-
-        return await response.json();
-    } catch (error) {
-        console.error('Error creating user:', error);
-    }
-};
-const getLoginUser = async () => {
-    try {
-        const response = await fetch(`${API_BASE_URL}/loginusers`);
-        return await response.json();
-    } catch (error) {
-        console.error('Error fetching users:', error);
-    }
-};
-const deleteLoginUser = async () => {
-    try {
-        await fetch(`${API_BASE_URL}/loginusers`, {
-            method: 'DELETE'
-        });
-    } catch (error) {
-        console.error('Error deleting all users:', error);
-    }
-};
 // Export aller Funktionen
 export {
     getUsers,
@@ -379,7 +345,4 @@ export {
     updateTag,
     deleteTag,
     deleteAllTags,
-    deleteLoginUser,
-    createLoginUser,
-    getLoginUser
 };

@@ -8,18 +8,7 @@ const UserSchema = new Schema({
     firstname: { type: String, required: true },
     lastname: { type: String, required: true },
     password: { type: String, required: true },
-    role: String, // Admin or User
-    profilePicture: String,
+    role: String, // admin or user or mod
+    profilepicture: String,
 });
-UserSchema.pre('save', async function(next) {
-    if (this.isModified('password')) {
-        this.password = await bcrypt.hash(this.password, 10);
-    }
-    next();
-});
-
-UserSchema.methods.comparePassword = function(candidatePassword) {
-    return bcrypt.compare(candidatePassword, this.password);
-};
-
 module.exports = mongoose.model('User', UserSchema);

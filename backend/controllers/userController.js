@@ -12,7 +12,7 @@ exports.getAllUsers = async (req, res) => {
 
 exports.getUserByName = async (req, res) => {
     try {
-        const user = await Post.findOne({ username: req.params.username });
+        const user = await User.findOne({ username: req.params.username });
         if (!user) return res.status(404).json({ message: 'User not found' });
         res.status(200).json(user);
     } catch (error) {
@@ -20,7 +20,7 @@ exports.getUserByName = async (req, res) => {
     }
 };
 exports.getUserById = async (req, res) => {
-    const userId = req.params.id;
+    const userId = req.params._id;
     try {
         const user = await User.findById(userId);
         if (!user) {
@@ -33,30 +33,13 @@ exports.getUserById = async (req, res) => {
 };
 
 exports.createUser = async (req, res) => {
-    const { firstName, lastName, username, password, role,profilePicture} = req.body;
+    const { firstname, lastname, username, password, role,profilepicture} = req.body;
     try {
-        const newUser = new User({ firstName, lastName, username, password, role,profilePicture });
+        const newUser = new User({ firstname, lastname, username, password, role,profilepicture });
         await newUser.save(); // Neuen Benutzer zur Datenbank hinzufügen
         res.status(201).json(newUser);
     } catch (error) {
         res.status(500).json({ error: error.message });
-    }
-};
-// Register a new user
-exports.registerUser = async (req, res) => {
-    try {
-        const { nachname, vorname, benutzername, passwort } = req.body;
-        const existingUser = await User.findOne({ benutzername });
-
-        if (existingUser) {
-            return res.status(400).json({ message: 'Benutzername existiert bereits' });
-        }
-
-        const user = new User({ nachname, vorname, benutzername, passwort });
-        await user.save();
-        res.status(201).json(user);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
     }
 };
 
@@ -69,11 +52,9 @@ exports.loginUser = async (req, res) => {
             return res.status(404).json({ message: 'Benutzername existiert nicht' });
         }
 
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
+        if (user.password!==password) {
             return res.status(400).json({ message: 'Falsches Passwort' });
         }
-
         res.status(200).json({ message: 'Erfolgreich eingeloggt', user });
     } catch (error) {
         res.status(500).json({ message: error.message });
