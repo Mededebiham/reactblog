@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import {createUser} from "../database/db";
+import React, { useState } from 'react';
+import { createUser } from '../database/db';
+import {useNavigate} from "react-router-dom";
 
 const Register = () => {
     const [firstname, setFirstname] = useState('');
@@ -8,15 +9,14 @@ const Register = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
-    // Handler für Änderungen in den Eingabefeldern
     const handleChange = (e) => {
         const { name, value } = e.target;
         switch (name) {
-            case 'firstName':
-                setFirstName(value);
+            case 'firstname':
+                setFirstname(value);
                 break;
-            case 'lastName':
-                setLastName(value);
+            case 'lastname':
+                setLastname(value);
                 break;
             case 'username':
                 setUsername(value);
@@ -31,31 +31,26 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // Passwort überprüfen
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
         if (!passwordRegex.test(password)) {
-            alert('Das Passwort muss mindestens 8 Zeichen lang sein, einen Großbuchstaben, eine Zahl und ein Sonderzeichen enthalten!');
-            return setError('Das Passwort muss mindestens 8 Zeichen lang sein, einen Großbuchstaben, eine Zahl und ein Sonderzeichen enthalten.');
+            setError('Das Passwort muss mindestens 8 Zeichen lang sein, einen Großbuchstaben, eine Zahl und ein Sonderzeichen enthalten.');
+            return;
         }
         try {
             const userData = {
-                firstName,
-                lastName,
+                firstname,
+                lastname,
                 username,
                 password
             };
-
-            // Aufruf der createUser-Funktion aus frontend.js, um den Benutzer zu erstellen
             const response = await createUser(userData);
-
-            // Erfolgsmeldung anzeigen und Zustände zurücksetzen
-            setFirstName('');
-            setLastName('');
+            setFirstname('');
+            setLastname('');
             setUsername('');
             setPassword('');
-            alert(response.message || 'Benutzer erfolgreich registriert!');
+            setError('');
         } catch (error) {
-            setError(error.message || 'Serverfehler');
+            setError(error.message || 'Serverfehler: ' + error.message);
         }
     };
 
@@ -63,29 +58,30 @@ const Register = () => {
         <div>
             <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-4 bg-surface0 shadow-md rounded-lg text-text">
                 <h2 className="text-2xl font-bold mb-4">Registrierung</h2>
+                {error && <p className="text-red-500 mb-4">{error}</p>}
                 <div className="mb-4">
                     <label>Vorname:</label>
                     <input
                         type="text"
                         className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"
-                        name="firstName"
-                        value={firstName}
+                        name="firstname"
+                        value={firstname}
                         onChange={handleChange}
                         required
                     />
                 </div>
-                <div>
+                <div className="mb-4">
                     <label>Nachname:</label>
                     <input
                         type="text"
                         className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"
-                        name="lastName"
-                        value={lastName}
+                        name="lastname"
+                        value={lastname}
                         onChange={handleChange}
                         required
                     />
                 </div>
-                <div>
+                <div className="mb-4">
                     <label>Benutzername:</label>
                     <input
                         type="text"
@@ -96,12 +92,11 @@ const Register = () => {
                         required
                     />
                 </div>
-                <div>
+                <div className="mb-4">
                     <label>Passwort:</label>
                     <input
                         type="password"
                         className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"
-
                         name="password"
                         value={password}
                         onChange={handleChange}
@@ -110,7 +105,6 @@ const Register = () => {
                 </div>
                 <button type="submit" className="w-full p-2 bg-blue text-base rounded hover:bg-sapphire mt-4">Registrieren</button>
             </form>
-
         </div>
     );
 };
