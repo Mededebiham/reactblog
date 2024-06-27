@@ -13,10 +13,10 @@ const Register = () => {
         const { name, value } = e.target;
         switch (name) {
             case 'firstName':
-                setFirstName(value);
+                setFirstname(value);
                 break;
             case 'lastName':
-                setLastName(value);
+                setLastname(value);
                 break;
             case 'username':
                 setUsername(value);
@@ -39,8 +39,8 @@ const Register = () => {
         }
         try {
             const userData = {
-                firstName,
-                lastName,
+                firstname,
+                lastname,
                 username,
                 password
             };
@@ -49,8 +49,8 @@ const Register = () => {
             const response = await createUser(userData);
 
             // Erfolgsmeldung anzeigen und Zustände zurücksetzen
-            setFirstName('');
-            setLastName('');
+            setFirstname('');
+            setLastname('');
             setUsername('');
             setPassword('');
             alert(response.message || 'Benutzer erfolgreich registriert!');
@@ -69,7 +69,7 @@ const Register = () => {
                         type="text"
                         className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"
                         name="firstName"
-                        value={firstName}
+                        value={firstname}
                         onChange={handleChange}
                         required
                     />
@@ -80,7 +80,7 @@ const Register = () => {
                         type="text"
                         className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"
                         name="lastName"
-                        value={lastName}
+                        value={lastname}
                         onChange={handleChange}
                         required
                     />

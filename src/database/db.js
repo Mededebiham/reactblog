@@ -61,7 +61,6 @@ const createUser = async (user) => {
         console.error('Error creating user:', error);
     }
 };
-
 const updateUser = async (user) => {
     try {
         const response = await fetch(`${API_BASE_URL}/users/${user.id}`, {
