@@ -1,5 +1,4 @@
 const User = require('../models/User');
-const Post = require("../models/Post");
 
 // Controller-Methoden
 exports.getAllUsers = async (req, res) => {
@@ -13,9 +12,9 @@ exports.getAllUsers = async (req, res) => {
 
 exports.getUserByName = async (req, res) => {
     try {
-        const post = await Post.findOne({ username: req.params.username });
-        if (!post) return res.status(404).json({ message: 'Post not found' });
-        res.status(200).json(post);
+        const user = await Post.findOne({ username: req.params.username });
+        if (!user) return res.status(404).json({ message: 'User not found' });
+        res.status(200).json(user);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -34,9 +33,9 @@ exports.getUserById = async (req, res) => {
 };
 
 exports.createUser = async (req, res) => {
-    const { firstName, lastName, username, password, role } = req.body;
+    const { firstName, lastName, username, password, role,profilePicture} = req.body;
     try {
-        const newUser = new User({ firstName, lastName, username, password, role });
+        const newUser = new User({ firstName, lastName, username, password, role,profilePicture });
         await newUser.save(); // Neuen Benutzer zur Datenbank hinzufügen
         res.status(201).json(newUser);
     } catch (error) {
