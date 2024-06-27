@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Link from "../components/parts/Link";
 import { getPostById, getTags, updatePost } from "../database/db";
-import TagBadge from "../components/TagBadge";
 import PostCard from "../components/posts/PostCard";
 import PostFooter from "../components/posts/PostFooter";
 import Comments from "../components/Comments";
