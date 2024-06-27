@@ -3,9 +3,9 @@ const Post = require('../models/Post');
 
 // Controller-Methoden
 exports.getCommentsForPost = async (req, res) => {
-    const postId = req.params.postId; // Beitrag-ID aus der URL-Parameter lesen
+    const postid = req.params.postid; // Beitrag-ID aus der URL-Parameter lesen
     try {
-        const comments = await Comment.find({ post: postId }); // Kommentare für einen bestimmten Beitrag abrufen
+        const comments = await Comment.find({ post: postid }); // Kommentare für einen bestimmten Beitrag abrufen
         res.json(comments);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -13,12 +13,12 @@ exports.getCommentsForPost = async (req, res) => {
 };
 
 exports.createComment = async (req, res) => {
-    const {  content,postId,authorId } = req.body;
+    const {  content,postid,authorid } = req.body;
     try {
-        const newComment = new Comment({ content, postId,authorId });
+        const newComment = new Comment({ content, postid, authorid });
         await newComment.save();
 
-        const post = await fetchPostById(postId);
+        const post = await fetchPostById(postid);
         if (!post) {
             return res.status(404).json({ error: 'Post not found' });
         }
@@ -31,11 +31,11 @@ exports.createComment = async (req, res) => {
 };
 
 exports.deleteAllCommentsForPost = async (req, res) => {
-    const postId = req.params.postId;
+    const postid = req.params.postid;
     try {
-        await Comment.deleteMany({ post: postId }); // Löschen Sie alle Kommentare für einen bestimmten Beitrag
+        await Comment.deleteMany({ post: postid }); // Löschen Sie alle Kommentare für einen bestimmten Beitrag
         // Entfernen Sie auch die Referenzen zu diesen Kommentaren im Beitrag
-        await Post.findByIdAndUpdate(postId, { $set: { comments: [] } });
+        await Post.findByIdAndUpdate(postid, { $set: { comments: [] } });
         res.json({ message: 'All comments for the post deleted successfully' });
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -43,14 +43,14 @@ exports.deleteAllCommentsForPost = async (req, res) => {
 };
 
 exports.deleteCommentForPostById = async (req, res) => {
-    const commentId = req.params.commentId;
+    const commentid = req.params.commentid;
     try {
-        const deletedComment = await Comment.findByIdAndDelete(commentId); // Kommentar nach ID löschen
+        const deletedComment = await Comment.findByIdAndDelete(commentid); // Kommentar nach ID löschen
         if (!deletedComment) {
             return res.status(404).json({ error: 'Comment not found' });
         }
         // Entfernen Sie die Referenz des Kommentars aus dem Beitrag
-        await Post.findByIdAndUpdate(deletedComment.post, { $pull: { comments: commentId } });
+        await Post.findByIdAndUpdate(deletedComment.post, { $pull: { comments: commentid } });
         res.json({ message: 'Comment deleted successfully' });
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -58,11 +58,11 @@ exports.deleteCommentForPostById = async (req, res) => {
 };
 
 exports.updateCommentForPost = async (req, res) => {
-    const commentId = req.params.commentId;
+    const commentid = req.params.commentid;
     const { content } = req.body;
     try {
         const updatedComment = await Comment.findByIdAndUpdate(
-            commentId,
+            commentid,
             { content },
             { new: true }
         ); // Kommentar aktualisieren
