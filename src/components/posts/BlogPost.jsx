@@ -24,11 +24,6 @@ const BlogPost = ({ addPost }) => {
                 postId:'26522fgdztt72g224433r',
                 authorId:'87466t44663772',
             };
-            const newTag = {
-                name:'ocean',
-                color:'red',
-            };
-            const responseTag = await createTag(newTag);
             const responseContent = await createComment(newComment);
             const newPost = {
                 benutzername: 'Medede',
