@@ -10,5 +10,6 @@ const UserSchema = new Schema({
     password: { type: String, required: true },
     role: String, // admin or user or mod
     profilepicture: String,
+    description: String,
 });
 module.exports = mongoose.model('User', UserSchema);

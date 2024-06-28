@@ -33,9 +33,9 @@ exports.getUserById = async (req, res) => {
 };
 
 exports.createUser = async (req, res) => {
-    const { firstname, lastname, username, password, role,profilepicture} = req.body;
+    const { firstname, lastname, username, password, role,profilepicture, description} = req.body;
     try {
-        const newUser = new User({ firstname, lastname, username, password, role, profilepicture });
+        const newUser = new User({ firstname, lastname, username, password, role, profilepicture, description });
         await newUser.save(); // Neuen Benutzer zur Datenbank hinzufügen
         res.status(201).json(newUser);
     } catch (error) {
@@ -65,6 +65,7 @@ exports.loginUser = async (req, res) => {
             password: user.password,
             role: user.role,
             profilepicture: user.profilepicture || null, // Default to null if not present
+            description: user.description || null, // Default to null if not present
         };
 
         res.status(200).json({ message: 'Erfolgreich eingeloggt', user: cleanUser });
@@ -77,11 +78,11 @@ exports.loginUser = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
     const userid = req.params.id;
-    const { firstname, lastname, username, password, role } = req.body;
+    const { firstname, lastname, username, password, role, profilepicture, description } = req.body;
     try {
         const updatedUser = await User.findByIdAndUpdate(
             userid,
-            { firstname, lastname, username, password, role },
+            { firstname, lastname, username, password, role, profilepicture, description },
             { new: true }
         );
         if (!updatedUser) {

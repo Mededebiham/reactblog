@@ -10,6 +10,7 @@ const initialUserState = {
     password: null,
     role: null,
     profilepicture: null,
+    description: null,
 };
 
 const UserProvider = ({ children }) => {
@@ -44,7 +45,7 @@ const UserProvider = ({ children }) => {
     };
 
     const isValidUser = (userObj) => {
-        const requiredKeys = ['_id', 'firstname', 'lastname', 'username', 'password', 'role', 'profilepicture'];
+        const requiredKeys = ['_id', 'firstname', 'lastname', 'username', 'password', 'role', 'profilepicture', 'description'];
         const valid = requiredKeys.every(key => key in userObj);
         console.log('isValidUser:', valid, userObj); // Debug: Check validation
         return valid;
