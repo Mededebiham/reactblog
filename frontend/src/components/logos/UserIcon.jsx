@@ -22,6 +22,7 @@ const UserIcon = ({ className = "", userId }) => {
         };
 
         if (userId) {
+            setLoading(true);
             fetchUserImage();
         }
     }, [userId]);
