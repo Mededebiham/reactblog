@@ -33,15 +33,15 @@ const User = () => {
     }
 
     return (
-        <div className="w-full max-w-sm bg-mantle border border-surface1 rounded-lg shadow h-min">
+        <div className="w-full bg-mantle border border-surface1 rounded-lg shadow h-min m-8">
             <div className="flex flex-col items-center pb-10 mt-8 m-4">
-                <UserIcon className="w-32 h-32 mb-3 rounded-full shadow-lg" userId={user._id} />
+                <UserIcon className="w-32 h-32 mb-3 rounded-xl shadow-lg" userId={user._id} />
                 <h5 className="mb-1 text-xl font-medium text-text">{`${toTitleCase(user.firstname)} ${toTitleCase(user.lastname)}`}</h5>
                 <span className="text-sm text-overlay2 mt-2">{user.username}</span>
                 <div className="text-sm text-overlay2 mt-8 text-center">
                     {user.description ? user.description :
                         <div className="flex flex-col items-center">
-                            <p className="mb-4">{toTitleCase(user.firstname)} hat noch keine Beschreibung hinzugefügt 😢</p>
+                            <p className="mb-4"><span className="text-text font-medium">{user.firstname ? toTitleCase(user.firstname) : "Der Benutzer"}</span> hat noch keine Beschreibung hinzugefügt 😢</p>
                             <LogoTumbleweed className="object-contain h-40 w-40 rounded-full shadow-inner" />
                         </div>}
                 </div>
