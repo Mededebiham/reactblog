@@ -63,17 +63,22 @@ const Comment = ({ commentId, onDelete }) => {
                     <p>:</p>
                 </div>
                 <div className="flex">
+                    <p>{new Date(comment.createdAt).toLocaleTimeString('de-DE', {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    })} {new Date(comment.createdAt).toLocaleDateString('de-DE')}</p>
                     {canEdit && (
                         <>
-                            <button onClick={handleEdit} className="pr-3 text-blue hover:text-yellow">Bearbeiten</button>
-                            <button onClick={handleDelete} className="pr-3 text-red hover:text-yellow">Löschen</button>
+                            <button onClick={handleEdit} className="pl-3 text-blue hover:text-yellow">Bearbeiten
+                            </button>
+                            <button onClick={handleDelete} className="pl-3 text-red hover:text-yellow">Löschen</button>
                         </>
                     )}
-                    <p>{new Date(comment.createdAt).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })} {new Date(comment.createdAt).toLocaleDateString('de-DE')}</p>
+
                 </div>
             </div>
-            <hr className="border-surface1 mb-2" />
-            <div className="text-text" dangerouslySetInnerHTML={{ __html: comment.content }}></div>
+            <hr className="border-surface1 mb-2"/>
+            <div className="text-text" dangerouslySetInnerHTML={{__html: comment.content}}></div>
         </div>
     );
 };
