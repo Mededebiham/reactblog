@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import UserUnknownIcon from "../logos/UserUnknownIcon";
-import { getUsers, updateUser } from '../../database/db';
+import { getUsers, updateUser, deleteUser } from '../../database/db';
 
 const roles = {
     'admin': { name: "Administrator", color: 'bg-red' },
@@ -35,6 +35,15 @@ const UsersTab = () => {
         }
     };
 
+    const handleDeleteUser = async (userId) => {
+        try {
+            await deleteUser(userId);
+            setUsers(users.filter(user => user._id !== userId));
+        } catch (error) {
+            console.error('Error deleting user:', error);
+        }
+    };
+
     const filteredUsers = users.filter(user =>
         user.firstname.toLowerCase().includes(searchTerm.toLowerCase()) ||
         user.lastname.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -49,7 +58,7 @@ const UsersTab = () => {
                     <div className="relative">
                         <div className="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
                             <svg
-                                className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                                className="w-4 h-4 text-text dark:text-gray-400"
                                 aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
@@ -119,7 +128,12 @@ const UsersTab = () => {
                                     >
                                         Bearbeiten
                                     </a>
-                                    <button className="font-medium text-red hover:text-yellow">Löschen</button>
+                                    <button
+                                        onClick={() => handleDeleteUser(user._id)}
+                                        className="font-medium text-red hover:text-yellow"
+                                    >
+                                        Löschen
+                                    </button>
                                 </div>
                             </td>
                         </tr>
