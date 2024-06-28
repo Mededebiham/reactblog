@@ -1,4 +1,5 @@
 const Post = require('../models/Post');
+const Comment = require('../models/Comment');
 
 exports.createPost = async (req, res) => {
     try {
@@ -17,7 +18,6 @@ exports.createPost = async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 };
-
 
 // Get all posts
 exports.getAllPosts = async (req, res) => {
@@ -54,9 +54,14 @@ exports.getPostById = async (req, res) => {
 // Delete post by ID
 exports.deletePostById = async (req, res) => {
     try {
-        const post = await Post.findByIdAndDelete(req.params.id);
+        const post = await Post.findById(req.params.id);
         if (!post) return res.status(404).json({ message: 'Post not found' });
-        res.status(200).json({ message: 'Post deleted successfully' });
+
+        // Delete all comments associated with the post
+        await Comment.deleteMany({ postid: post._id });
+
+        await Post.findByIdAndDelete(post._id);
+        res.status(200).json({ message: 'Post and associated comments deleted successfully' });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -67,7 +72,11 @@ exports.deletePostByTitle = async (req, res) => {
     try {
         const post = await Post.findOneAndDelete({ title: req.params.title });
         if (!post) return res.status(404).json({ message: 'Post not found' });
-        res.status(200).json({ message: 'Post deleted successfully' });
+
+        // Delete all comments associated with the post
+        await Comment.deleteMany({ postid: post._id });
+
+        res.status(200).json({ message: 'Post and associated comments deleted successfully' });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
