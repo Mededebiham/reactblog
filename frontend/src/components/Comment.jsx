@@ -4,6 +4,7 @@ import { getCommentById, getUserById, deleteComment, updateComment } from '../da
 import Link from "./parts/Link";
 import { UserContext } from '../context';
 import { toTitleCase } from "../utils/utils";
+import QuillEditor from "./QuillEditor";
 
 const Comment = ({ commentId, onDelete }) => {
     const [comment, setComment] = useState(null);
@@ -104,14 +105,12 @@ const Comment = ({ commentId, onDelete }) => {
             </div>
             <hr className="border-surface1 mb-2"/>
             {isEditing ? (
-                <div
-                    contentEditable
-                    className="text-text pt-2 border border-gray-300 p-2 rounded"
-                    onInput={(e) => setEditedContent(e.currentTarget.textContent)}
-                    suppressContentEditableWarning={true}
-                >
-                    {editedContent}
-                </div>
+                <QuillEditor
+                    value={editedContent}
+                    onChange={setEditedContent}
+                    placeholder="Kommentar bearbeiten..."
+                    theight="h-32"
+                />
             ) : (
                 <div className="text-text pt-2" dangerouslySetInnerHTML={{__html: comment.content}}></div>
             )}
