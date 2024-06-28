@@ -53,8 +53,9 @@ const ProfileTab = () => {
     return (
         <div className="flex justify-center items-center">
             <div className="w-96 bg-mantle p-6 rounded-lg shadow-lg">
+                <h2 className="header2">Profileinstellungen</h2>
                 {imageUrl && (
-                    <img src={imageUrl} alt="Profile Preview" className="w-48 h-48 rounded-3xl mt-2 mx-auto mb-4" />
+                    <img src={imageUrl} alt="Profile Preview" className="w-48 h-48 rounded-3xl mt-2 mx-auto mb-4"/>
                 )}
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>

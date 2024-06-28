@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { passwordRegex } from "../../utils/utils";
 import { updateUser, loginUser } from '../../database/db';
 import { UserContext } from '../../context';
+import Button from "../parts/Button";
 
 const UserSettingsTab = () => {
     const { user, setUser } = useContext(UserContext);
@@ -78,64 +79,68 @@ const UserSettingsTab = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-4">
-            <h2 className="header2">Benutzereinstellungen</h2>
+        <div className="flex justify-center items-center">
+            <div className="w-96 bg-mantle p-6 rounded-lg shadow-lg">
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    <h2 className="header2">Benutzereinstellungen</h2>
 
-            <div className="mb-4">
-                <label htmlFor="password" className="label">Aktuelles Passwort:</label>
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    className="input"
-                    required
-                />
+                    <div className="mb-4">
+                        <label htmlFor="password" className="label">Aktuelles Passwort:</label>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            className="input"
+                            required
+                        />
+                    </div>
+
+                    <div className="mb-4">
+                        <label htmlFor="newPassword" className="label">Neues Passwort:</label>
+                        <input
+                            type="password"
+                            id="newPassword"
+                            name="newPassword"
+                            value={formData.newPassword}
+                            onChange={handleChange}
+                            className="input"
+                        />
+                    </div>
+
+                    <div className="mb-4">
+                        <label htmlFor="confirmPassword" className="label">Neues Passwort bestätigen:</label>
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            value={formData.confirmPassword}
+                            onChange={handleChange}
+                            className="input"
+                        />
+                    </div>
+
+                    <div className="mb-4">
+                        <label htmlFor="email" className="label">Neue Email:</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            className="input"
+                            placeholder="Leer lassen, um die Email nicht zu ändern"
+                        />
+                    </div>
+
+                    {errors && <p className="text-red">{errors}</p>}
+
+                    <Button type="submit" className="bg-green w-full">Änderungen speichern</Button>
+                </form>
             </div>
-
-            <div className="mb-4">
-                <label htmlFor="newPassword" className="label">Neues Passwort:</label>
-                <input
-                    type="password"
-                    id="newPassword"
-                    name="newPassword"
-                    value={formData.newPassword}
-                    onChange={handleChange}
-                    className="input"
-                />
-            </div>
-
-            <div className="mb-4">
-                <label htmlFor="confirmPassword" className="label">Neues Passwort bestätigen:</label>
-                <input
-                    type="password"
-                    id="confirmPassword"
-                    name="confirmPassword"
-                    value={formData.confirmPassword}
-                    onChange={handleChange}
-                    className="input"
-                />
-            </div>
-
-            <div className="mb-4">
-                <label htmlFor="email" className="label">Neue Email:</label>
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="input"
-                    placeholder="Leer lassen, um die Email nicht zu ändern"
-                />
-            </div>
-
-            {errors && <p className="text-red">{errors}</p>}
-
-            <button type="submit" className="button">Änderungen speichern</button>
-        </form>
-    )
+        </div>
+    );
 };
 
 export default UserSettingsTab;
