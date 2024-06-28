@@ -19,6 +19,8 @@ const UsersTab = () => {
         const fetchUsers = async () => {
             try {
                 const fetchedUsers = await getUsers();
+                // Sort users by lastname
+                fetchedUsers.sort((a, b) => a.lastname.localeCompare(b.lastname));
                 setUsers(fetchedUsers);
             } catch (error) {
                 console.error('Error fetching users:', error);
