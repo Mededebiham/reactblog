@@ -48,7 +48,7 @@ const ProfileTab = () => {
 
     return (
         <div className="w-full   ">
-            <UserIcon className="w-32 h-32 rounded-full mx-auto mb-4" src={`${user.profilepicture ? user.profilepicture : ''}`} />
+            <UserIcon className="w-32 h-32 rounded-full mx-auto mb-4" userId={`${user._id}`} />
 
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
