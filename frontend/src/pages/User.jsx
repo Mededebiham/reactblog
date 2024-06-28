@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import UserIcon from "../components/logos/UserIcon";
 import { getUserById } from "../database/db";
 import { toTitleCase } from "../utils/utils";
+import LogoTumbleweed from "../components/logos/LogoTumbleweed";
 
 const User = () => {
     const { id } = useParams();
@@ -36,13 +37,14 @@ const User = () => {
             <div className="flex flex-col items-center pb-10 mt-8 m-4">
                 <UserIcon className="w-32 h-32 mb-3 rounded-full shadow-lg" userId={user._id} />
                 <h5 className="mb-1 text-xl font-medium text-text">{`${toTitleCase(user.firstname)} ${toTitleCase(user.lastname)}`}</h5>
-                <span className="text-sm text-overlay2 mt-2">{user.email}</span>
-                <p className="text-sm text-overlay2 mt-2">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </p>
+                <span className="text-sm text-overlay2 mt-2">{user.username}</span>
+                <div className="text-sm text-overlay2 mt-8 text-center">
+                    {user.description ? user.description :
+                        <div className="flex flex-col items-center">
+                            <p className="mb-4">{toTitleCase(user.firstname)} hat noch keine Beschreibung hinzugefügt 😢</p>
+                            <LogoTumbleweed className="object-contain h-40 w-40 rounded-full shadow-inner" />
+                        </div>}
+                </div>
             </div>
         </div>
     );
