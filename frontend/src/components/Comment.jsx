@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { getCommentById, getUserById, deleteComment } from '../database/db';
+import { getCommentById, getUserById, deleteComment, updateComment } from '../database/db';
 import Link from "./parts/Link";
 import { UserContext } from '../context';
 import { toTitleCase } from "../utils/utils";
@@ -8,6 +8,8 @@ import { toTitleCase } from "../utils/utils";
 const Comment = ({ commentId, onDelete }) => {
     const [comment, setComment] = useState(null);
     const [author, setAuthor] = useState(null);
+    const [isEditing, setIsEditing] = useState(false);
+    const [editedContent, setEditedContent] = useState('');
     const { user } = useContext(UserContext);
 
     useEffect(() => {
@@ -15,6 +17,7 @@ const Comment = ({ commentId, onDelete }) => {
             try {
                 const fetchedComment = await getCommentById(commentId);
                 setComment(fetchedComment);
+                setEditedContent(fetchedComment.content);
 
                 if (fetchedComment && fetchedComment.authorid) {
                     const fetchedAuthor = await getUserById(fetchedComment.authorid);
@@ -40,7 +43,22 @@ const Comment = ({ commentId, onDelete }) => {
     };
 
     const handleEdit = () => {
-        // Implement the edit functionality
+        setIsEditing(true);
+    };
+
+    const handleCancelEdit = () => {
+        setIsEditing(false);
+        setEditedContent(comment.content);
+    };
+
+    const handleSaveEdit = async () => {
+        try {
+            const updatedComment = await updateComment({ ...comment, content: editedContent });
+            setComment(updatedComment);
+            setIsEditing(false);
+        } catch (error) {
+            console.error('Error updating comment:', error);
+        }
     };
 
     if (!comment) {
@@ -66,19 +84,37 @@ const Comment = ({ commentId, onDelete }) => {
                     <p>{new Date(comment.createdAt).toLocaleTimeString('de-DE', {
                         hour: '2-digit',
                         minute: '2-digit'
-                    })} {new Date(comment.createdAt).toLocaleDateString('de-DE')}</p>
+                    })} {new Date(comment.createdAt).toLocaleDateString('de-DE')} {(comment.createdAt !== comment.updatedAt) && "(Bearbeitet)"}</p>
                     {canEdit && (
                         <>
-                            <button onClick={handleEdit} className="pl-3 text-blue hover:text-yellow">Bearbeiten
-                            </button>
-                            <button onClick={handleDelete} className="pl-3 text-red hover:text-yellow">Löschen</button>
+                            {isEditing ? (
+                                <>
+                                    <button onClick={handleSaveEdit} className="pl-3 text-blue hover:text-yellow">Ändern</button>
+                                    <button onClick={handleCancelEdit} className="pl-3 text-red hover:text-yellow">Abbrechen</button>
+                                </>
+                            ) : (
+                                <>
+                                    <button onClick={handleEdit} className="pl-3 text-blue hover:text-yellow">Bearbeiten</button>
+                                    <button onClick={handleDelete} className="pl-3 text-red hover:text-yellow">Löschen</button>
+                                </>
+                            )}
                         </>
                     )}
-
                 </div>
             </div>
             <hr className="border-surface1 mb-2"/>
-            <div className="text-text" dangerouslySetInnerHTML={{__html: comment.content}}></div>
+            {isEditing ? (
+                <div
+                    contentEditable
+                    className="text-text pt-2 border border-gray-300 p-2 rounded"
+                    onInput={(e) => setEditedContent(e.currentTarget.textContent)}
+                    suppressContentEditableWarning={true}
+                >
+                    {editedContent}
+                </div>
+            ) : (
+                <div className="text-text pt-2" dangerouslySetInnerHTML={{__html: comment.content}}></div>
+            )}
         </div>
     );
 };
