@@ -52,6 +52,10 @@ const Comment = ({ commentId }) => {
 
     const canEdit = user._id === comment.authorid || user.role === 'admin' || user.role === 'mod';
 
+    const createdAtDate = new Date(comment.createdAt);
+    const today = new Date();
+    const isToday = createdAtDate.toDateString() === today.toDateString();
+
     return (
         <div className="p-4 rounded mb-2 bg-mantle">
             <div className="flex justify-between text-xs mb-2 text-overlay0">
@@ -72,7 +76,9 @@ const Comment = ({ commentId }) => {
                             <button onClick={handleDelete} className="pr-3 text-red hover:text-yellow">Löschen</button>
                         </>
                     )}
-                    <p>{new Date(comment.createdAt).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })} {new Date(comment.createdAt).toLocaleDateString('de-DE')}</p>
+                    <p>
+                        {createdAtDate.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })} {isToday ? 'Heute' : createdAtDate.toLocaleDateString('de-DE')}
+                    </p>
                 </div>
             </div>
             <hr className="border-surface1 mb-2" />
