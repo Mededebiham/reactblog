@@ -1,17 +1,15 @@
-// frontend/src/App.js
-import React from 'react';
-import ImageUpload from "./components/ImageUpload";
-import Profile from "./components/Profile";
 
+import React from 'react'
+import UploadPicture from './UploadPicture';
 
-const App = () => {
-  return (
-      <div>
-        <h1>Image Upload and Profile</h1>
-        <ImageUpload />
-        <Profile />
-      </div>
-  );
-};
+function App() {
+    return (
+        <div className="App">
+            <header className="App-header">
+                <UploadPicture />
+            </header>
+        </div>
+    );
+}
 
 export default App;
