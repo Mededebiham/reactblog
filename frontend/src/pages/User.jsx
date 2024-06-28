@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import UserUnknownIcon from "../components/logos/UserUnknownIcon";
+import UserIcon from "../components/logos/UserIcon";
 import { getUserById } from "../database/db";
 import { toTitleCase } from "../utils/utils";
 
@@ -34,7 +34,7 @@ const User = () => {
     return (
         <div className="w-full max-w-sm bg-mantle border border-surface1 rounded-lg shadow h-min">
             <div className="flex flex-col items-center pb-10 mt-8 m-4">
-                <UserUnknownIcon className="w-24 h-24 mb-3 rounded-full shadow-lg" />
+                <UserIcon className="w-24 h-24 mb-3 rounded-full shadow-lg" />
                 <h5 className="mb-1 text-xl font-medium text-text">{`${toTitleCase(user.firstname)} ${toTitleCase(user.lastname)}`}</h5>
                 <span className="text-sm text-overlay2 mt-2">{user.email}</span>
                 <p className="text-sm text-overlay2 mt-2">

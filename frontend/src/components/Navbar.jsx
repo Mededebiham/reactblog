@@ -4,7 +4,7 @@ import { routes } from '../routes';
 import Link from './parts/Link';
 import { UserContext, initialUserState } from '../context';
 import Logo from "./logos/Logo";
-import UserUnknownIcon from "./logos/UserUnknownIcon";
+import UserIcon from "./logos/UserIcon";
 import { createPopper } from '@popperjs/core';
 
 const brightnessMode = {
@@ -113,7 +113,7 @@ const Navbar = () => {
                             onClick={() => setDropdownVisible(!dropdownVisible)}
                         >
                             <span className="sr-only">Benutzer Menü öffnen</span>
-                            <UserUnknownIcon className="w-8 h-8 rounded-full" />
+                            <UserIcon className="w-8 h-8 rounded-full" />
                         </button>
                         {/*Dropdown menu*/}
                         <div
