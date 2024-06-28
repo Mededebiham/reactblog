@@ -129,8 +129,8 @@ const UserSettingsTab = () => {
                             name="email"
                             value={formData.email}
                             onChange={handleChange}
-                            className="input"
-                            placeholder="Leer lassen, um die Email nicht zu ändern"
+                            className="input placeholder-overlay1"
+                            placeholder="Leer für keine Änderung"
                         />
                     </div>
 
