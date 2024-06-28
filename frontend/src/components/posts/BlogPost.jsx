@@ -81,12 +81,9 @@ const BlogPost = () => {
 
         try {
             const postData = {
-                userid: user._id,
                 title,
                 content,
-                likes: [],
                 tags: selectedTags.map(tag => tag._id),
-                comments: [],
             };
 
             if (isEditMode) {
