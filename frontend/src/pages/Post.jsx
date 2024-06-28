@@ -94,6 +94,15 @@ const Post = () => {
         }
     }
 
+    const removeComment = (commentId) => {
+        const updatedComments = post.comments.filter(id => id !== commentId);
+        const updatedPost = {
+            ...post,
+            comments: updatedComments
+        };
+        setPost(updatedPost);
+    }
+
     if (!post) return <div>Lade...</div>;
 
     return (
@@ -123,7 +132,7 @@ const Post = () => {
                         />
                     ) : <PostsFooter post={post} hideReadMore={true} />}
                 </PostCard>
-                {post.comments.length > 0 && <Comments commentIds={post.comments} />}
+                {post.comments.length > 0 && <Comments commentIds={post.comments} addComment={addComment} removeComment={removeComment} />}
                 {showCreateComment && <CreateComment addComment={addComment} />}
             </ul>
         </div>

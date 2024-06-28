@@ -5,7 +5,7 @@ import Link from "./parts/Link";
 import { UserContext } from '../context';
 import { toTitleCase } from "../utils/utils";
 
-const Comment = ({ commentId }) => {
+const Comment = ({ commentId, onDelete }) => {
     const [comment, setComment] = useState(null);
     const [author, setAuthor] = useState(null);
     const { user } = useContext(UserContext);
@@ -13,13 +13,11 @@ const Comment = ({ commentId }) => {
     useEffect(() => {
         const fetchCommentAndAuthor = async () => {
             try {
-                const fetchedComment = await getCommentById(commentId); // No need to handle it as an array
-                console.log('Fetched Comment:', fetchedComment); // Debugging line
+                const fetchedComment = await getCommentById(commentId);
                 setComment(fetchedComment);
 
                 if (fetchedComment && fetchedComment.authorid) {
                     const fetchedAuthor = await getUserById(fetchedComment.authorid);
-                    console.log('Fetched Author:', fetchedAuthor); // Debugging line
                     setAuthor(fetchedAuthor);
                 } else {
                     console.error('No author ID found in the comment');
@@ -35,7 +33,7 @@ const Comment = ({ commentId }) => {
     const handleDelete = async () => {
         try {
             await deleteComment(commentId);
-            setComment(null); // Or trigger a re-fetch of the comments in the parent component
+            onDelete(commentId); // Notify parent to remove the comment
         } catch (error) {
             console.error('Error deleting comment:', error);
         }
@@ -82,6 +80,7 @@ const Comment = ({ commentId }) => {
 
 Comment.propTypes = {
     commentId: PropTypes.string.isRequired,
+    onDelete: PropTypes.func.isRequired,
 };
 
 export default Comment;
