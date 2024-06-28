@@ -3,7 +3,6 @@ import Posts from "./pages/Posts";
 import Post from "./pages/Post";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
-import Logout from "./pages/Logout";
 import CreatePost from "./pages/CreatePost";
 import Error404 from "./pages/404";
 import Settings from "./pages/Settings";
@@ -20,7 +19,6 @@ export const routes = [
     { path: '/post/edit/:id', component: CreatePost, name: 'Beitrag bearbeiten', renderNav: false, userRole: 'admin'},
     { path: '/register',component: Register, name: "Registrieren", renderNav: false, userRole: null },
     { path: '/login',component: Login, name: "Einloggen", renderNav: false, userRole: null },
-    { path: '/logout',component: Logout, name: "Ausloggen", renderNav: false, userRole: null },
     { path: 'user/:id', component: User, name: 'Benutzerseite', renderNav: false, userRole: null },
     { path: '/create-post', component: CreatePost, name: 'Beitrag erstellen', renderNav: true, userRole: 'admin' },
     { path: '/settings', component: Settings, name: 'Einstellungen', renderNav: false, userRole: 'user' },
