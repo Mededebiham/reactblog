@@ -13,12 +13,13 @@ const Comment = ({ commentId }) => {
     useEffect(() => {
         const fetchCommentAndAuthor = async () => {
             try {
-                const fetchedCommentArray = await getCommentById(commentId);
-                const fetchedComment = fetchedCommentArray[0];
+                const fetchedComment = await getCommentById(commentId); // No need to handle it as an array
+                console.log('Fetched Comment:', fetchedComment); // Debugging line
                 setComment(fetchedComment);
 
                 if (fetchedComment && fetchedComment.authorid) {
                     const fetchedAuthor = await getUserById(fetchedComment.authorid);
+                    console.log('Fetched Author:', fetchedAuthor); // Debugging line
                     setAuthor(fetchedAuthor);
                 } else {
                     console.error('No author ID found in the comment');
