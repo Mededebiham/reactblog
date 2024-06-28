@@ -20,7 +20,7 @@ exports.getCommentById = async (req, res) => {
         if (!comment) {
             return res.status(404).json({ message: 'Comment not found' });
         }
-        res.status(200).json(comment);
+        res.status(200).json(comment); // Return the comment object directly
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

@@ -13,11 +13,14 @@ const Comment = ({ commentId }) => {
     useEffect(() => {
         const fetchCommentAndAuthor = async () => {
             try {
-                const fetchedComment = await getCommentById(commentId);
+                const fetchedCommentArray = await getCommentById(commentId);
+                const fetchedComment = fetchedCommentArray[0];
+                console.log('Fetched Comment:', fetchedComment); // Debugging line
                 setComment(fetchedComment);
 
                 if (fetchedComment && fetchedComment.authorid) {
                     const fetchedAuthor = await getUserById(fetchedComment.authorid);
+                    console.log('Fetched Author:', fetchedAuthor); // Debugging line
                     setAuthor(fetchedAuthor);
                 } else {
                     console.error('No author ID found in the comment');
@@ -69,7 +72,7 @@ const Comment = ({ commentId }) => {
                             <button onClick={handleDelete} className="pr-3 text-red hover:text-yellow">Löschen</button>
                         </>
                     )}
-                    <p>{new Date(comment.createdAt).toLocaleDateString('de-DE')}</p>
+                    <p>{new Date(comment.createdAt).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })} {new Date(comment.createdAt).toLocaleDateString('de-DE')}</p>
                 </div>
             </div>
             <hr className="border-surface1 mb-2" />
