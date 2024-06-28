@@ -21,7 +21,6 @@ const apiRequest = async (url, method = 'GET', data = null) => {
     }
 };
 
-
 // Benutzer Funktionen
 export const getUsers = () => apiRequest(`${API_BASE_URL}/users`);
 export const getUserById = (userId) => apiRequest(`${API_BASE_URL}/users/${userId}`);

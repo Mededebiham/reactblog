@@ -13,9 +13,9 @@ exports.getCommentsForPost = async (req, res) => {
 };
 
 exports.getCommentById = async (req, res) => {
-    const { id } = req.params;
+    const commentId = req.params.commentId;
     try {
-        const comment = await Comment.findById(id);
+        const comment = await Comment.findById(commentId);
         console.log('Fetched comment:', comment); // Debugging line
         if (!comment) {
             return res.status(404).json({ message: 'Comment not found' });
@@ -58,26 +58,29 @@ exports.deleteAllCommentsForPost = async (req, res) => {
 };
 
 exports.deleteCommentForPostById = async (req, res) => {
-    const commentid = req.params.commentid;
+    const commentId = req.params.commentId;
+    console.log(`Received request to delete comment with id: ${commentId}`); // Debug log
     try {
-        const deletedComment = await Comment.findByIdAndDelete(commentid); // Kommentar nach ID löschen
+        const deletedComment = await Comment.findByIdAndDelete(commentId);
         if (!deletedComment) {
+            console.log(`Comment with id ${commentId} not found`); // Debug log
             return res.status(404).json({ error: 'Comment not found' });
         }
-        // Entfernen Sie die Referenz des Kommentars aus dem Beitrag
-        await Post.findByIdAndUpdate(deletedComment.post, { $pull: { comments: commentid } });
+        await Post.findByIdAndUpdate(deletedComment.postid, { $pull: { comments: commentId } });
+        console.log(`Comment with id ${commentId} deleted successfully`); // Debug log
         res.json({ message: 'Comment deleted successfully' });
     } catch (error) {
+        console.error('Error deleting comment:', error); // Debug log
         res.status(500).json({ error: error.message });
     }
 };
 
 exports.updateCommentForPost = async (req, res) => {
-    const commentid = req.params.commentid;
+    const commentId = req.params.commentId;
     const { content } = req.body;
     try {
         const updatedComment = await Comment.findByIdAndUpdate(
-            commentid,
+            commentId,
             { content },
             { new: true }
         ); // Kommentar aktualisieren
