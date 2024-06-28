@@ -161,11 +161,6 @@ const Navbar = () => {
                                     </Link>
                                 </li>
                             ))}
-                            <li>
-                                <Link to="/settings">
-                                    Settings
-                                </Link>
-                            </li>
                         </ul>
                     </div>
                 </div>
