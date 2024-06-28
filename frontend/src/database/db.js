@@ -53,3 +53,5 @@ export const createTag = (tag) => apiRequest(`${API_BASE_URL}/tags`, 'POST', tag
 export const updateTag = (tag) => apiRequest(`${API_BASE_URL}/tags/${tag._id}`, 'PUT', tag);
 export const deleteTag = (tagId) => apiRequest(`${API_BASE_URL}/tags/${tagId}`, 'DELETE');
 export const deleteAllTags = () => apiRequest(`${API_BASE_URL}/tags`, 'DELETE');
+export const uploadImage = (formData) => apiRequest(`${API_BASE_URL}/images/upload`, 'Post');
+export const downloadImage = (imageId) => apiRequest(`${API_BASE_URL}/images/download/${imageId}`);

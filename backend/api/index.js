@@ -2,10 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const connectDB = require('../config/db');
-const postShema=require('../models/User');
-const userShema=require('../models/Post');
-const commentShema=require('../models/Comment');
-const tagsShema=require('../models/Tag');
 
 const app = express();
 const PORT = process.env.PORT || 5001;
