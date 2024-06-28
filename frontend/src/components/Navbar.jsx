@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { routes } from '../routes';
 import Link from './parts/Link';
 import { UserContext, initialUserState } from '../context';
 import Logo from "./logos/Logo";
 import UserUnknownIcon from "./logos/UserUnknownIcon";
+import { createPopper } from '@popperjs/core';
 
 const brightnessMode = {
     dark: "Dunkler Modus", light: "Heller Modus"
@@ -13,8 +14,11 @@ const brightnessMode = {
 const Navbar = () => {
     const [isDark, setIsDark] = useState(true);
     const [userIconVisibility, setUserIconVisibility] = useState(false);
+    const [dropdownVisible, setDropdownVisible] = useState(false);
     const [filteredRoutes, setFilteredRoutes] = useState([]);
     const { user, setUser } = useContext(UserContext);
+    const dropdownRef = useRef(null);
+    const userMenuButtonRef = useRef(null);
 
     const toggleDarkmode = () => {
         const html = document.documentElement;
@@ -30,6 +34,7 @@ const Navbar = () => {
     const logout = () => {
         setUser(initialUserState);
         setUserIconVisibility(false);
+        setDropdownVisible(false);
     };
 
     useEffect(() => {
@@ -46,6 +51,33 @@ const Navbar = () => {
         return !(filteredRoutes.length === 1 && filteredRoutes[0].path === '/posts');
     };
 
+    const handleClickOutside = (event) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target) && !userMenuButtonRef.current.contains(event.target)) {
+            setDropdownVisible(false);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (dropdownVisible && userMenuButtonRef.current && dropdownRef.current) {
+            createPopper(userMenuButtonRef.current, dropdownRef.current, {
+                placement: 'bottom-start', // Ensures it opens under the icon
+                modifiers: [{
+                    name: 'offset',
+                    options: {
+                        offset: [0, 8],
+                    },
+                }],
+            });
+        }
+    }, [dropdownVisible]);
+
     return (
         <>
             <nav className="bg-mantle">
@@ -61,20 +93,26 @@ const Navbar = () => {
                             </li>
                             <li className="mx-2"><Link to="/register">Registrieren</Link></li>
                         </ul>
-                        <button type="button"
-                                className={`flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-overlay2 ${userIconVisibility ? "" : "hidden"}`}
-                                id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
-                                data-dropdown-placement="bottom">
+                        <button
+                            type="button"
+                            ref={userMenuButtonRef}
+                            className={`flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-overlay2 ${userIconVisibility ? "" : "hidden"}`}
+                            id="user-menu-button"
+                            aria-expanded={dropdownVisible ? "true" : "false"}
+                            onClick={() => setDropdownVisible(!dropdownVisible)}
+                        >
                             <span className="sr-only">Benutzer Menü öffnen</span>
                             <UserUnknownIcon className="w-8 h-8 rounded-full" />
                         </button>
                         {/*Dropdown menu*/}
                         <div
-                            className="z-50 hidden my-4 text-base list-none bg-mantle divide-y divide-surface2 rounded-lg shadow"
-                            id="user-dropdown">
+                            ref={dropdownRef}
+                            className={`z-50 ${dropdownVisible ? '' : 'hidden'} my-4 text-base list-none bg-mantle divide-y divide-surface2 rounded-lg shadow`}
+                            id="user-dropdown"
+                        >
                             <div className="px-4 py-3">
                                 <span className="block text-sm text-text">{user.firstname} {user.lastname}</span>
-                                <span className="block text-sm  text-overlay1 truncate">{user.username}</span>
+                                <span className="block text-sm text-overlay1 truncate">{user.username}</span>
                             </div>
                             <ul className="py-2" aria-labelledby="user-menu-button">
                                 <li>
@@ -87,8 +125,7 @@ const Navbar = () => {
                                 </li>
                                 <li>
                                     <button onClick={logout}
-                                            className="block px-4 py-2 text-sm text-text hover:bg-surface0 w-full text-left">Ausloggen
-                                    </button>
+                                            className="block px-4 py-2 text-sm text-text hover:bg-surface0 w-full text-left">Ausloggen</button>
                                 </li>
                             </ul>
                         </div>
