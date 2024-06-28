@@ -19,6 +19,7 @@ const Navbar = () => {
     const { user, setUser } = useContext(UserContext);
     const dropdownRef = useRef(null);
     const userMenuButtonRef = useRef(null);
+    const popperInstanceRef = useRef(null);
 
     const toggleDarkmode = () => {
         const html = document.documentElement;
@@ -65,16 +66,26 @@ const Navbar = () => {
     }, []);
 
     useEffect(() => {
-        if (dropdownVisible && userMenuButtonRef.current && dropdownRef.current) {
-            createPopper(userMenuButtonRef.current, dropdownRef.current, {
-                placement: 'bottom-start', // Ensures it opens under the icon
-                modifiers: [{
-                    name: 'offset',
-                    options: {
-                        offset: [0, 8],
-                    },
-                }],
-            });
+        if (dropdownVisible) {
+            if (userMenuButtonRef.current && dropdownRef.current) {
+                if (popperInstanceRef.current) {
+                    popperInstanceRef.current.destroy();
+                }
+                popperInstanceRef.current = createPopper(userMenuButtonRef.current, dropdownRef.current, {
+                    placement: 'bottom-start', // Ensures it opens under the icon
+                    modifiers: [{
+                        name: 'offset',
+                        options: {
+                            offset: [0, 8],
+                        },
+                    }],
+                });
+            }
+        } else {
+            if (popperInstanceRef.current) {
+                popperInstanceRef.current.destroy();
+                popperInstanceRef.current = null;
+            }
         }
     }, [dropdownVisible]);
 
