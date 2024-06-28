@@ -5,6 +5,7 @@ import Link from "./parts/Link";
 import { UserContext } from '../context';
 import { toTitleCase } from "../utils/utils";
 import QuillEditor from "./QuillEditor";
+import UserIcon from "./logos/UserIcon";
 
 const Comment = ({ commentId, onDelete }) => {
     const [comment, setComment] = useState(null);
@@ -69,19 +70,18 @@ const Comment = ({ commentId, onDelete }) => {
     const canEdit = user._id === comment.authorid || user.role === 'admin' || user.role === 'mod';
 
     return (<>
-            <div className="p-4 rounded mb-2 bg-mantle">
+            <div className="p-4 rounded mb-4 bg-mantle">
                 <div className="flex justify-between text-xs mb-2 text-overlay0">
                     <div className="flex">
                         {author ? (
-                            <Link to={`/user/${comment.authorid}`} className="text-blue hover:text-yellow">
-                                {toTitleCase(author.firstname)}
+                            <Link to={`/user/${comment.authorid}`} className="text-blue hover:text-yellow flex items-center">
+                                <UserIcon className="w-5 h-5 rounded-full mr-2" userId={author._id} /> {toTitleCase(author.firstname)} {toTitleCase(author.lastname)}
                             </Link>
                         ) : (
                             'Autor nicht gefunden'
                         )}
-                        <p>:</p>
                     </div>
-                    <div className="flex">
+                    <div className="flex items-center">
                         <p>{new Date(comment.createdAt).toLocaleTimeString('de-DE', {
                             hour: '2-digit',
                             minute: '2-digit'
