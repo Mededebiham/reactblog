@@ -9,12 +9,12 @@ const CreatePost = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (user.role !== 'admin' || user.role === 'mod') {
+        if (user.role !== 'admin' && user.role !== 'mod') {
             navigate('/login');
         }
     }, [user, navigate]);
 
-    if (user.role !== 'admin' || user.role === 'mod') {
+    if (user.role !== 'admin' && user.role !== 'mod') {
         return null;
     }
 

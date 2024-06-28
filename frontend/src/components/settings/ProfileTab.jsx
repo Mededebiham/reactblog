@@ -1,76 +1,133 @@
-import React, {useContext, useState} from 'react';
-import defaultProfilePic from "../../assets/unknown.jpg";
-import UserIcon from "../logos/UserIcon";
+import React, { useContext, useState } from 'react';
 import { UserContext } from '../../context';
+import { updateUser } from '../../database/db';
+import Button from "../parts/Button";
 
 const ProfileTab = () => {
-    const [selectedFile, setSelectedFile] = useState(defaultProfilePic);
-    const [previewUrl, setPreviewUrl] = useState(null);
-    const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
-    const { user } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
+    const [imageUrl, setImageUrl] = useState(user.profilepicture || '');
+    const [firstname, setFirstname] = useState(user.firstname || '');
+    const [lastname, setLastname] = useState(user.lastname || '');
+    const [description, setDescription] = useState(user.description || '');
+    const [isEditing, setIsEditing] = useState(false);
+    const [errors, setErrors] = useState('');
 
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        setSelectedFile(file);
-
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setPreviewUrl(reader.result);
-            };
-            reader.readAsDataURL(file);
-        } else {
-            setPreviewUrl(defaultProfilePic);
-        }
+    const handleImageUrlChange = (event) => {
+        setImageUrl(event.target.value);
     };
 
-    const handleNameChange = (event) => {
-        setName(event.target.value);
+    const handleFirstnameChange = (event) => {
+        setFirstname(event.target.value);
+    };
+
+    const handleLastnameChange = (event) => {
+        setLastname(event.target.value);
     };
 
     const handleDescriptionChange = (event) => {
         setDescription(event.target.value);
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log('Profilbild hochladen:', selectedFile);
-        console.log(' Name ändern:', name);
-        console.log('\n' + 'Beschreibung ändern in:', description);
 
+        const updatedUser = {
+            ...user,
+            profilepicture: imageUrl,
+            firstname,
+            lastname,
+            description,
+        };
 
-        setSelectedFile(null);
-        setPreviewUrl(defaultProfilePic);
-        setName('');
-        setDescription('');
+        try {
+            const res = await updateUser(updatedUser);
+            setUser(res);
+            setErrors('');
+            setIsEditing(false);
+            alert('Änderungen erfolgreich gespeichert.');
+        } catch (error) {
+            setErrors(error.message || 'Fehler beim Speichern der Änderungen.');
+        }
     };
 
     return (
-        <div className="w-full   ">
-            <UserIcon className="w-32 h-32 rounded-full mx-auto mb-4" userId={`${user._id}`} />
+        <div className="flex justify-center items-center">
+            <div className="w-96 bg-mantle p-6 rounded-lg shadow-lg">
+                <h2 className="header2">Profileinstellungen</h2>
+                {imageUrl && (
+                    <img src={imageUrl} alt="Profile Preview" className="w-48 h-48 rounded-3xl mt-2 mx-auto mb-4"/>
+                )}
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    <div>
+                        <label className="label">Profilbild URL</label>
+                        <input
+                            type="text"
+                            value={imageUrl}
+                            onChange={handleImageUrlChange}
+                            className={`input ${isEditing ? 'text-text' : 'text-overlay1'}`}
+                            placeholder="URL zum neuen Profilbild eingeben"
+                            disabled={!isEditing}
+                        />
+                    </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                    <label className="label">Profilbild hochladen</label>
-                    <input type="file" accept="image/*" onChange={handleFileChange} className="input"/>
+                    <div>
+                        <label className="label">Vorname</label>
+                        <input
+                            type="text"
+                            value={firstname}
+                            onChange={handleFirstnameChange}
+                            className={`input ${isEditing ? 'text-text' : 'text-overlay1'}`}
+                            placeholder="Vorname eingeben"
+                            disabled={!isEditing}
+                        />
+                    </div>
 
-                    {previewUrl &&
-                        <img src={previewUrl} alt="Profile Preview" className="w-24 h-24 rounded-lg mt-2 mx-auto"/>}
-                </div>
+                    <div>
+                        <label className="label">Nachname</label>
+                        <input
+                            type="text"
+                            value={lastname}
+                            onChange={handleLastnameChange}
+                            className={`input ${isEditing ? 'text-text' : 'text-overlay1'}`}
+                            placeholder="Nachname eingeben"
+                            disabled={!isEditing}
+                        />
+                    </div>
 
-                <div>
-                    <label className="label"> Name ändern</label>
-                    <input type="text" value={name} onChange={handleNameChange} className="input"/>
-                </div>
+                    <div>
+                        <label className="label">Beschreibung</label>
+                        <input
+                            type="text"
+                            value={description}
+                            onChange={handleDescriptionChange}
+                            className={`input ${isEditing ? 'text-text' : 'text-overlay1'}`}
+                            placeholder="Beschreibung eingeben"
+                            disabled={!isEditing}
+                        />
+                    </div>
 
-                <div>
-                    <label className="label">Beschreibung ändern</label>
-                    <input type="text" value={description} onChange={handleDescriptionChange} className="input"/>
-                </div>
+                    {errors && <p className="text-red">{errors}</p>}
 
-                <button type="submit" className="button">Änderungen speichern</button>
-            </form>
+                    {!isEditing && (
+                        <Button
+                            type="button"
+                            className="w-full"
+                            onClick={() => setIsEditing(!isEditing)}
+                        >
+                            Profil bearbeiten
+                        </Button>
+                    )}
+
+                    {isEditing && (
+                        <Button
+                            type="submit"
+                            className="bg-green w-full"
+                        >
+                            Änderungen speichern
+                        </Button>
+                    )}
+                </form>
+            </div>
         </div>
     );
 };

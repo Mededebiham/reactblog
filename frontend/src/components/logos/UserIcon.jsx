@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import unknown from '../../assets/unknown.jpg';
 import { getUserById } from '../../database/db';
 
+const classNamesDefault = "object-cover";
+
 const UserIcon = ({ className = "", userId }) => {
     const [imageSrc, setImageSrc] = useState(unknown);
     const [loading, setLoading] = useState(true);
@@ -22,6 +24,7 @@ const UserIcon = ({ className = "", userId }) => {
         };
 
         if (userId) {
+            setLoading(true);
             fetchUserImage();
         }
     }, [userId]);
@@ -30,7 +33,7 @@ const UserIcon = ({ className = "", userId }) => {
     if (error) return <div>{error}</div>;
 
     return (
-        <img src={imageSrc} alt="User Icon" className={className} />
+        <img src={imageSrc} alt="User Icon" className={`${classNamesDefault} ${className}`} />
     );
 };
 

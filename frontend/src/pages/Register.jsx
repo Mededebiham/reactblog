@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { createUser } from '../database/db';
 import {useNavigate} from "react-router-dom";
+import {passwordRegex} from "../utils/utils";
 
 const Register = () => {
     const [firstname, setFirstname] = useState('');
@@ -33,7 +34,6 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
         if (!passwordRegex.test(password)) {
             setError('Das Passwort muss mindestens 8 Zeichen lang sein, einen Großbuchstaben, eine Zahl und ein Sonderzeichen enthalten.');
             return;
