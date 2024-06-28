@@ -29,6 +29,8 @@ const Register = () => {
         }
     };
 
+    const navigate = useNavigate();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -45,11 +47,9 @@ const Register = () => {
                 role: 'user',
             };
             const response = await createUser(userData);
-            setFirstname('');
-            setLastname('');
-            setUsername('');
-            setPassword('');
-            setError('');
+
+            navigate('/login');
+
         } catch (error) {
             setError(error.message || 'Serverfehler: ' + error.message);
         }
