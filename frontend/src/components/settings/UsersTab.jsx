@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import UserIcon from "../logos/UserIcon";
+import Pagination from "../Pagination"; // Import Pagination component
 import { getUsers, updateUser, deleteUser } from '../../database/db';
 
 const roles = {
@@ -11,6 +12,8 @@ const roles = {
 const UsersTab = () => {
     const [users, setUsers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const usersPerPage = 10;
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -49,6 +52,16 @@ const UsersTab = () => {
         user.lastname.toLowerCase().includes(searchTerm.toLowerCase()) ||
         user.username.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    // Pagination logic
+    const indexOfLastUser = currentPage * usersPerPage;
+    const indexOfFirstUser = indexOfLastUser - usersPerPage;
+    const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+    const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
 
     return (
         <>
@@ -92,7 +105,7 @@ const UsersTab = () => {
                     </tr>
                     </thead>
                     <tbody>
-                    {filteredUsers.map(user => (
+                    {currentUsers.map(user => (
                         <tr key={user._id} className="bg-surface0 border-b hover:bg-mantle">
                             <th scope="row" className="flex items-center px-6 py-4 text-text whitespace-nowrap">
                                 <UserIcon className="w-10 h-10 rounded-full" userId={`${user._id}`} />
@@ -140,6 +153,11 @@ const UsersTab = () => {
                     ))}
                     </tbody>
                 </table>
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
+                />
             </div>
         </>
     );

@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
+
+    if (totalPages < 2) return null;
+
     return (
         <div className="flex justify-center mt-4">
             <nav>
