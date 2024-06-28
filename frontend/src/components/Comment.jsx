@@ -68,53 +68,62 @@ const Comment = ({ commentId, onDelete }) => {
 
     const canEdit = user._id === comment.authorid || user.role === 'admin' || user.role === 'mod';
 
-    return (
-        <div className="p-4 rounded mb-2 bg-mantle">
-            <div className="flex justify-between text-xs mb-2 text-overlay0">
-                <div className="flex">
-                    {author ? (
-                        <Link to={`/user/${comment.authorid}`} className="text-blue hover:text-yellow">
-                            {toTitleCase(author.firstname)}
-                        </Link>
-                    ) : (
-                        'Autor nicht gefunden'
-                    )}
-                    <p>:</p>
+    return (<>
+            <div className="p-4 rounded mb-2 bg-mantle">
+                <div className="flex justify-between text-xs mb-2 text-overlay0">
+                    <div className="flex">
+                        {author ? (
+                            <Link to={`/user/${comment.authorid}`} className="text-blue hover:text-yellow">
+                                {toTitleCase(author.firstname)}
+                            </Link>
+                        ) : (
+                            'Autor nicht gefunden'
+                        )}
+                        <p>:</p>
+                    </div>
+                    <div className="flex">
+                        <p>{new Date(comment.createdAt).toLocaleTimeString('de-DE', {
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        })} {new Date(comment.createdAt).toLocaleDateString('de-DE')} {(comment.createdAt !== comment.updatedAt) && "(Bearbeitet)"}</p>
+                        {canEdit && (
+                            <>
+                                {isEditing ? (
+                                    <>
+                                        <button onClick={handleSaveEdit}
+                                                className="pl-3 text-blue hover:text-yellow">Ändern
+                                        </button>
+                                        <button onClick={handleCancelEdit}
+                                                className="pl-3 text-red hover:text-yellow">Abbrechen
+                                        </button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <button onClick={handleEdit}
+                                                className="pl-3 text-blue hover:text-yellow">Bearbeiten
+                                        </button>
+                                        <button onClick={handleDelete}
+                                                className="pl-3 text-red hover:text-yellow">Löschen
+                                        </button>
+                                    </>
+                                )}
+                            </>
+                        )}
+                    </div>
                 </div>
-                <div className="flex">
-                    <p>{new Date(comment.createdAt).toLocaleTimeString('de-DE', {
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    })} {new Date(comment.createdAt).toLocaleDateString('de-DE')} {(comment.createdAt !== comment.updatedAt) && "(Bearbeitet)"}</p>
-                    {canEdit && (
-                        <>
-                            {isEditing ? (
-                                <>
-                                    <button onClick={handleSaveEdit} className="pl-3 text-blue hover:text-yellow">Ändern</button>
-                                    <button onClick={handleCancelEdit} className="pl-3 text-red hover:text-yellow">Abbrechen</button>
-                                </>
-                            ) : (
-                                <>
-                                    <button onClick={handleEdit} className="pl-3 text-blue hover:text-yellow">Bearbeiten</button>
-                                    <button onClick={handleDelete} className="pl-3 text-red hover:text-yellow">Löschen</button>
-                                </>
-                            )}
-                        </>
-                    )}
-                </div>
+                <hr className="border-surface1 mb-2"/>
+                {isEditing ? (
+                    <QuillEditor
+                        value={editedContent}
+                        onChange={setEditedContent}
+                        placeholder="Kommentar bearbeiten..."
+                        theight="h-32"
+                    />
+                ) : (
+                    <div className="text-text pt-2" dangerouslySetInnerHTML={{__html: comment.content}}></div>
+                )}
             </div>
-            <hr className="border-surface1 mb-2"/>
-            {isEditing ? (
-                <QuillEditor
-                    value={editedContent}
-                    onChange={setEditedContent}
-                    placeholder="Kommentar bearbeiten..."
-                    theight="h-32"
-                />
-            ) : (
-                <div className="text-text pt-2" dangerouslySetInnerHTML={{__html: comment.content}}></div>
-            )}
-        </div>
+        </>
     );
 };
 
