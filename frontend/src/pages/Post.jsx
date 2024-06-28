@@ -123,7 +123,7 @@ const Post = () => {
                         />
                     ) : <PostsFooter post={post} hideReadMore={true} />}
                 </PostCard>
-                {post.comments.length > 0 && <Comments commentIds={post.comments} addComment={addComment} />}
+                {post.comments.length > 0 && <Comments commentIds={post.comments} />}
                 {showCreateComment && <CreateComment addComment={addComment} />}
             </ul>
         </div>

@@ -26,19 +26,19 @@ exports.getCommentById = async (req, res) => {
     }
 };
 
-
 exports.createComment = async (req, res) => {
-    const {  content,postid,authorid } = req.body;
+    const { content, postid, authorid } = req.body;
     try {
         const newComment = new Comment({ content, postid, authorid });
         await newComment.save();
 
-        const post = await fetchPostById(postid);
+        const post = await Post.findById(postid);
         if (!post) {
             return res.status(404).json({ error: 'Post not found' });
         }
         post.comments.push(newComment._id);
         await post.save();
+
         res.status(201).json(newComment);
     } catch (error) {
         res.status(500).json({ error: error.message });
