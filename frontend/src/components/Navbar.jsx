@@ -113,7 +113,7 @@ const Navbar = () => {
                             onClick={() => setDropdownVisible(!dropdownVisible)}
                         >
                             <span className="sr-only">Benutzer Menü öffnen</span>
-                            <UserIcon className="w-8 h-8 rounded-full" />
+                            <UserIcon className="w-8 h-8 rounded-full" src={`${user.profilepicture ? user.profilepicture : ''}`} />
                         </button>
                         {/*Dropdown menu*/}
                         <div

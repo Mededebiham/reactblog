@@ -95,7 +95,7 @@ const UsersTab = () => {
                     {filteredUsers.map(user => (
                         <tr key={user._id} className="bg-surface0 border-b hover:bg-mantle">
                             <th scope="row" className="flex items-center px-6 py-4 text-text whitespace-nowrap">
-                                <UserIcon className="w-10 h-10 rounded-full" />
+                                <UserIcon className="w-10 h-10 rounded-full" src={`${user.profilepicture ? user.profilepicture : ''}`} />
                                 <div className="ps-3">
                                     <div className="text-text font-semibold">{user.firstname} {user.lastname}</div>
                                     <div className="font-normal text-overlay1">{user.username}</div>

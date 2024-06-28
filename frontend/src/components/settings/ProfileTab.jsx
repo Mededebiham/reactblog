@@ -1,11 +1,14 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import defaultProfilePic from "../../assets/unknown.jpg";
+import UserIcon from "../logos/UserIcon";
+import { UserContext } from '../../context';
 
 const ProfileTab = () => {
     const [selectedFile, setSelectedFile] = useState(defaultProfilePic);
     const [previewUrl, setPreviewUrl] = useState(null);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
+    const { user } = useContext(UserContext);
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -45,8 +48,7 @@ const ProfileTab = () => {
 
     return (
         <div className="w-full   ">
-            <img src={defaultProfilePic} alt="Profile Preview"
-                 className="w-32 h-32 rounded-full mx-auto mb-4"/>
+            <UserIcon className="w-32 h-32 rounded-full mx-auto mb-4" src={`${user.profilepicture ? user.profilepicture : ''}`} />
 
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
