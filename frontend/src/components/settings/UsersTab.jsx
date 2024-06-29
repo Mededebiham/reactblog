@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import UserIcon from "../logos/UserIcon";
 import Pagination from "../Pagination"; // Import Pagination component
-import { getUsers, updateUser, deleteUser } from '../../database/db';
+import {deleteUser, getUsers, updateUser} from '../../database/db';
+import Link from "../parts/Link";
 
 const roles = {
-    'admin': { name: "Administrator", color: 'bg-red' },
-    'mod': { name: "Moderator", color: 'bg-mauve' },
-    'user': { name: "Benutzer", color: 'bg-green' },
+    'admin': {name: "Administrator", color: 'bg-red'},
+    'mod': {name: "Moderator", color: 'bg-mauve'},
+    'user': {name: "Benutzer", color: 'bg-green'},
 };
 
 const UsersTab = () => {
@@ -49,11 +50,7 @@ const UsersTab = () => {
         }
     };
 
-    const filteredUsers = users.filter(user =>
-        user.firstname.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.lastname.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.username.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filteredUsers = users.filter(user => user.firstname.toLowerCase().includes(searchTerm.toLowerCase()) || user.lastname.toLowerCase().includes(searchTerm.toLowerCase()) || user.username.toLowerCase().includes(searchTerm.toLowerCase()));
 
     // Pagination logic
     const indexOfLastUser = currentPage * usersPerPage;
@@ -65,13 +62,14 @@ const UsersTab = () => {
         setCurrentPage(pageNumber);
     };
 
-    return (
-        <>
+    return (<>
             <div className="relative overflow-x-auto rounded-lg w-full">
-                <div className="flex items-center justify-between flex-column md:flex-row flex-wrap space-y-4 md:space-y-0 py-4 bg-surface1">
+                <div
+                    className="flex items-center justify-between flex-column md:flex-row flex-wrap space-y-4 md:space-y-0 py-4 bg-surface1">
                     <label htmlFor="table-search" className="sr-only">Suche</label>
                     <div className="relative">
-                        <div className="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <div
+                            className="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
                             <svg
                                 className="w-4 h-4 text-text dark:text-gray-400"
                                 aria-hidden="true"
@@ -107,14 +105,15 @@ const UsersTab = () => {
                     </tr>
                     </thead>
                     <tbody>
-                    {currentUsers.map(user => (
-                        <tr key={user._id} className="bg-surface0 border-b hover:bg-mantle">
+                    {currentUsers.map(user => (<tr key={user._id} className="bg-surface0 border-b hover:bg-mantle">
                             <th scope="row" className="flex items-center px-6 py-4 text-text whitespace-nowrap">
-                                <UserIcon className="w-10 h-10 rounded-full" userId={`${user._id}`} />
-                                <div className="ps-3">
-                                    <div className="text-text font-semibold">{user.firstname} {user.lastname}</div>
-                                    <div className="font-normal text-overlay1">{user.username}</div>
-                                </div>
+                                <Link className="flex" to={`/user/${user._id}`}>
+                                    <UserIcon className="w-10 h-10 rounded-full" userId={`${user._id}`}/>
+                                    <div className="ps-3">
+                                        <div className="text-text font-semibold">{user.firstname} {user.lastname}</div>
+                                        <div className="font-normal text-overlay1">{user.username}</div>
+                                    </div>
+                                </Link>
                             </th>
                             <td className="px-6 py-4">
                                 <div className="flex items-center">
@@ -124,11 +123,9 @@ const UsersTab = () => {
                                         onChange={(e) => handleRoleChange(user._id, e.target.value)}
                                         className="border bg-mantle text-text rounded px-2 py-1"
                                     >
-                                        {Object.keys(roles).map((key) => (
-                                            <option key={key} value={key}>
+                                        {Object.keys(roles).map((key) => (<option key={key} value={key}>
                                                 {roles[key].name}
-                                            </option>
-                                        ))}
+                                            </option>))}
                                     </select>
                                 </div>
                             </td>
@@ -151,8 +148,7 @@ const UsersTab = () => {
                                     </button>
                                 </div>
                             </td>
-                        </tr>
-                    ))}
+                        </tr>))}
                     </tbody>
                 </table>
                 <Pagination
@@ -161,8 +157,7 @@ const UsersTab = () => {
                     onPageChange={handlePageChange}
                 />
             </div>
-        </>
-    );
+        </>);
 };
 
 export default UsersTab;
