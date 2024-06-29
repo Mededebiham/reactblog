@@ -78,7 +78,7 @@ const UsersTab = () => {
     };
 
     const handleDeleteUser = async (userId) => {
-        const confirmDelete = window.confirm("Möchten Sie diesen Benutzer wirklich löschen?");
+        const confirmDelete = window.confirm("Benutzer wirklich löschen?");
         if (!confirmDelete) return;
 
         try {

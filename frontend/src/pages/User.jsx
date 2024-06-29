@@ -39,11 +39,18 @@ const User = () => {
                 <h5 className="mb-1 text-xl font-medium text-text">{`${toTitleCase(user.firstname)} ${toTitleCase(user.lastname)}`}</h5>
                 <span className="text-sm text-overlay2 mt-2">{user.username}</span>
                 <div className="text-sm text-overlay2 mt-8 text-center">
-                    {user.description ? user.description :
+                    {user.description ? (
+                        <div dangerouslySetInnerHTML={{ __html: user.description }} />
+                    ) : (
                         <div className="flex flex-col items-center">
-                            <p className="mb-4"><span className="text-text font-medium">{user.firstname ? toTitleCase(user.firstname) : "Der Benutzer"}</span> hat noch keine Beschreibung hinzugefügt 😢</p>
+                            <p className="mb-4">
+                                <span className="text-text font-medium">
+                                    {user.firstname ? toTitleCase(user.firstname) : "Der Benutzer"}
+                                </span> hat noch keine Beschreibung hinzugefügt 😢
+                            </p>
                             <LogoTumbleweed className="object-contain h-40 w-40 rounded-full shadow-inner" />
-                        </div>}
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
