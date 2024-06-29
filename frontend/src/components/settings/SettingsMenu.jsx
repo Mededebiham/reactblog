@@ -36,7 +36,7 @@ const SettingsMenu = () => {
 
     return (
         <div className="m-4 w-full">
-            <h2 className="text-xl font-bold mb-4">Einstellungen{user.firstname ? `: ${user.firstname} ${user.lastname}` : ""}</h2>
+            <h2 className="text-xl font-bold mb-4 ml-1">Einstellungen</h2>
             <div className="mb-4 border-b border-surface0">
                 <div className="flex flex-wrap -mb-px text-sm font-medium text-center justify-between" id="default-tab"
                      data-tabs-toggle="#default-tab-content" role="tablist">
