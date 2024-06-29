@@ -84,6 +84,7 @@ const BlogPost = () => {
                 title,
                 content,
                 tags: selectedTags.map(tag => tag._id),
+                userid: user._id,
             };
 
             if (isEditMode) {
@@ -100,6 +101,9 @@ const BlogPost = () => {
     };
 
     const handleDelete = async () => {
+        const confirmDelete = window.confirm("Möchten Sie diesen Beitrag wirklich löschen?");
+        if (!confirmDelete) return;
+
         try {
             await deletePost(id);
             navigate('/posts');
@@ -138,14 +142,14 @@ const BlogPost = () => {
                     </div>
                 </div>
                 <div className="flex">
-                <button type="submit" className="w-full p-2 bg-blue text-base rounded hover:bg-sapphire mt-4">
-                    {isEditMode ? 'Änderungen speichern' : 'Beitrag erstellen'}
-                </button>
-                {isEditMode && (
-                    <button type="button" onClick={handleDelete} className="ml-2 w-full p-2 bg-red text-base rounded hover:bg-yellow mt-4">
-                        Beitrag löschen
+                    <button type="submit" className="w-full p-2 bg-blue text-base rounded hover:bg-sapphire mt-4">
+                        {isEditMode ? 'Änderungen speichern' : 'Beitrag erstellen'}
                     </button>
-                )}
+                    {isEditMode && (
+                        <button type="button" onClick={handleDelete} className="ml-2 w-full p-2 bg-red text-base rounded hover:bg-yellow mt-4">
+                            Beitrag löschen
+                        </button>
+                    )}
                 </div>
             </form>
         </div>
