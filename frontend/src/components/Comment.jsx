@@ -36,6 +36,9 @@ const Comment = ({ commentId, onDelete }) => {
     }, [commentId]);
 
     const handleDelete = async () => {
+        const confirmDelete = window.confirm("Möchten Sie diesen Kommentar wirklich löschen?");
+        if (!confirmDelete) return;
+
         try {
             await deleteComment(commentId);
             onDelete(commentId); // Notify parent to remove the comment
@@ -69,7 +72,8 @@ const Comment = ({ commentId, onDelete }) => {
 
     const canEdit = user._id === comment.authorid || user.role === 'admin' || user.role === 'mod';
 
-    return (<>
+    return (
+        <>
             <div className="p-4 rounded mb-4 bg-mantle">
                 <div className="flex justify-between text-xs mb-2 text-overlay0">
                     <div className="flex">
@@ -90,21 +94,13 @@ const Comment = ({ commentId, onDelete }) => {
                             <>
                                 {isEditing ? (
                                     <>
-                                        <button onClick={handleSaveEdit}
-                                                className="pl-3 text-blue hover:text-yellow">Ändern
-                                        </button>
-                                        <button onClick={handleCancelEdit}
-                                                className="pl-3 text-red hover:text-yellow">Abbrechen
-                                        </button>
+                                        <button onClick={handleSaveEdit} className="pl-3 text-blue hover:text-yellow">Ändern</button>
+                                        <button onClick={handleCancelEdit} className="pl-3 text-red hover:text-yellow">Abbrechen</button>
                                     </>
                                 ) : (
                                     <>
-                                        <button onClick={handleEdit}
-                                                className="pl-3 text-blue hover:text-yellow">Bearbeiten
-                                        </button>
-                                        <button onClick={handleDelete}
-                                                className="pl-3 text-red hover:text-yellow">Löschen
-                                        </button>
+                                        <button onClick={handleEdit} className="pl-3 text-blue hover:text-yellow">Bearbeiten</button>
+                                        <button onClick={handleDelete} className="pl-3 text-red hover:text-yellow">Löschen</button>
                                     </>
                                 )}
                             </>
@@ -120,7 +116,7 @@ const Comment = ({ commentId, onDelete }) => {
                         theight="h-32"
                     />
                 ) : (
-                    <div className="text-text pt-2" dangerouslySetInnerHTML={{__html: comment.content}}></div>
+                    <div className="text-text pt-2" dangerouslySetInnerHTML={{ __html: comment.content }}></div>
                 )}
             </div>
         </>
