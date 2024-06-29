@@ -1,9 +1,11 @@
-// backend/models/image.js
 const mongoose = require('mongoose');
 
 const imageSchema = new mongoose.Schema({
+    userid: String,
     data: Buffer,
-    contentType: String
+    contentType: String,
 });
 
-module.exports = mongoose.model('Image', imageSchema);
+const Image = mongoose.model('Image', imageSchema);
+
+module.exports = Image;

@@ -1,11 +1,12 @@
-// UploadPicture.js
 import React, { useState } from 'react';
+import { uploadImage, getImage } from './db'; // Importieren Sie die neuen Funktionen
 
 const UploadPicture = () => {
     const [file, setFile] = useState(null);
     const [image, setImage] = useState(null);
     const [message, setMessage] = useState('');
     const [downloadedImage, setDownloadedImage] = useState(null);
+    const [userid, setUserid] = useState('1235'); // Beispielhafte UserID, kann dynamisch gesetzt werden
 
     const handleFileChange = (event) => {
         setFile(event.target.files[0]);
@@ -24,19 +25,7 @@ const UploadPicture = () => {
 
     const handleSave = () => {
         if (file) {
-            const formData = new FormData();
-            formData.append('image', file);
-
-            fetch('http://localhost:5000/upload', {
-                method: 'POST',
-                body: formData,
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
+            uploadImage(userid, file)
                 .then(data => {
                     if (data.success) {
                         setMessage('Bild erfolgreich gespeichert');
@@ -52,14 +41,7 @@ const UploadPicture = () => {
     };
 
     const handleDownload = () => {
-        const userid = '1234'; // Example userid, replace with actual userid
-        fetch(`http://localhost:5000/getpicture/${userid}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.blob();
-            })
+        getImage(userid)
             .then(blob => {
                 const url = URL.createObjectURL(blob);
                 setDownloadedImage(url);
@@ -70,7 +52,7 @@ const UploadPicture = () => {
                 setMessage('Fehler beim Herunterladen des Bildes');
             });
     };
-
+/*
     return (
         <div>
             <h1>Bild hochladen und anzeigen</h1>
@@ -108,7 +90,7 @@ const UploadPicture = () => {
                 </div>
             )}
         </div>
-    );
+    );*/
 };
 
 export default UploadPicture;

@@ -1,12 +1,12 @@
-// backend/routes/imageRoute.js
 const express = require('express');
+const multer = require('multer');
+const { uploadImage, getImage } = require('../controllers/imageController');
+
 const router = express.Router();
-const imageController = require('../controllers/imageController');
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
-// Route for uploading an image
-router.post('/upload', imageController.uploadImage);
-
-// Route for downloading an image
-router.get('/download/:id', imageController.downloadImage);
+router.post('/upload/:userid', upload.single('image'), uploadImage);
+router.get('/getpicture/:userid', getImage);
 
 module.exports = router;

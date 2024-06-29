@@ -1,38 +1,60 @@
-// backend/controllers/imageController.js
-const Image = require('../models/image');
+const Image = require('../models/Image');
+const sharp = require('sharp');
 
-// Upload image
 const uploadImage = async (req, res) => {
+    if (!req.file) {
+        console.error('No file uploaded');
+        return res.status(400).send({ success: false, message: 'No file uploaded' });
+    }
+
+    const userid = req.body.userid;
+    if (!userid) {
+        console.error('No userid provided');
+        return res.status(400).send({ success: false, message: 'No userid provided' });
+    }
+
     try {
-        const { data, contentType } = req.body; // Assuming image data is sent in the request body
-        const image = new Image({
-            data: Buffer.from(data, 'base64'), // Assuming data is base64 encoded
-            contentType
+        // Komprimiere das Bild
+        const compressedBuffer = await sharp(req.file.buffer)
+            .resize({ width: 500 }) // Größe anpassen (optional)
+            .jpeg({ quality: 80 }) // Kompressionseinstellungen
+            .toBuffer();
+
+        if (compressedBuffer.length > 125 * 1024) {
+            console.error('File size after compression exceeds 125 KB');
+            return res.status(400).send({ success: false, message: 'File size after compression exceeds 125 KB' });
+        }
+
+        const newImage = new Image({
+            userid: userid,
+            data: compressedBuffer,
+            contentType: 'image/jpeg',
         });
-        await image.save();
-        res.status(200).json({ message: 'Image uploaded successfully' });
-    } catch (error) {
-        console.error('Error uploading image:', error);
-        res.status(500).json({ error: 'Failed to upload image' });
+
+        const savedImage = await newImage.save();
+        console.log('Image saved successfully:', savedImage);
+        res.status(200).send({ success: true, message: 'Image saved successfully' });
+    } catch (err) {
+        console.error('Error saving image to database:', err);
+        res.status(500).send({ success: false, message: 'Error saving image to database', error: err });
     }
 };
 
-// Download image
-const downloadImage = async (req, res) => {
+const getImage = async (req, res) => {
     try {
-        const image = await Image.findById(req.params.id);
+        const image = await Image.findOne({ userid: req.params.userid });
         if (!image) {
-            return res.status(404).json({ error: 'Image not found' });
+            return res.status(404).send({ success: false, message: 'Image not found' });
         }
         res.set('Content-Type', image.contentType);
         res.send(image.data);
-    } catch (error) {
-        console.error('Error downloading image:', error);
-        res.status(500).json({ error: 'Failed to download image' });
+    } catch (err) {
+        console.error('Error retrieving image from database:', err);
+        res.status(500).send({ success: false, message: 'Error retrieving image from database', error: err });
     }
 };
 
 module.exports = {
     uploadImage,
-    downloadImage
+    getImage,
 };
