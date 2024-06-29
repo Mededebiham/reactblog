@@ -101,7 +101,7 @@ const BlogPost = () => {
     };
 
     const handleDelete = async () => {
-        const confirmDelete = window.confirm("Möchten Sie diesen Beitrag wirklich löschen?");
+        const confirmDelete = window.confirm("Beitrag wirklich löschen?");
         if (!confirmDelete) return;
 
         try {

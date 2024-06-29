@@ -36,7 +36,7 @@ const Comment = ({ commentId, onDelete }) => {
     }, [commentId]);
 
     const handleDelete = async () => {
-        const confirmDelete = window.confirm("Möchten Sie diesen Kommentar wirklich löschen?");
+        const confirmDelete = window.confirm("Kommentar wirklich löschen?");
         if (!confirmDelete) return;
 
         try {
