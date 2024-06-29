@@ -13,6 +13,10 @@
     @apply bg-surface2 text-text text-[1rem] rounded-b;
 }
 
+.ql-disabled .ql-container {
+    @apply text-overlay1;
+}
+
 .ql-toolbar {
     @apply bg-base text-text dark:bg-text dark:text-base rounded-t;
 }
@@ -20,15 +24,19 @@
 .ql-picker-label::before {
     @apply text-text dark:text-base;
 }
+
 .label {
-    @apply block text-text ;
+    @apply block text-text;
 }
+
 .header2 {
     @apply text-2xl font-bold mb-4;
 }
+
 .input {
     @apply w-full p-2 border border-surface1 bg-surface2 rounded mt-1;
 }
+
 .button {
     @apply w-full p-2 bg-blue text-base rounded hover:bg-sapphire mt-4
 }

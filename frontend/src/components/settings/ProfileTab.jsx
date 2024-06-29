@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { UserContext } from '../../context';
 import { updateUser } from '../../database/db';
 import Button from "../parts/Button";
+import QuillEditor from "../QuillEditor";
 
 const ProfileTab = () => {
     const { user, setUser } = useContext(UserContext);
@@ -24,8 +25,8 @@ const ProfileTab = () => {
         setLastname(event.target.value);
     };
 
-    const handleDescriptionChange = (event) => {
-        setDescription(event.target.value);
+    const handleDescriptionChange = (content) => {
+        setDescription(content);
     };
 
     const handleSubmit = async (event) => {
@@ -55,7 +56,7 @@ const ProfileTab = () => {
             <div className="w-96 bg-mantle p-6 rounded-lg shadow-lg">
                 <h2 className="header2">Profileinstellungen</h2>
                 {imageUrl && (
-                    <img src={imageUrl} alt="Profile Preview" className="w-48 h-48 rounded-3xl mt-2 mx-auto mb-4"/>
+                    <img src={imageUrl} alt="Profile Preview" className="w-48 h-48 rounded-3xl mt-2 mx-auto mb-4" />
                 )}
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
@@ -96,12 +97,11 @@ const ProfileTab = () => {
 
                     <div>
                         <label className="label">Beschreibung</label>
-                        <input
-                            type="text"
+                        <QuillEditor
                             value={description}
                             onChange={handleDescriptionChange}
-                            className={`input ${isEditing ? 'text-text' : 'text-overlay1'}`}
                             placeholder="Beschreibung eingeben"
+                            theight="h-32"
                             disabled={!isEditing}
                         />
                     </div>
