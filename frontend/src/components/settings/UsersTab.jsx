@@ -78,6 +78,9 @@ const UsersTab = () => {
     };
 
     const handleDeleteUser = async (userId) => {
+        const confirmDelete = window.confirm("Möchten Sie diesen Benutzer wirklich löschen?");
+        if (!confirmDelete) return;
+
         try {
             await deleteUser(userId);
             setUsers(users.filter(user => user._id !== userId));
