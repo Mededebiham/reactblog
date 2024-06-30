@@ -19,20 +19,19 @@ const Team = () => {
     }, []);
 
     return (
-        <div className="">
-            <h1>Unser Team</h1>
-            <div>
+        <div className=" bg-surface2 py-10  p-6 rounded-lg shadow-lg ">
+            <h2 className="header2 text-center ">Unser Team</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 {admins.map((admin, index) => (
-                    <div key={index} >
+                    <div key={index} className=" bg-mantle p-6 rounded-xl shadow-xl">
                         <img
                             src={admin.profilepicture || 'default-image-path'}
                             alt={`${admin.firstname} ${admin.lastname}'s profile`}
-
+                            className="w-64 h-64 rounded-xl "
                         />
-                        <div className="p-6">
-                            <h2>{admin.firstname} {admin.lastname}</h2>
-                            <h3 >{admin.role}</h3>
-                            <p>{admin.description}</p>
+                        <div className="p-2">
+                            <h2 className="header2">{admin.firstname} {admin.lastname}</h2>
+                            <p className="label">{admin.description}</p>
                         </div>
                     </div>
                 ))}
