@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
     const currentYear = new Date().getFullYear();
@@ -27,6 +28,10 @@ const Footer = () => {
                 <li className="p-4 hover:text-yellow">
                     <button>Impressum</button>
                 </li>
+                <li className="p-4 hover:text-yellow">
+                    <Link to="/team">Unser Team</Link>
+                </li>
+
             </ul>
         </footer>
     );

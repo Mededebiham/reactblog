@@ -7,6 +7,7 @@ import CreatePost from "./pages/CreatePost";
 import Error404 from "./pages/404";
 import Settings from "./pages/Settings";
 import User from "./pages/User";
+import Team from "./pages/Team";
 import { Navigate } from 'react-router-dom';
 
 export const routes = [
@@ -22,6 +23,7 @@ export const routes = [
     { path: '/create-post', component: CreatePost, name: 'Beitrag erstellen', renderNav: true, userRole: 'admin' },
     { path: '/settings', component: () => <Navigate to="/settings/profile" />, name: 'Einstellungen', renderNav: false, userRole: 'user', exact: true },
     { path: '/settings/:tab', component: Settings, name: 'Einstellungen', renderNav: false, userRole: 'user' },
+    { path: '/team', component: Team, name: 'Unser Team', userRole: null },
     { path: '*', component: Error404, name: '404', renderNav: false, userRole: null }
 ];
 
