@@ -26,6 +26,9 @@ const Footer = () => {
                     <button>Datenschutz</button>
                 </li>
                 <li className="p-4 hover:text-yellow">
+                    <button>AGB</button>
+                </li>
+                <li className="p-4 hover:text-yellow">
                     <button>Impressum</button>
                 </li>
                 <li className="p-4 hover:text-yellow">
