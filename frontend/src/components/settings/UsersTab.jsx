@@ -1,8 +1,9 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import UserIcon from "../logos/UserIcon";
 import Pagination from "../Pagination";
 import { deleteUser, getUsers, updateUser } from '../../database/db';
 import Link from "../parts/Link";
+import { useAlert } from '../../alert'; // Import the alert context
 
 const roles = {
     'admin': { name: "Administrator", color: 'bg-red' },
@@ -17,6 +18,7 @@ const UsersTab = () => {
     const [editingUserId, setEditingUserId] = useState(null);
     const usersPerPage = 10;
     const tableRef = useRef();
+    const { setAlert } = useAlert(); // Use the alert context
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -26,6 +28,7 @@ const UsersTab = () => {
                 setUsers(fetchedUsers);
             } catch (error) {
                 console.error('Error fetching users:', error);
+                setAlert({ content: 'Fehler beim Abrufen der Benutzer', type: 'danger' });
             }
         };
         fetchUsers();
@@ -60,9 +63,10 @@ const UsersTab = () => {
             const res = await updateUser(userToUpdate);
             setUsers(users.map(user => (user._id === userId ? res : user)));
             setEditingUserId(null);
+            setAlert({ content: `${userToUpdate.firstname} ${userToUpdate.lastname} erfolgreich aktualisiert.`, type: 'success' });
         } catch (error) {
             console.error('Error updating user:', error);
-            alert('Fehler beim Speichern der Änderungen.');
+            setAlert({ content: 'Fehler beim Speichern der Änderungen.', type: 'danger' });
         }
     };
 
@@ -72,8 +76,10 @@ const UsersTab = () => {
             updatedUser.role = newRole;
             await updateUser(updatedUser);
             setUsers(users.map(user => (user._id === userId ? updatedUser : user)));
+            setAlert({ content: `Rolle von ${updatedUser.firstname} ${updatedUser.lastname} erfolgreich aktualisiert.`, type: 'success' });
         } catch (error) {
             console.error('Error updating user role:', error);
+            setAlert({ content: 'Fehler beim Aktualisieren der Rolle.', type: 'danger' });
         }
     };
 
@@ -82,10 +88,13 @@ const UsersTab = () => {
         if (!confirmDelete) return;
 
         try {
+            const userToDelete = users.find(user => user._id === userId);
             await deleteUser(userId);
             setUsers(users.filter(user => user._id !== userId));
+            setAlert({ content: `${userToDelete.firstname} ${userToDelete.lastname} erfolgreich gelöscht.`, type: 'success' });
         } catch (error) {
             console.error('Error deleting user:', error);
+            setAlert({ content: 'Fehler beim Löschen des Benutzers.', type: 'danger' });
         }
     };
 
