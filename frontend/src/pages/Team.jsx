@@ -22,7 +22,7 @@ const Team = () => {
 
     return (
         <div className=" py-10 p-6 rounded-lg shadow-lg">
-            <h2 className="header2 text-center">Unser Team</h2>
+            <h2 className="header2 text-center">Die drei M's</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 {admins.map((admin, index) => (
                     <div key={index} className="bg-mantle p-6 rounded-xl shadow-xl">
