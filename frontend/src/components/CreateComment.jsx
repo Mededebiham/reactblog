@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import QuillEditor from "./QuillEditor";
 import PropTypes from 'prop-types';
+import Button from "./parts/Button";
 
 const CreateComment = ({ addComment }) => {
     const [content, setContent] = useState('');
@@ -21,9 +22,9 @@ const CreateComment = ({ addComment }) => {
                 placeholder="Kommentar eingeben..."
                 theight='h-32'
             />
-            <button type="submit" className="mt-2 px-2 p-1 bg-blue text-base rounded hover:bg-sapphire">
+            <Button type="submit" className="mt-2">
                 Kommentar hinzufügen
-            </button>
+            </Button>
         </form>
     );
 };
