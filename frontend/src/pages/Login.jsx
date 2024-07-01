@@ -35,7 +35,7 @@ const Login = () => {
                             type="text"
                             id="username"
                             name="username"
-                            className="shadow-sm bg-surface0 border border-overlay1 text-base text-sm rounded-lg focus:ring-blue focus:border-blue block w-full p-2.5"
+                            className="shadow-sm bg-surface0 border border-overlay1 text-text text-sm rounded-lg focus:ring-blue focus:border-blue block w-full p-2.5"
                             placeholder="E-Mail"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
@@ -47,7 +47,7 @@ const Login = () => {
                             type="password"
                             id="password"
                             name="password"
-                            className="shadow-sm bg-surface0 border border-overlay1 text-base text-sm rounded-lg focus:ring-blue focus:border-blue block w-full p-2.5"
+                            className="shadow-sm bg-surface0 border border-overlay1 text-text text-sm rounded-lg focus:ring-blue focus:border-blue block w-full p-2.5"
                             placeholder="Passwort"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}

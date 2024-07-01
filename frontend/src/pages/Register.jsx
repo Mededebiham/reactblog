@@ -82,7 +82,7 @@ const Register = () => {
                             type="text"
                             id="firstname"
                             name="firstname"
-                            className="shadow-sm bg-surface0 border border-overlay1 text-base text-sm rounded-lg focus:ring-blue focus:border-blue block w-full p-2.5"
+                            className="shadow-sm bg-surface0 border border-overlay1 text-text text-sm rounded-lg focus:ring-blue focus:border-blue block w-full p-2.5"
                             placeholder="Vorname"
                             value={firstname}
                             onChange={handleChange}
@@ -94,7 +94,7 @@ const Register = () => {
                             type="text"
                             id="lastname"
                             name="lastname"
-                            className="shadow-sm bg-surface0 border border-overlay1 text-base text-sm rounded-lg focus:ring-blue focus:border-blue block w-full p-2.5"
+                            className="shadow-sm bg-surface0 border border-overlay1 text-text text-sm rounded-lg focus:ring-blue focus:border-blue block w-full p-2.5"
                             placeholder="Nachname"
                             value={lastname}
                             onChange={handleChange}
@@ -106,7 +106,7 @@ const Register = () => {
                             type="text"
                             id="username"
                             name="username"
-                            className="shadow-sm bg-surface0 border border-overlay1 text-base text-sm rounded-lg focus:ring-blue focus:border-blue block w-full p-2.5"
+                            className="shadow-sm bg-surface0 border border-overlay1 text-text text-sm rounded-lg focus:ring-blue focus:border-blue block w-full p-2.5"
                             placeholder="Benutzername"
                             value={username}
                             onChange={handleChange}
@@ -118,7 +118,7 @@ const Register = () => {
                             type="password"
                             id="password"
                             name="password"
-                            className="shadow-sm bg-surface0 border border-overlay1 text-base text-sm rounded-lg focus:ring-blue focus:border-blue block w-full p-2.5"
+                            className="shadow-sm bg-surface0 border border-overlay1 text-text text-sm rounded-lg focus:ring-blue focus:border-blue block w-full p-2.5"
                             placeholder="Passwort"
                             value={password}
                             onChange={handleChange}
@@ -130,7 +130,7 @@ const Register = () => {
                             type="password"
                             id="repeatPassword"
                             name="repeatPassword"
-                            className="shadow-sm bg-surface0 border border-overlay1 text-base text-sm rounded-lg focus:ring-blue focus:border-blue block w-full p-2.5"
+                            className="shadow-sm bg-surface0 border border-overlay1 text-text text-sm rounded-lg focus:ring-blue focus:border-blue block w-full p-2.5"
                             placeholder="Passwort wiederholen"
                             value={repeatPassword}
                             onChange={handleChange}

@@ -5,6 +5,7 @@ import TagPool from "../components/TagPool";
 import TagBadge from "../components/TagBadge";
 import PostCard from "../components/posts/PostCard";
 import Pagination from "../components/Pagination";
+import { useAlert } from '../alert';
 
 const showAllTitle = 'Nach Kategorie filtern:';
 
@@ -18,6 +19,8 @@ const Posts = () => {
     const [tagTitle, setTagTitle] = useState(showAllTitle);
     const [currentPage, setCurrentPage] = useState(parseInt(page) || 1);
     const postsPerPage = 3;
+
+    const { setAlert } = useAlert();  // Use the alert context
 
     useEffect(() => {
         const fetchTagsAndPosts = async () => {
@@ -36,11 +39,12 @@ const Posts = () => {
                 setFilteredPosts(postsWithTags); // Initially, all posts are shown
             } catch (error) {
                 console.error('Error fetching tags and posts:', error);
+                setAlert({ content: <p>Error fetching tags and posts</p>, type: 'danger' }); // Set the alert
             }
         };
 
         fetchTagsAndPosts();
-    }, []);
+    }, [setAlert]);
 
     useEffect(() => {
         setCurrentPage(parseInt(page) || 1);

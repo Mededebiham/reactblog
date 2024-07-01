@@ -10,7 +10,7 @@
 }
 
 .ql-container {
-    @apply bg-surface0 text-text text-[1rem] rounded-b;
+    @apply bg-surface0 text-text text-sm rounded-b;
 }
 
 .ql-disabled .ql-container {
