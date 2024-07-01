@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getUsers } from '../database/db';
 import {toTitleCase} from "../utils/utils";
+import UserIcon from "../components/logos/UserIcon";
 
 const Team = () => {
     const [admins, setAdmins] = useState([]);
@@ -25,11 +26,7 @@ const Team = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 {admins.map((admin, index) => (
                     <div key={index} className="bg-mantle p-6 rounded-xl shadow-xl">
-                        <img
-                            src={admin.profilepicture || 'default-image-path'}
-                            alt={`${admin.firstname} ${admin.lastname}'s profile`}
-                            className="w-full h-auto max-w-xs mx-auto rounded-xl"
-                        />
+                        <UserIcon userId={admin._id} className="w-full h-auto max-w-xs mx-auto rounded-xl" />
                         <div className="p-2 text-center">
                             <h2 className="header2">{toTitleCase(admin.firstname)} {toTitleCase(admin.lastname)}</h2>
                             <div className="label" dangerouslySetInnerHTML={{ __html: admin.description }}></div>
