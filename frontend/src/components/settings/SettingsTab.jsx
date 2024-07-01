@@ -1,6 +1,6 @@
 import React from 'react';
 
-const defaultClasses = 'p-4 rounded-lg bg-surface1';
+const defaultClasses = 'p-4 rounded-lg';
 
 const SettingsTab = ({ children, id, classNames = "", visible = false }) => {
     return (

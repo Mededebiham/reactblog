@@ -105,7 +105,7 @@ const UsersTab = () => {
     };
 
     return (
-        <div ref={tableRef} className="relative overflow-x-auto rounded-lg w-full">
+        <div ref={tableRef} className="relative overflow-x-auto rounded-lg w-full bg-surface1 p-6">
             <div className="flex items-center justify-between flex-column md:flex-row flex-wrap space-y-4 md:space-y-0 py-4 bg-surface1">
                 <label htmlFor="table-search" className="sr-only">Suche</label>
                 <div className="relative">

@@ -40,7 +40,7 @@ const CategoryTab = () => {
     };
 
     return (
-        <div>
+        <div className="bg-surface1 p-4 rounded-lg w-full">
             <h3 className="ml-1 text-lg font-bold mb-4">Existierende Kategorien:</h3>
             <TagPool tags={tags} onClick={handleEditTag} />
             <p className="ml-1 mt-4 font-medium">

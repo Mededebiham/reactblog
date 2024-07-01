@@ -5,11 +5,11 @@ const Footer = () => {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="bg-mantle text-sm text-text flex justify-around items-center">
-            <div className="flex items-center p-4">
+        <footer className="bg-mantle text-sm text-text flex flex-col md:flex-row items-center justify-between px-4 relative">
+            <div className="flex items-center p-4 order-2 md:order-1">
                 © {currentYear} Drei M's
             </div>
-            <div>
+            <div className="order-1 md:order-2 flex-1 flex justify-center md:absolute md:left-1/2 md:transform md:-translate-x-1/2 my-2">
                 <a href="https://github.com/Mededebiham/reactblog">
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 30 30" className="h-8 w-8 fill-current text-text">
                         <path
@@ -18,7 +18,7 @@ const Footer = () => {
                     </svg>
                 </a>
             </div>
-            <ul className='flex'>
+            <ul className='flex order-3 md:order-3'>
                 <li className="p-4 hover:text-yellow">
                     <button>Kontakt</button>
                 </li>
@@ -31,7 +31,6 @@ const Footer = () => {
                 <li className="p-4 hover:text-yellow">
                     <Link to="/team">Unser Team</Link>
                 </li>
-
             </ul>
         </footer>
     );

@@ -122,7 +122,7 @@ const UserSettingsTab = () => {
                     </div>
 
                     <div className="mb-4">
-                        <label htmlFor="email" className="label">Neue Email:</label>
+                        <label htmlFor="email" className="label">Neue E-Mail:</label>
                         <input
                             type="email"
                             id="email"
