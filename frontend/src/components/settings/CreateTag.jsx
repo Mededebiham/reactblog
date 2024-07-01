@@ -3,11 +3,12 @@ import ColorPicker from "../ColorPicker";
 import Button from "../parts/Button";
 import TagBadge from "../TagBadge";
 import { createTag, updateTag, deleteTag, getTagById } from "../../database/db";
+import { useAlert } from '../../alert'; // Import the alert context
 
 const CreateTag = ({ visible = false, isNewTag, setIsNewTag, tagId, updateTagPool }) => {
     const [selectedColor, setSelectedColor] = useState("bg-blue");
-    const [error, setError] = useState("");
     const [tagName, setTagName] = useState("");
+    const { setAlert } = useAlert(); // Use the alert context
 
     useEffect(() => {
         if (tagId && tagId !== 'new') {
@@ -15,15 +16,15 @@ const CreateTag = ({ visible = false, isNewTag, setIsNewTag, tagId, updateTagPoo
                 .then(tagToEdit => {
                     setTagName(tagToEdit ? tagToEdit.name : "");
                     setSelectedColor(tagToEdit ? tagToEdit.color : "bg-blue");
-                    setError("");
+                    setAlert(null); // Clear any previous alerts
                 })
-                .catch(e => setError("Unerwarteter Fehler: " + e.message));
+                .catch(e => setAlert({ content: "Unerwarteter Fehler: " + e.message, type: 'danger' }));
         } else {
             setTagName("");
             setSelectedColor("bg-blue");
-            setError("");
+            setAlert(null); // Clear any previous alerts
         }
-    }, [tagId]);
+    }, [tagId, setAlert]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -37,13 +38,15 @@ const CreateTag = ({ visible = false, isNewTag, setIsNewTag, tagId, updateTagPoo
             if (tagId !== 'new' && tagId !== null) {
                 newTag._id = tagId;
                 await updateTag(newTag);
+                setAlert({ content: `Kategorie "${newTag.name}" erfolgreich aktualisiert.`, type: 'success' });
             } else {
                 await createTag(newTag);
+                setAlert({ content: `Kategorie "${newTag.name}" erfolgreich erstellt.`, type: 'success' });
             }
             resetForm();
             updateTagPool();
         } catch (e) {
-            setError("Unerwarteter Fehler: " + e.message);
+            setAlert({ content: "Unerwarteter Fehler: " + e.message, type: 'danger' });
         }
     };
 
@@ -53,9 +56,10 @@ const CreateTag = ({ visible = false, isNewTag, setIsNewTag, tagId, updateTagPoo
                 await deleteTag(tagId);
                 resetForm();
                 updateTagPool();
+                setAlert({ content: `Kategorie "${tagName}" gelöscht.`, type: 'warning' });
             }
         } catch (e) {
-            setError("Unerwarteter Fehler: " + e.message);
+            setAlert({ content: "Unerwarteter Fehler: " + e.message, type: 'danger' });
         }
     };
 
@@ -63,6 +67,7 @@ const CreateTag = ({ visible = false, isNewTag, setIsNewTag, tagId, updateTagPoo
         setSelectedColor("bg-blue");
         setTagName("");
         setIsNewTag(null);
+        setAlert(null); // Clear any previous alerts
     };
 
     const handleChange = (e) => {
@@ -71,7 +76,6 @@ const CreateTag = ({ visible = false, isNewTag, setIsNewTag, tagId, updateTagPoo
 
     return (
         <div className={`ml-1 mt-8 ${visible ? "" : "hidden"}`}>
-
             <form className="max-w-lg mx-auto mt-4" onSubmit={handleSubmit}>
                 <h3 className="text-lg font-medium mt-12 mb-8">
                     {isNewTag ? "Neue Kategorie erstellen" : "Kategorie bearbeiten"}
@@ -83,20 +87,19 @@ const CreateTag = ({ visible = false, isNewTag, setIsNewTag, tagId, updateTagPoo
                     <input
                         type="text"
                         id="category"
-                        className="input"
+                        className="shadow-sm bg-surface0 border border-overlay1 text-text text-sm rounded-lg focus:ring-blue focus:border-blue block w-full p-2.5"
                         placeholder="Name der Kategorie"
                         onChange={handleChange}
                         value={tagName}
                         required
                     />
                 </div>
-                {!error && tagName && (
+                {tagName && (
                     <div className="flex mb-4 items-center">
                         <p className="mr-2">Vorschau:</p>
                         <TagBadge bgColor={selectedColor}>{tagName}</TagBadge>
                     </div>
                 )}
-                {error && <p className="text-red ml-2 mb-2">{error}</p>}
                 <div className="flex">
                     <Button type="submit">
                         {isNewTag ? "Kategorie erstellen" : "Kategorie ändern"}
