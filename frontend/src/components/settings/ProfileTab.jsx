@@ -1,17 +1,18 @@
 import React, { useContext, useState } from 'react';
 import { UserContext } from '../../context';
+import { useAlert } from '../../alert'; // Import the alert context
 import { updateUser } from '../../database/db';
 import Button from "../parts/Button";
 import QuillEditor from "../QuillEditor";
 
 const ProfileTab = () => {
     const { user, setUser } = useContext(UserContext);
+    const { setAlert } = useAlert(); // Use the alert context
     const [imageUrl, setImageUrl] = useState(user.profilepicture || '');
     const [firstname, setFirstname] = useState(user.firstname || '');
     const [lastname, setLastname] = useState(user.lastname || '');
     const [description, setDescription] = useState(user.description || '');
     const [isEditing, setIsEditing] = useState(false);
-    const [errors, setErrors] = useState('');
 
     const handleImageUrlChange = (event) => {
         setImageUrl(event.target.value);
@@ -43,11 +44,10 @@ const ProfileTab = () => {
         try {
             const res = await updateUser(updatedUser);
             setUser(res);
-            setErrors('');
             setIsEditing(false);
-            alert('Änderungen erfolgreich gespeichert.');
+            setAlert({ content: 'Änderungen erfolgreich gespeichert.', type: 'success' });
         } catch (error) {
-            setErrors(error.message || 'Fehler beim Speichern der Änderungen.');
+            setAlert({ content: error.message || 'Fehler beim Speichern der Änderungen.', type: 'danger' });
         }
     };
 
@@ -58,7 +58,6 @@ const ProfileTab = () => {
                 {imageUrl && (
                     <img src={imageUrl} alt="Profile Preview" className="w-48 h-48 rounded-3xl mt-2 mx-auto mb-4" />
                 )}
-                {errors && <p className="text-red-500 mb-4">{errors}</p>}
                 <div className="mb-5">
                     <label className="block mb-2 text-sm font-medium text-text">Profilbild URL:</label>
                     <input
