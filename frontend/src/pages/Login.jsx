@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../database/db';
 import { UserContext } from '../context';
+import Button from "../components/parts/Button";
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -15,11 +16,8 @@ const Login = () => {
         try {
             const credentials = { username, password };
             const res = await loginUser(credentials);
-            console.log('Login response:', res); // Debug: Check the response
             setMessage(res.message);
-            console.log('Before setting user:', res.user); // Debug: Before updating context
             setUser(res.user); // Update user context with the logged-in user
-            console.log('After setting user:', res.user); // Debug: After updating context
             navigate('/');
         } catch (error) {
             setMessage(error.message || 'Fehler beim Einloggen');
@@ -27,29 +25,36 @@ const Login = () => {
     };
 
     return (
-        <div className="mb-4">
-            <h2 className="text-2xl font-bold mb-4">Anmelden</h2>
-            <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-4 bg-surface0 shadow-md rounded-lg text-text">
-                <label>Benutzername:</label>
-                <input
-                    type="text"
-                    className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"
-                    placeholder="Benutzername"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    required
-                />
-                <input
-                    type="password"
-                    className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"
-                    placeholder="Passwort"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-                <button type="submit" className="w-full p-2 bg-blue text-base rounded hover:bg-sapphire mt-4">Login</button>
+        <div className="flex justify-center items-center">
+            <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto p-6 shadow-md rounded-lg bg-mantle">
+                <h2 className="text-2xl font-bold mb-4 text-text">Anmelden</h2>
+                {message && <p className="text-red-500 mb-4">{message}</p>}
+                <div className="mb-5">
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        className="shadow-sm bg-surface0 border border-overlay1 text-base text-sm rounded-lg focus:ring-blue focus:border-blue block w-full p-2.5"
+                        placeholder="E-Mail"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className="mb-5">
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        className="shadow-sm bg-surface0 border border-overlay1 text-base text-sm rounded-lg focus:ring-blue focus:border-blue block w-full p-2.5"
+                        placeholder="Passwort"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </div>
+                <Button type="submit" className="w-full mb-0">Login</Button>
             </form>
-            {message && <p>{message}</p>}
         </div>
     );
 };
