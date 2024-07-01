@@ -2,17 +2,18 @@ import React, { useState, useContext, useEffect } from 'react';
 import { passwordRegex } from "../../utils/utils";
 import { updateUser, loginUser } from '../../database/db';
 import { UserContext } from '../../context';
+import { useAlert } from '../../alert';  // import the alert hook
 import Button from "../parts/Button";
 
 const UserSettingsTab = () => {
     const { user, setUser } = useContext(UserContext);
+    const { setAlert } = useAlert();  // use the alert hook
     const [formData, setFormData] = useState({
         password: '',
         newPassword: '',
         confirmPassword: '',
         email: '',
     });
-    const [errors, setErrors] = useState('');
     const [isFormValid, setIsFormValid] = useState(false);
 
     useEffect(() => {
@@ -35,27 +36,27 @@ const UserSettingsTab = () => {
         e.preventDefault();
 
         if (!formData.newPassword && !formData.email) {
-            setErrors('Bitte geben Sie entweder eine neue E-Mail-Adresse oder ein neues Passwort ein.');
+            setAlert({ content: 'Bitte gebe entweder eine neue E-Mail-Adresse oder ein neues Passwort ein.', type: 'danger' });
             return;
         }
 
         if (formData.newPassword && formData.newPassword === user.password) {
-            setErrors('Das neue Passwort darf nicht mit dem aktuellen Passwort übereinstimmen.');
+            setAlert({ content: 'Das neue Passwort darf nicht mit dem aktuellen Passwort übereinstimmen.', type: 'danger' });
             return;
         }
 
         if (formData.email && formData.email === user.username) {
-            setErrors('Die neue E-Mail-Adresse darf nicht mit der aktuellen E-Mail-Adresse übereinstimmen.');
+            setAlert({ content: 'Die neue E-Mail-Adresse darf nicht mit der aktuellen E-Mail-Adresse übereinstimmen.', type: 'danger' });
             return;
         }
 
         if (formData.newPassword && formData.newPassword !== formData.confirmPassword) {
-            setErrors('Passwörter stimmen nicht überein.');
+            setAlert({ content: 'Passwörter stimmen nicht überein.', type: 'danger' });
             return;
         }
 
         if (formData.newPassword && !passwordRegex.test(formData.newPassword)) {
-            setErrors('Das neue Passwort erfüllt nicht die erforderlichen Kriterien.');
+            setAlert({ content: 'Das neue Passwort erfüllt nicht die erforderlichen Kriterien.', type: 'danger' });
             return;
         }
 
@@ -74,10 +75,9 @@ const UserSettingsTab = () => {
             // Update user
             const res = await updateUser(updatedUser);
             setUser(res);
-            setErrors('');
-            alert('Änderungen erfolgreich gespeichert.');
+            setAlert({ content: 'Änderungen erfolgreich gespeichert.', type: 'success' });
         } catch (error) {
-            setErrors(error.message || 'Fehler beim Speichern der Änderungen.');
+            setAlert({ content: error.message || 'Fehler beim Speichern der Änderungen.', type: 'danger' });
         }
 
         setFormData({
@@ -92,7 +92,6 @@ const UserSettingsTab = () => {
         <div className="flex justify-center items-center">
             <form onSubmit={handleSubmit} className="w-full max-w-lg mx-auto p-6 shadow-md rounded-lg bg-mantle">
                 <h2 className="text-2xl font-bold mb-4 text-text">Benutzereinstellungen</h2>
-                {errors && <p className="text-red-500 mb-4">{errors}</p>}
                 <div className="mb-5">
                     <label htmlFor="password" className="block mb-2 text-sm font-medium text-text">Aktuelles Passwort:</label>
                     <input
@@ -101,7 +100,7 @@ const UserSettingsTab = () => {
                         name="password"
                         value={formData.password}
                         onChange={handleChange}
-                        className="shadow-sm bg-surface0 border border-overlay1 text-base text-sm rounded-lg focus:ring-blue focus:border-blue block w-full p-2.5"
+                        className="shadow-sm bg-surface0 border border-overlay1 text-text text-sm rounded-lg focus:ring-blue focus:border-blue block w-full p-2.5"
                         required
                     />
                 </div>
@@ -113,7 +112,7 @@ const UserSettingsTab = () => {
                         name="newPassword"
                         value={formData.newPassword}
                         onChange={handleChange}
-                        className="shadow-sm bg-surface0 border border-overlay1 text-base text-sm rounded-lg focus:ring-blue focus:border-blue block w-full p-2.5"
+                        className="shadow-sm bg-surface0 border border-overlay1 text-text text-sm rounded-lg focus:ring-blue focus:border-blue block w-full p-2.5"
                     />
                 </div>
                 <div className="mb-5">
@@ -124,7 +123,7 @@ const UserSettingsTab = () => {
                         name="confirmPassword"
                         value={formData.confirmPassword}
                         onChange={handleChange}
-                        className="shadow-sm bg-surface0 border border-overlay1 text-base text-sm rounded-lg focus:ring-blue focus:border-blue block w-full p-2.5"
+                        className="shadow-sm bg-surface0 border border-overlay1 text-text text-sm rounded-lg focus:ring-blue focus:border-blue block w-full p-2.5"
                     />
                 </div>
                 <div className="mb-5">
@@ -135,7 +134,7 @@ const UserSettingsTab = () => {
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
-                        className="shadow-sm bg-surface0 border border-overlay1 text-base text-sm rounded-lg focus:ring-blue focus:border-blue block w-full p-2.5"
+                        className="shadow-sm bg-surface0 border border-overlay1 text-text text-sm rounded-lg focus:ring-blue focus:border-blue block w-full p-2.5"
                         placeholder="Leer für keine Änderung"
                     />
                 </div>
