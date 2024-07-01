@@ -4,6 +4,7 @@ import TagPool from '../TagPool';
 import QuillEditor from "../QuillEditor";
 import { createPost, updatePost, getPostById, getTags, deletePost } from "../../database/db";
 import { UserContext } from '../../context';
+import Button from "../parts/Button";
 
 const BlogPost = () => {
     const { id } = useParams();
@@ -113,42 +114,42 @@ const BlogPost = () => {
     };
 
     return (
-        <div>
-            <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-4 bg-surface0 shadow-md rounded-lg">
-                <h2 className="text-2xl font-bold mb-4">{isEditMode ? 'Beitrag bearbeiten' : 'Neuen Beitrag erstellen'}</h2>
-                {error && <p className="text-red-500">{error}</p>}
-                <div className="mb-4">
-                    <label className="block text-text">Titel</label>
+        <div className="flex justify-center items-center">
+            <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto p-6 shadow-md rounded-lg bg-mantle">
+                <h2 className="text-2xl font-bold mb-4 text-text">{isEditMode ? 'Beitrag bearbeiten' : 'Neuen Beitrag erstellen'}</h2>
+                {error && <p className="text-red-500 mb-4">{error}</p>}
+                <div className="mb-5">
+                    <label className="block mb-2 text-sm font-medium text-text">Titel:</label>
                     <input
                         type="text"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
-                        className="w-full p-2 border border-surface1 bg-surface2 rounded mt-1"
+                        className="shadow-sm bg-surface0 border border-overlay1 text-base text-sm rounded-lg focus:ring-blue focus:border-blue block w-full p-2.5"
                         required
                     />
                 </div>
                 <div className="mb-16 h-full">
-                    <label className="block text-text">Inhalt</label>
+                    <label className="block mb-2 text-sm font-medium text-text">Inhalt:</label>
                     <QuillEditor value={content} onChange={setContent} />
                 </div>
                 <div className="mt-4">
                     <div>
-                        <label className="block text-text mb-2">Verfügbare Tags</label>
+                        <label className="block text-sm font-medium text-text mb-2">Verfügbare Tags</label>
                         <TagPool tags={availableTags} onClick={handleTagClickAvailable} />
                     </div>
                     <div className={`${selectedTags.length < 1 ? "hidden" : ""}`}>
-                        <label className="block text-text mt-4 mb-2">Ausgewählte Tags</label>
+                        <label className="block text-sm font-medium text-text mt-4 mb-2">Ausgewählte Tags</label>
                         <TagPool tags={selectedTags} onClick={handleTagClickSelected} />
                     </div>
                 </div>
                 <div className="flex">
-                    <button type="submit" className="w-full p-2 bg-blue text-base rounded hover:bg-sapphire mt-4">
+                    <Button type="submit" className="w-full mb-0">
                         {isEditMode ? 'Änderungen speichern' : 'Beitrag erstellen'}
-                    </button>
+                    </Button>
                     {isEditMode && (
-                        <button type="button" onClick={handleDelete} className="ml-2 w-full p-2 bg-red text-base rounded hover:bg-yellow mt-4">
+                        <Button type="button" onClick={handleDelete} className="ml-2 w-full bg-red hover:bg-yellow mb-0">
                             Beitrag löschen
-                        </button>
+                        </Button>
                     )}
                 </div>
             </form>

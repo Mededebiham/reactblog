@@ -90,7 +90,7 @@ const UserSettingsTab = () => {
 
     return (
         <div className="flex justify-center items-center">
-            <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto p-6 shadow-md rounded-lg bg-mantle">
+            <form onSubmit={handleSubmit} className="w-full max-w-lg mx-auto p-6 shadow-md rounded-lg bg-mantle">
                 <h2 className="text-2xl font-bold mb-4 text-text">Benutzereinstellungen</h2>
                 {errors && <p className="text-red-500 mb-4">{errors}</p>}
                 <div className="mb-5">

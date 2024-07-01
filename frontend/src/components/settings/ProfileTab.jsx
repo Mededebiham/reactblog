@@ -53,7 +53,7 @@ const ProfileTab = () => {
 
     return (
         <div className="flex justify-center items-center">
-            <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto p-6 shadow-md rounded-lg bg-mantle">
+            <form onSubmit={handleSubmit} className="w-full max-w-xl mx-auto p-6 shadow-md rounded-lg bg-mantle">
                 <h2 className="text-2xl font-bold mb-4 text-text">Profileinstellungen</h2>
                 {imageUrl && (
                     <img src={imageUrl} alt="Profile Preview" className="w-48 h-48 rounded-3xl mt-2 mx-auto mb-4" />
