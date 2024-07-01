@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getUsers } from '../database/db';
+import {toTitleCase} from "../utils/utils";
 
 const Team = () => {
     const [admins, setAdmins] = useState([]);
@@ -19,7 +20,7 @@ const Team = () => {
     }, []);
 
     return (
-        <div className="bg-surface2 py-10 p-6 rounded-lg shadow-lg">
+        <div className=" py-10 p-6 rounded-lg shadow-lg">
             <h2 className="header2 text-center">Unser Team</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 {admins.map((admin, index) => (
@@ -30,14 +31,13 @@ const Team = () => {
                             className="w-full h-auto max-w-xs mx-auto rounded-xl"
                         />
                         <div className="p-2 text-center">
-                            <h2 className="header2">{admin.firstname} {admin.lastname}</h2>
-                            <p className="label">{admin.description}</p>
+                            <h2 className="header2">{toTitleCase(admin.firstname)} {toTitleCase(admin.lastname)}</h2>
+                            <div className="label" dangerouslySetInnerHTML={{ __html: admin.description }}></div>
                         </div>
                     </div>
                 ))}
             </div>
         </div>
-
     );
 };
 
