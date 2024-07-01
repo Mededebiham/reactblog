@@ -53,81 +53,78 @@ const ProfileTab = () => {
 
     return (
         <div className="flex justify-center items-center">
-            <div className="w-96 bg-mantle p-6 rounded-lg shadow-lg">
-                <h2 className="header2">Profileinstellungen</h2>
+            <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto p-6 shadow-md rounded-lg bg-mantle">
+                <h2 className="text-2xl font-bold mb-4 text-text">Profileinstellungen</h2>
                 {imageUrl && (
                     <img src={imageUrl} alt="Profile Preview" className="w-48 h-48 rounded-3xl mt-2 mx-auto mb-4" />
                 )}
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    <div>
-                        <label className="label">Profilbild URL</label>
-                        <input
-                            type="text"
-                            value={imageUrl}
-                            onChange={handleImageUrlChange}
-                            className={`input ${isEditing ? 'text-text' : 'text-overlay1'}`}
-                            placeholder="URL zum neuen Profilbild eingeben"
-                            disabled={!isEditing}
-                        />
-                    </div>
+                {errors && <p className="text-red-500 mb-4">{errors}</p>}
+                <div className="mb-5">
+                    <label className="block mb-2 text-sm font-medium text-text">Profilbild URL:</label>
+                    <input
+                        type="text"
+                        value={imageUrl}
+                        onChange={handleImageUrlChange}
+                        className={`shadow-sm bg-surface0 border border-overlay1 text-base text-sm rounded-lg focus:ring-blue focus:border-blue block w-full p-2.5 ${isEditing ? 'text-text' : 'text-overlay1'}`}
+                        placeholder="URL zum neuen Profilbild eingeben"
+                        disabled={!isEditing}
+                    />
+                </div>
 
-                    <div>
-                        <label className="label">Vorname</label>
-                        <input
-                            type="text"
-                            value={firstname}
-                            onChange={handleFirstnameChange}
-                            className={`input ${isEditing ? 'text-text' : 'text-overlay1'}`}
-                            placeholder="Vorname eingeben"
-                            disabled={!isEditing}
-                        />
-                    </div>
+                <div className="mb-5">
+                    <label className="block mb-2 text-sm font-medium text-text">Vorname:</label>
+                    <input
+                        type="text"
+                        value={firstname}
+                        onChange={handleFirstnameChange}
+                        className={`shadow-sm bg-surface0 border border-overlay1 text-base text-sm rounded-lg focus:ring-blue focus:border-blue block w-full p-2.5 ${isEditing ? 'text-text' : 'text-overlay1'}`}
+                        placeholder="Vorname eingeben"
+                        disabled={!isEditing}
+                    />
+                </div>
 
-                    <div>
-                        <label className="label">Nachname</label>
-                        <input
-                            type="text"
-                            value={lastname}
-                            onChange={handleLastnameChange}
-                            className={`input ${isEditing ? 'text-text' : 'text-overlay1'}`}
-                            placeholder="Nachname eingeben"
-                            disabled={!isEditing}
-                        />
-                    </div>
+                <div className="mb-5">
+                    <label className="block mb-2 text-sm font-medium text-text">Nachname:</label>
+                    <input
+                        type="text"
+                        value={lastname}
+                        onChange={handleLastnameChange}
+                        className={`shadow-sm bg-surface0 border border-overlay1 text-base text-sm rounded-lg focus:ring-blue focus:border-blue block w-full p-2.5 ${isEditing ? 'text-text' : 'text-overlay1'}`}
+                        placeholder="Nachname eingeben"
+                        disabled={!isEditing}
+                    />
+                </div>
 
-                    <div>
-                        <label className="label">Beschreibung</label>
-                        <QuillEditor
-                            value={description}
-                            onChange={handleDescriptionChange}
-                            placeholder="Beschreibung eingeben"
-                            theight="h-32"
-                            disabled={!isEditing}
-                        />
-                    </div>
+                <div className="mb-5">
+                    <label className="block mb-2 text-sm font-medium text-text">Beschreibung:</label>
+                    <QuillEditor
+                        value={description}
+                        onChange={handleDescriptionChange}
+                        placeholder="Beschreibung eingeben"
+                        theight="h-32"
+                        disabled={!isEditing}
+                    />
+                </div>
 
-                    {errors && <p className="text-red">{errors}</p>}
+                {!isEditing && (
+                    <Button
+                        type="button"
+                        className="w-full"
+                        onClick={() => setIsEditing(!isEditing)}
+                    >
+                        Profil bearbeiten
+                    </Button>
+                )}
 
-                    {!isEditing && (
-                        <Button
-                            type="button"
-                            className="w-full"
-                            onClick={() => setIsEditing(!isEditing)}
-                        >
-                            Profil bearbeiten
-                        </Button>
-                    )}
-
-                    {isEditing && (
-                        <Button
-                            type="submit"
-                            className="bg-green w-full"
-                        >
-                            Änderungen speichern
-                        </Button>
-                    )}
-                </form>
-            </div>
+                {isEditing && (
+                    <Button
+                        type="submit"
+                        className="bg-green w-full"
+                    >
+                        Änderungen speichern
+                    </Button>
+                )}
+            </form>
         </div>
     );
 };
