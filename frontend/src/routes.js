@@ -16,14 +16,14 @@ export const routes = [
     { path: '/posts/category/:tag', component: Posts, name: 'Beiträge', renderNav: false, userRole: null },
     { path: '/posts/:page', component: Posts, name: 'Beiträge', renderNav: false, userRole: null},
     { path: '/post/:id', component: Post, name: 'Post', renderNav: false, userRole: null },
-    { path: '/post/edit/:id', component: CreatePost, name: 'Beitrag bearbeiten', renderNav: false, userRole: 'admin'},
+    { path: '/post/edit/:id', component: CreatePost, name: 'Beitrag bearbeiten', renderNav: false, userRole: ['admin', 'mod'] },
     { path: '/register', component: Register, name: "Registrieren", renderNav: false, userRole: null },
     { path: '/login', component: Login, name: "Einloggen", renderNav: false, userRole: null },
     { path: '/user/:id', component: User, name: 'Benutzerseite', renderNav: false, userRole: null },
-    { path: '/create-post', component: CreatePost, name: 'Beitrag erstellen', renderNav: true, userRole: 'admin' },
+    { path: '/create-post', component: CreatePost, name: 'Beitrag erstellen', renderNav: true, userRole: ['admin', 'mod'] },
     { path: '/settings', component: () => <Navigate to="/settings/profile" />, name: 'Einstellungen', renderNav: false, userRole: 'user', exact: true },
     { path: '/settings/:tab', component: Settings, name: 'Einstellungen', renderNav: false, userRole: 'user' },
-    { path: '/team', component: Team, name: 'Unser Team', userRole: null },
+    { path: '/team', component: Team, name: 'Unser Team', renderNav: false, userRole: null },
     { path: '*', component: Error404, name: '404', renderNav: false, userRole: null }
 ];
 

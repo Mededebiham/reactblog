@@ -39,7 +39,7 @@ const Navbar = () => {
     };
 
     useEffect(() => {
-        const visibleRoutes = routes.filter(route => route.renderNav && (route.userRole === null || route.userRole === user.role));
+        const visibleRoutes = routes.filter(route => route.renderNav && (route.userRole === null || (Array.isArray(route.userRole) ? route.userRole.includes(user.role) : route.userRole === user.role)));
         setFilteredRoutes(visibleRoutes);
         setUserIconVisibility(!!user._id);
     }, [user]);
