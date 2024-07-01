@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { getCommentById, getUserById, deleteComment, updateComment } from '../database/db';
 import Link from "./parts/Link";
 import { UserContext } from '../context';
+import { useAlert } from '../alert'; // Import the alert context
 import { toTitleCase } from "../utils/utils";
 import QuillEditor from "./QuillEditor";
 import UserIcon from "./logos/UserIcon";
@@ -13,6 +14,7 @@ const Comment = ({ commentId, onDelete }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editedContent, setEditedContent] = useState('');
     const { user } = useContext(UserContext);
+    const { setAlert } = useAlert(); // Use the alert context
 
     useEffect(() => {
         const fetchCommentAndAuthor = async () => {
@@ -29,11 +31,12 @@ const Comment = ({ commentId, onDelete }) => {
                 }
             } catch (error) {
                 console.error('Error fetching comment or author:', error);
+                setAlert({ content: 'Fehler beim Laden des Kommentars oder Autors', type: 'danger' });
             }
         };
 
         fetchCommentAndAuthor();
-    }, [commentId]);
+    }, [commentId, setAlert]);
 
     const handleDelete = async () => {
         const confirmDelete = window.confirm("Kommentar wirklich löschen?");
@@ -42,8 +45,10 @@ const Comment = ({ commentId, onDelete }) => {
         try {
             await deleteComment(commentId);
             onDelete(commentId); // Notify parent to remove the comment
+            setAlert({ content: 'Kommentar gelöscht.', type: 'warning' });
         } catch (error) {
             console.error('Error deleting comment:', error);
+            setAlert({ content: 'Fehler beim Löschen des Kommentars.', type: 'danger' });
         }
     };
 
@@ -61,8 +66,10 @@ const Comment = ({ commentId, onDelete }) => {
             const updatedComment = await updateComment({ ...comment, content: editedContent });
             setComment(updatedComment);
             setIsEditing(false);
+            setAlert({ content: 'Kommentar erfolgreich aktualisiert.', type: 'success' });
         } catch (error) {
             console.error('Error updating comment:', error);
+            setAlert({ content: 'Fehler beim Aktualisieren des Kommentars.', type: 'danger' });
         }
     };
 
