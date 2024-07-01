@@ -150,7 +150,7 @@ const Navbar = () => {
                     <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-surface0 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
                         {shouldRenderNavLinks() && filteredRoutes.map((route, index) => (
                             <li key={index}>
-                                <Link to={route.path}>
+                                <Link to={route.path} className="hover:text-yellow">
                                     {route.name}
                                 </Link>
                             </li>
